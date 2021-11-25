@@ -31,7 +31,7 @@ metaDataFormat= "yaml"
   img_title = "logo"
   icon = ""
   quote = "Delegate your CPU&RAM intensive scientific tasks."
-  description= "The Habanero server is a 32 Core, High RAM(256GB) machine running on the Naver Cloud Platform. This server is currently running thanks to the BK21 and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You."
+  description= "The Habanero server is a 32 Core, High RAM(256GB) machine running on the Naver Cloud Platform. This server is currently running thanks to BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You."
   licenseUrl = ""
 
  # Social icons
