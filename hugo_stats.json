@@ -1,0 +1,53 @@
+{
+  "htmlElements": {
+    "tags": [
+      "a",
+      "body",
+      "br",
+      "div",
+      "footer",
+      "h2",
+      "head",
+      "hi",
+      "html",
+      "img",
+      "input",
+      "label",
+      "li",
+      "link",
+      "meta",
+      "p",
+      "path",
+      "polyline",
+      "script",
+      "strong",
+      "svg",
+      "title",
+      "ul"
+    ],
+    "classes": [
+      "back-icon",
+      "ball",
+      "checkbox",
+      "color-scheme",
+      "go-back",
+      "image",
+      "intro",
+      "intro-quote",
+      "label",
+      "line",
+      "link",
+      "main",
+      "name",
+      "nav",
+      "post-title",
+      "social",
+      "title"
+    ],
+    "ids": [
+      "chk",
+      "footer",
+      "scrollIndicator"
+    ]
+  }
+}
