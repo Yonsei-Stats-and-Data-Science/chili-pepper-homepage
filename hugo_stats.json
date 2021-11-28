@@ -4,9 +4,12 @@
       "a",
       "body",
       "br",
+      "code",
       "div",
       "footer",
       "h2",
+      "h3",
+      "h4",
       "head",
       "hi",
       "html",
@@ -16,21 +19,28 @@
       "li",
       "link",
       "meta",
+      "ol",
       "p",
       "path",
       "polyline",
+      "pre",
       "script",
+      "section",
+      "span",
       "strong",
       "svg",
       "title",
-      "ul"
+      "ul",
+      "well"
     ],
     "classes": [
       "back-icon",
       "ball",
       "checkbox",
       "color-scheme",
+      "content",
       "go-back",
+      "highlight",
       "image",
       "intro",
       "intro-quote",
@@ -40,14 +50,22 @@
       "main",
       "name",
       "nav",
+      "post-dets",
+      "post-header",
+      "post-item",
       "post-title",
       "social",
-      "title"
+      "tags",
+      "title",
+      "well"
     ],
     "ids": [
+      "admin-prerequisite",
       "chk",
+      "creating-a-python-kernel",
       "footer",
-      "scrollIndicator"
+      "scrollIndicator",
+      "user-instructions"
     ]
   }
 }

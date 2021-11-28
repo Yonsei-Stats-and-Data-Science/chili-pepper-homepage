@@ -62,9 +62,9 @@ metaDataFormat= "yaml"
     url        = "http://110.165.19.170:8787"
 
   [[menu.main]]
-    identifier = "wiki"
-    name       = "Wiki"
-    url        = "404.html"
+    identifier = "posts"
+    name       = "Posts"
+    url        = "/posts/"
 
   [[menu.main]]
     identifier = "bkhomepage"
