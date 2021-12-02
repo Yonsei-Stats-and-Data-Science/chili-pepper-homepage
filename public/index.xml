@@ -1,51 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Habanero Yonsei Data Science Server</title>
-    <link>/</link>
-    <description>Recent posts from on Habanero Yonsei Data Science Server</description>
+    <title>Chili Pepper |</title>
+    <link>http://110.165.19.170:8999/</link>
+    <description>Recent content on Chili Pepper |</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>utf-8</language>
-    <lastBuildDate>Sun, 28 Nov 2021 22:24:04 +0900</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Nov 2021 22:24:04 +0900</lastBuildDate><atom:link href="http://110.165.19.170:8999/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Creating Your Custom Jupyter Kernel from a Virtual Environment</title>
-      <link>/post/configuring-jupyter-kernel/</link>
+      <link>http://110.165.19.170:8999/docs/configuring-jupyter-kernel/</link>
       <pubDate>Sun, 28 Nov 2021 22:24:04 +0900</pubDate>
       
-      <guid>/post/configuring-jupyter-kernel/</guid>
-      <description>&lt;h2 id=&#34;creating-a-python-kernel&#34;&gt;Creating a Python Kernel&lt;/h2&gt;
-&lt;h3 id=&#34;admin-prerequisite&#34;&gt;Admin Prerequisite&lt;/h3&gt;
-&lt;p&gt;Admin must enable &lt;code&gt;conda&lt;/code&gt; for all users by creating a symlink. This will let users create their own virtual environment by using the &lt;code&gt;conda create&lt;/code&gt; command.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ln -s /opt/conda/bin/conda /usr/local/bin/conda
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;user-instructions&#34;&gt;User Instructions&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;Users can launch a terminal session with either JupyterHub or RStudio or SSH connections. Launch a &lt;code&gt;bash&lt;/code&gt; session.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Users then can create a virtual environment in the following way. Note that specifying &lt;code&gt;ipykernel&lt;/code&gt; package will make the user easily create jupyter kernels from that environment. Also users can create virtual environments with various python versions(3.6 ~ 3.9). Activate the environment. If any warnings occur, read the warning and do the recommended procedure. Most of the time you will need to refresh your shell with &lt;code&gt;bash&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# create environemnt&lt;/span&gt;
-conda create -n NAME_OF_VIRTUAL_ENV python&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3.8 ipykernel
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# refresh your shell&lt;/span&gt;
-bash
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# activate environemnt&lt;/span&gt;
-conda activate NAME_OF_VIRTUAL_ENV
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;Install packages via &lt;code&gt;pip&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# directly&lt;/span&gt;
-pip install PACKAGE_NAME
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# requirements.txt&lt;/span&gt;
-pip install -r YOUR_REQUIREMENTS.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;Add the virtual environment as a kernel. This will be only available to each user.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;python -m ipykernel install --user --name NAME_OF_VIRTUAL_ENV --display-name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[displayKenrelName]&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>http://110.165.19.170:8999/docs/configuring-jupyter-kernel/</guid>
+      <description>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+ln -s /opt/conda/bin/conda /usr/local/bin/conda User Instructions  Users can launch a terminal session with either JupyterHub or RStudio or SSH connections. Launch a bash session.  bash Users then can create a virtual environment in the following way. Note that specifying ipykernel package will make the user easily create jupyter kernels from that environment.</description>
+    </item>
+    
+    <item>
+      <title>Creating Your Custom Jupyter Kernel from a Virtual Environment</title>
+      <link>http://110.165.19.170:8999/post/configuring-jupyter-kernel/</link>
+      <pubDate>Sun, 28 Nov 2021 22:24:04 +0900</pubDate>
+      
+      <guid>http://110.165.19.170:8999/post/configuring-jupyter-kernel/</guid>
+      <description>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+ln -s /opt/conda/bin/conda /usr/local/bin/conda User Instructions  Users can launch a terminal session with either JupyterHub or RStudio or SSH connections. Launch a bash session.  bash Users then can create a virtual environment in the following way. Note that specifying ipykernel package will make the user easily create jupyter kernels from that environment.</description>
     </item>
     
   </channel>
