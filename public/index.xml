@@ -23,7 +23,7 @@ ln -s /opt/conda/bin/conda /usr/local/bin/conda User Instructions  Users can lau
       
       <guid>http://110.165.19.170:8999/post/configuring-jupyter-kernel/</guid>
       <description>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
-ln -s /opt/conda/bin/conda /usr/local/bin/conda User Instructions  Users can launch a terminal session with either JupyterHub or RStudio or SSH connections. Launch a bash session.  bash Users then can create a virtual environment in the following way. Note that specifying ipykernel package will make the user easily create jupyter kernels from that environment.</description>
+ln -s /opt/conda/bin/conda /usr/local/bin/conda User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  bash Users then can create a virtual environment in the following way. Note that specifying ipykernel package will make the user easily create jupyter kernels from that environment.</description>
     </item>
     
   </channel>
