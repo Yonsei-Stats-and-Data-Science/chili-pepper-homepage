@@ -52,7 +52,7 @@ params:
     profileMode:
         enabled: true
         title: "Chili Pepper<br><h3>HPC Data Science Cluster</h3>
-<br><p>Chili Pepper is a High Performance Computing(HPC) cluster configured to provide a web-based Jupyter/RStudio for Big data scientific computing. Currently only the single server instance, Habanero, is available at this time.<br>Habanero is a 32 Core, High RAM(256GB) machine running on the Naver Cloud Platform. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>"
+<br><p>Chili Pepper is a High Performance Computing(HPC) cluster configured to provide a web-based Jupyter for Big data scientific computing. Currently only the single server instance, Habanero, is available at this time.<br>Habanero is a 32 Core, High RAM(256GB) machine running on the Naver Cloud Platform. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>"
         imageUrl: images/logo.svg
         imageTitle: "BK logo"
         imageWidth: 500
@@ -60,8 +60,6 @@ params:
         buttons:
             - name: Jupyter
               url: "http://110.165.19.170:8000/"
-            - name: RStudio
-              url: "http://110.165.19.170:8787/"
             - name: BK21 Homepage
               url: "http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment"
 
