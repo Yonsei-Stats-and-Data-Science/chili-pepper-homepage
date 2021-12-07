@@ -16,9 +16,7 @@ ln -s /opt/conda/bin/conda /usr/local/bin/conda
 
 ### User Instructions
 
-#### Python
-
-1. Users can launch a terminal session with either JupyterHub or SSH connections. Launch a `bash` session.
+1. Users can launch a terminal session with either JupyterHub or RStudio or SSH connections. Launch a `bash` session.
 
 ```bash
 bash
@@ -52,39 +50,3 @@ pip install -r YOUR_REQUIREMENTS.txt
 ```bash
 python -m ipykernel install --user --name NAME_OF_VIRTUAL_ENV --display-name "[displayKenrelName]"
 ```
-
-#### R
-
-1. Launch a `bash` session via JupyterHub or SSH.
-
-```bash
-bash
-```
-
-2.  Users then can create a virtual environment in the following way. 
-
-```bash
-# create environemnt
-conda create -n NAME_OF_VIRTUAL_ENV r-essentials r-base r-irkernel
-
-# refresh your shell
-bash
-
-# activate environemnt
-conda activate NAME_OF_VIRTUAL_ENV
-```
-
-3.  Install packages via `install.packages()`.
-
-```bash
-# directly
-Rscript -e 'install.packages(c("dplyr"))'
-```
-
-4.  Add the virtual environment as a kernel. This will be only available to each user.
-
-```bash
-Rscript -e "IRkernel::installspec(name='myRkernel', displayname='My R Kernel')"
-```
-
-
