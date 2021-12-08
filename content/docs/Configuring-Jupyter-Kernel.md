@@ -88,3 +88,18 @@ Rscript -e "IRkernel::installspec(name='myRkernel', displayname='My R Kernel')"
 ```
 
 
+#### Removing Kernels
+
+To remove kernels use the `jupyter` command in terminal.
+
+View your current kernel list with the following command from a bash terminal.
+```bash
+jupyter kernelspec list
+```
+
+Remove kernel with the following command.
+```bash
+jupyter kernelspec remove KERNELNAME
+```
+
+
