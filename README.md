@@ -1,4 +1,5 @@
 # landing-page
-Landing page for cloud servers
 
-http://110.165.19.170:8999
+Static site landing page built with Hugo.
+
+Use webserver(Nginx) to host `./public`. 
