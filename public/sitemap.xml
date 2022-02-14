@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://110.165.19.170:8999/</loc>
+    <loc>https://statstatstat.ga/</loc>
     <lastmod>2021-11-28T22:24:04+09:00</lastmod>
   </url><url>
-    <loc>http://110.165.19.170:8999/docs/configuring-jupyter-kernel/</loc>
+    <loc>https://statstatstat.ga/docs/configuring-jupyter-kernel/</loc>
     <lastmod>2021-11-28T22:24:04+09:00</lastmod>
   </url><url>
-    <loc>http://110.165.19.170:8999/docs/</loc>
+    <loc>https://statstatstat.ga/docs/</loc>
     <lastmod>2021-11-28T22:24:04+09:00</lastmod>
   </url><url>
-    <loc>http://110.165.19.170:8999/categories/</loc>
+    <loc>https://statstatstat.ga/categories/</loc>
   </url><url>
-    <loc>http://110.165.19.170:8999/series/</loc>
+    <loc>https://statstatstat.ga/series/</loc>
   </url><url>
-    <loc>http://110.165.19.170:8999/tags/</loc>
+    <loc>https://statstatstat.ga/tags/</loc>
   </url>
 </urlset>

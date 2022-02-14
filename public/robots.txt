@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: http://110.165.19.170:8999/sitemap.xml
+Sitemap: https://statstatstat.ga/sitemap.xml

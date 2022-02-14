@@ -1,7 +1,7 @@
-baseURL: "http://110.165.19.170:8999/"
+baseURL: "https://statstatstat.ga"
 title: Chili Pepper |
 paginate: 5
-theme: hugo-PaperMod
+theme: PaperMod
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
@@ -52,14 +52,18 @@ params:
     profileMode:
         enabled: true
         title: "Chili Pepper<br><h3>HPC Data Science Cluster</h3>
-<br><p>Chili Pepper is a High Performance Computing(HPC) cluster configured to provide a web-based Jupyter for Big data scientific computing. Currently only the single server instance, Habanero, is available at this time.<br>Habanero is a 32 Core, High RAM(256GB) machine running on the Naver Cloud Platform. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>"
+<br><p>Chili Pepper is a High Performance Computing(HPC) cluster configured to run heavy data science workloads via SLURM. Administrators are currently working on a web-based Jupyter sessions. Currently 2 compute nodes are available. The CPU dedicated server is equipped with 32 physical cores and 128GB of RAM. The GPU node has 16 physical cores and 80GB of RAM with 2 Tesla T4 GPUs with 16GB of vRAM each. The cluster is hosted via Naver Cloud Platform and configured by student administrators. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>"
         imageUrl: images/logo.svg
         imageTitle: "BK logo"
         imageWidth: 500
         # imageHeight: 250
         buttons:
+            - name: SLURM Job Configurator
+              url: "tools/job-configurator.html"
+
             - name: Jupyter
-              url: "http://110.165.19.170:8000/"
+              url: "404.html"
+
             - name: BK21 Homepage
               url: "http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment"
 
