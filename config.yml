@@ -78,6 +78,8 @@ params:
     socialIcons:
         - name: github
           url: "https://github.com/orgs/Yonsei-Stats-and-Data-Science/"
+        - name: slack
+          url: "https://yonseidatasci-jnw9112.slack.com"
         - name: email
           url: "mailto:dongook.son@yonsei.ac.kr"
 
