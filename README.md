@@ -10,6 +10,12 @@ Use webserver(Nginx) to host `./public`.
 
 2. Install extended version of `hugo` https://gohugo.io/getting-started/installing/.
 
+3. Clone from repository with `--recursive` flag to pull theme.
+
+```bash
+git clone --recursive git@github.com:Yonsei-Stats-and-Data-Science/landing-page.git
+```
+
 ## Usage
 
 The following command will create the static site based on `config.yml` and files in subdirectories.
