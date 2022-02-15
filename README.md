@@ -2,7 +2,15 @@
 
 Static site landing page built with Hugo.
 
-Use webserver(Nginx) to host `./public`. 
+Use webserver(Nginx) to host the `deploy` branch of `landing-page` repository. The compilation of static files are done remotely via GitHub Actions.
+
+Go to the `/mnt/nas/public` directory and download the `deploy` branch likewise.
+
+```bash
+cd /mnt/nas/public
+git clone git@github.com:Yonsei-Stats-and-Data-Science/landing-page.git -b deploy
+```
+
 
 ## Installation
 
