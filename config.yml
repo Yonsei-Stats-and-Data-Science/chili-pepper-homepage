@@ -61,8 +61,8 @@ params:
             - name: SLURM Job Configurator
               url: "tools/job-configurator.html"
 
-            - name: Jupyter
-              url: "404.html"
+            - name: Docs
+              url: "docs/"
 
             - name: BK21 Homepage
               url: "http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment"
