@@ -1,3 +1,0 @@
-User-agent: *
-Disallow:
-Sitemap: https://hpc.stat.yonsei.ac.kr/sitemap.xml
