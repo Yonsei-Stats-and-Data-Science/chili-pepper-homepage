@@ -1,4 +1,23 @@
-# landing-page
+<br/>
+<p align="center">
+    <a href="https://hpc.stat.yonsei.ac.kr/" target="_blank">
+        <img width="50%" src="https://hpc.stat.yonsei.ac.kr/images/logo.svg" alt="Yonsei BK logo">
+    </a>
+</p>
+
+<br/>
+<p align="center">
+</p>
+<br/>
+
+<p align="center">
+    <a href="https://hpc.stat.yonsei.ac.kr">
+        <img width="20%" src="https://hpc.stat.yonsei.ac.kr/images/chili.png" alt="Chili Pepper Cluster Logo">
+    </a>
+</p>
+<br/>
+
+# [Chili Pepper Landing Page](https://hpc.stat.yonsei.ac.kr)
 
 Static site landing page built with Hugo.
 
