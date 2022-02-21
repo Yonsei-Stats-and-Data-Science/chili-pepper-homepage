@@ -1,5 +1,6 @@
 ---
 title: "Creating Your Custom Jupyter Kernel from a Virtual Environment"
+author: "Dongook Son"
 date: 2021-11-28T22:24:04+09:00
 draft: False
 ---
