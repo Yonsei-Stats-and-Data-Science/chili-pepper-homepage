@@ -1,7 +1,7 @@
 baseURL: "https://hpc.stat.yonsei.ac.kr"
 title: Chili Pepper
 paginate: 5
-theme: PaperMod
+theme: YonseiPaperMod
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
