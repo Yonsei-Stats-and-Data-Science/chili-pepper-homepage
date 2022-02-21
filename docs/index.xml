@@ -5,7 +5,17 @@
     <link>https://hpc.stat.yonsei.ac.kr/docs/</link>
     <description>Recent content in Docs on Chili Pepper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Nov 2021 22:24:04 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Feb 2022 12:12:53 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How do I use the Chili Pepper Cluster?</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</link>
+      <pubDate>Mon, 21 Feb 2022 12:12:53 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</guid>
+      <description>Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/.</description>
+    </item>
+    
     <item>
       <title>Creating Your Custom Jupyter Kernel from a Virtual Environment</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/</link>

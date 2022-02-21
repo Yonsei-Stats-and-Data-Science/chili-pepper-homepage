@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How do I use the Chili Pepper Cluster? | Chili Pepper</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/.">
+<meta name="author" content="Dongook Son">
+<link rel="canonical" href="https://hpc.stat.yonsei.ac.kr/docs/using-slurm/" />
+<meta name="google-site-verification" content="XYZabc" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hpc.stat.yonsei.ac.kr/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hpc.stat.yonsei.ac.kr/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hpc.stat.yonsei.ac.kr/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hpc.stat.yonsei.ac.kr/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hpc.stat.yonsei.ac.kr/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.91.2" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="How do I use the Chili Pepper Cluster?" />
+<meta property="og:description" content="Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hpc.stat.yonsei.ac.kr/docs/using-slurm/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2022-02-21T12:12:53&#43;09:00" />
+<meta property="article:modified_time" content="2022-02-21T12:12:53&#43;09:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How do I use the Chili Pepper Cluster?"/>
+<meta name="twitter:description" content="Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Docs",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "How do I use the Chili Pepper Cluster?",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/using-slurm/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How do I use the Chili Pepper Cluster?",
+  "name": "How do I use the Chili Pepper Cluster?",
+  "description": "Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q\u0026amp;A channel in the Slack Group.\nStep 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/.",
+  "keywords": [
+    
+  ],
+  "articleBody": "Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q\u0026A channel in the Slack Group.\nStep 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/. For example, the home directory for the user dummyuser will be /mnt/nas/users/dummyuser/. The home directory is the recommended directory for users to store scripts, data and configuration files for using the Chili Pepper cluster.\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  # with the tree command the home directory will typically look like this /mnt/nas/users/dummyuser/ ├── .bash_history ├── .bash_logout ├── .bashrc ├── .conda ├── .config ├── GettingStarted.md ├── .gnupg ├── .ipynb_checkpoints ├── .ipython ├── .jupyter ├── .local ├── logs ├── .npm ├── .profile ├── .python_history ├── some_script.sh ├── .ssh └── .viminfo   Step 2 - Data Transfer With cluster access information(SSH) provided by the administrator, you can send and recieve files from and to the cluster with scp. The dummyuser can send various local files to the cluster in the following fashion. Note that for security purposes the default port for SSH is not 22. The administrator will inform you of this information upon providing access information to the cluster.\nSending a local file(some_file.txt) to the remote home directory 1  scp some_file.txt dummyuser@hpc.stat.yonsei.ac.kr:~/   Sending a local directory(some_files/) to the remote home directory 1 2  scp -r some_files dummyuser@hpc.stat.yonsei.ac.kr:~/ # /mnt/nas/users/dummyuser/some_files/ will be created   Recieving a remote file(some_file.txt) in the home directory to the current local directory 1  scp dummyuser@hpc.stat.yonsei.ac.kr:~/some_file.txt   Recieving a remote directory(/mnt/nas/users/dummyuser/some_files) in the home directory to the current local directory 1  scp -r dummyuser@hpc.stat.yonsei.ac.kr:~/some_files ./   Other various options for scp exist. More information on this topic can be found in this article. Also users can use GitHub or GitLab to upload and download source code to the cluster. This will be handled in a seperate article.\nStep 3 - Writing a SBATCH script for SLURM. From the homepage the SLURM batch scripting tool is available. Let’s look at the sample script(/mnt/nas/users/dummyuser/test_script.sh) created by using the tool. The first-half(line 1 ~ 11) of the script consists of directives and parameters for the slurm job. Each user can set the number of nodes, the time for the job to occupy the number of nodes, the location for the output logfile. There are more options available for submitting a job. Additional resources for SBATCH arguments can be found here.\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  #!/bin/bash # The interpreter used to execute the script #“#SBATCH” directives that convey submission options: #SBATCH --job-name=conda-env-create #SBATCH --nodes=1 #SBATCH --time=15:00 #SBATCH --account=dummyuser #SBATCH --partition=all #SBATCH --output=/mnt/nas/users/dummyuser/conda.log # The application(s) to execute along with its input arguments and options: ENV_NAME=myenv ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME conda env remove --prefix $ENV_PATH conda create -y --prefix $ENV_PATH python=3.8 pandas numpy scikit-learn source activate $ENV_PATH \u0026\u0026 pip freeze   From line 15 to the end of the script are actual bash commands for the node to execute.\n Line 15~16 creates two local variables(ENV_NAME and ENV_PATH). In the above script a conda environment named myenv will be created under /mnt/nas/users/dummyuser/.conda/envs/myenv. Line 18 will remove the environment in ENV_PATH if it is present. Line 19 will create a conda environment in ENV_PATH thanks to the -y(--yes) flag. This environment will have a Python interpreter of version 3.8 along with listed packages(pandas, numpy and scikit-learn). Line 20 will activate the conda environment in ENV_PATH and then sequentially run a pip freeze to the stdout. Note that the stdout is saved in the log file from line 11(/mnt/nas/users/dummyuser/conda.log).  To actually run a data science job, the only thing you have to do is to change the required packages for your environment, modify the pip freeze into python your_script_to_run.py.\nStep 4 - Submitting the script The submission of the script from the above is very simple.\n1  sbatch test_script.sh   You can check the current job queue with the following command.\n1  squeue   When you want to cancel the job you have submitted, get the JOBID from the squeue command and use the scancel command in the following fashion. Suppose the JOBID is 23.\n1  scancel 23   Note that ordinary users cannot cancel jobs that belong to other users, but the administrator can.\n",
+  "wordCount" : "753",
+  "inLanguage": "en",
+  "datePublished": "2022-02-21T12:12:53+09:00",
+  "dateModified": "2022-02-21T12:12:53+09:00",
+  "author":{
+    "@type": "Person",
+    "name": "Dongook Son"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hpc.stat.yonsei.ac.kr/docs/using-slurm/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chili Pepper",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hpc.stat.yonsei.ac.kr/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hpc.stat.yonsei.ac.kr" accesskey="h" title="Chili Pepper (Alt + H)">Chili Pepper</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hpc.stat.yonsei.ac.kr/docs/" title="Docs">
+                    <span>Docs</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hpc.stat.yonsei.ac.kr">Home</a>&nbsp;»&nbsp;<a href="https://hpc.stat.yonsei.ac.kr/docs/">Docs</a></div>
+    <h1 class="post-title">
+      How do I use the Chili Pepper Cluster?
+    </h1>
+    <div class="post-meta"><span title='2022-02-21 12:12:53 +0900 +0900'>February 21, 2022</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Dongook Son
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#intro" aria-label="Intro">Intro</a></li>
+                <li>
+                    <a href="#step-1---understanding-the-cluster-structure" aria-label="Step 1 - Understanding the Cluster Structure">Step 1 - Understanding the Cluster Structure</a></li>
+                <li>
+                    <a href="#step-2---data-transfer" aria-label="Step 2 - Data Transfer">Step 2 - Data Transfer</a><ul>
+                        
+                <li>
+                    <a href="#sending-a-local-filesome_filetxt-to-the-remote-home-directory" aria-label="Sending a local file(some_file.txt) to the remote home directory">Sending a local file(<code>some_file.txt</code>) to the remote home directory</a></li>
+                <li>
+                    <a href="#sending-a-local-directorysome_files-to-the-remote-home-directory" aria-label="Sending a local directory(some_files/) to the remote home directory">Sending a local directory(<code>some_files/</code>) to the remote home directory</a></li>
+                <li>
+                    <a href="#recieving-a-remote-filesome_filetxt-in-the-home-directory-to-the-current-local-directory" aria-label="Recieving a remote file(some_file.txt) in the home directory to the current local directory">Recieving a remote file(<code>some_file.txt</code>) in the home directory to the current local directory</a></li>
+                <li>
+                    <a href="#recieving-a-remote-directorymntnasusersdummyusersome_files-in-the-home-directory-to-the-current-local-directory" aria-label="Recieving a remote directory(/mnt/nas/users/dummyuser/some_files) in the home directory to the current local directory">Recieving a remote directory(<code>/mnt/nas/users/dummyuser/some_files</code>) in the home directory to the current local directory</a></li></ul>
+                </li>
+                <li>
+                    <a href="#step-3---writing-a-sbatch-script-for-slurm" aria-label="Step 3 - Writing a SBATCH script for SLURM.">Step 3 - Writing a <code>SBATCH</code> script for SLURM.</a></li>
+                <li>
+                    <a href="#step-4---submitting-the-script" aria-label="Step 4 - Submitting the script">Step 4 - Submitting the script</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="intro">Intro<a hidden class="anchor" aria-hidden="true" href="#intro">#</a></h2>
+<p>This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via <a href="mailto:jm.moon@yonsei.ac.kr">email</a> or use the Q&amp;A channel in the <a href="https://yonseidatasci-jnw9112.slack.com">Slack Group</a>.</p>
+<h2 id="step-1---understanding-the-cluster-structure">Step 1 - Understanding the Cluster Structure<a hidden class="anchor" aria-hidden="true" href="#step-1---understanding-the-cluster-structure">#</a></h2>
+<p>Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is <code>/mnt/nas/users/</code>. For example, the home directory for the user <code>dummyuser</code> will be <code>/mnt/nas/users/dummyuser/</code>. The home directory is the recommended directory for users to store scripts, data and configuration files for using the Chili Pepper cluster.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span class="lnt" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span class="lnt" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span class="lnt" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span><span class="lnt" id="12"><a style="outline: none; text-decoration:none; color:inherit" href="#12">12</a>
+</span><span class="lnt" id="13"><a style="outline: none; text-decoration:none; color:inherit" href="#13">13</a>
+</span><span class="lnt" id="14"><a style="outline: none; text-decoration:none; color:inherit" href="#14">14</a>
+</span><span class="lnt" id="15"><a style="outline: none; text-decoration:none; color:inherit" href="#15">15</a>
+</span><span class="lnt" id="16"><a style="outline: none; text-decoration:none; color:inherit" href="#16">16</a>
+</span><span class="lnt" id="17"><a style="outline: none; text-decoration:none; color:inherit" href="#17">17</a>
+</span><span class="lnt" id="18"><a style="outline: none; text-decoration:none; color:inherit" href="#18">18</a>
+</span><span class="lnt" id="19"><a style="outline: none; text-decoration:none; color:inherit" href="#19">19</a>
+</span><span class="lnt" id="20"><a style="outline: none; text-decoration:none; color:inherit" href="#20">20</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"># with the tree command the home directory will typically look like this
+/mnt/nas/users/dummyuser/
+├── .bash_history
+├── .bash_logout
+├── .bashrc
+├── .conda
+├── .config
+├── GettingStarted.md
+├── .gnupg
+├── .ipynb_checkpoints
+├── .ipython
+├── .jupyter
+├── .local
+├── logs
+├── .npm
+├── .profile
+├── .python_history
+├── some_script.sh
+├── .ssh
+└── .viminfo
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-2---data-transfer">Step 2 - Data Transfer<a hidden class="anchor" aria-hidden="true" href="#step-2---data-transfer">#</a></h2>
+<p>With cluster access information(<code>SSH</code>) provided by the administrator, you can send and recieve files from and to the cluster with <code>scp</code>. The <code>dummyuser</code> can send various local files to the cluster in the following fashion. Note that for security purposes the default port for <code>SSH</code> is not <code>22</code>. The administrator will inform you of this information upon providing access information to the cluster.</p>
+<h3 id="sending-a-local-filesome_filetxt-to-the-remote-home-directory">Sending a local file(<code>some_file.txt</code>) to the remote home directory<a hidden class="anchor" aria-hidden="true" href="#sending-a-local-filesome_filetxt-to-the-remote-home-directory">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp some_file.txt dummyuser@hpc.stat.yonsei.ac.kr:~/
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="sending-a-local-directorysome_files-to-the-remote-home-directory">Sending a local directory(<code>some_files/</code>) to the remote home directory<a hidden class="anchor" aria-hidden="true" href="#sending-a-local-directorysome_files-to-the-remote-home-directory">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp -r some_files dummyuser@hpc.stat.yonsei.ac.kr:~/
+<span class="c1"># /mnt/nas/users/dummyuser/some_files/ will be created</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="recieving-a-remote-filesome_filetxt-in-the-home-directory-to-the-current-local-directory">Recieving a remote file(<code>some_file.txt</code>) in the home directory to the current local directory<a hidden class="anchor" aria-hidden="true" href="#recieving-a-remote-filesome_filetxt-in-the-home-directory-to-the-current-local-directory">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp dummyuser@hpc.stat.yonsei.ac.kr:~/some_file.txt
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="recieving-a-remote-directorymntnasusersdummyusersome_files-in-the-home-directory-to-the-current-local-directory">Recieving a remote directory(<code>/mnt/nas/users/dummyuser/some_files</code>) in the home directory to the current local directory<a hidden class="anchor" aria-hidden="true" href="#recieving-a-remote-directorymntnasusersdummyusersome_files-in-the-home-directory-to-the-current-local-directory">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp -r dummyuser@hpc.stat.yonsei.ac.kr:~/some_files ./
+</code></pre></td></tr></table>
+</div>
+</div><p>Other various options for <code>scp</code> exist. More information on this topic can be found in this <a href="https://www.pcwdld.com/what-is-scp#wbounce-modal">article</a>. Also users can use GitHub or GitLab to upload and download source code to the cluster. This will be handled in a seperate article.</p>
+<h2 id="step-3---writing-a-sbatch-script-for-slurm">Step 3 - Writing a <code>SBATCH</code> script for SLURM.<a hidden class="anchor" aria-hidden="true" href="#step-3---writing-a-sbatch-script-for-slurm">#</a></h2>
+<p>From the homepage the <a href="https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html">SLURM batch scripting tool</a> is available. Let&rsquo;s look at the sample script(<code>/mnt/nas/users/dummyuser/test_script.sh</code>) created by using the tool. The first-half(line 1 ~ 11) of the script consists of directives and parameters for the <code>slurm</code> job. Each user can set the number of nodes, the time for the job to occupy the number of nodes, the location for the output logfile. There are more options available for submitting a job. Additional resources for <code>SBATCH</code> arguments can be found <a href="https://slurm.schedmd.com/sbatch.html">here</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span class="lnt" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span class="lnt" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span class="lnt" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span><span class="lnt" id="12"><a style="outline: none; text-decoration:none; color:inherit" href="#12">12</a>
+</span><span class="lnt" id="13"><a style="outline: none; text-decoration:none; color:inherit" href="#13">13</a>
+</span><span class="lnt" id="14"><a style="outline: none; text-decoration:none; color:inherit" href="#14">14</a>
+</span><span class="lnt" id="15"><a style="outline: none; text-decoration:none; color:inherit" href="#15">15</a>
+</span><span class="lnt" id="16"><a style="outline: none; text-decoration:none; color:inherit" href="#16">16</a>
+</span><span class="lnt" id="17"><a style="outline: none; text-decoration:none; color:inherit" href="#17">17</a>
+</span><span class="lnt" id="18"><a style="outline: none; text-decoration:none; color:inherit" href="#18">18</a>
+</span><span class="lnt" id="19"><a style="outline: none; text-decoration:none; color:inherit" href="#19">19</a>
+</span><span class="lnt" id="20"><a style="outline: none; text-decoration:none; color:inherit" href="#20">20</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="c1"># The interpreter used to execute the script</span>
+
+<span class="c1">#“#SBATCH” directives that convey submission options:</span>
+
+<span class="c1">#SBATCH --job-name=conda-env-create</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --time=15:00</span>
+<span class="c1">#SBATCH --account=dummyuser</span>
+<span class="c1">#SBATCH --partition=all</span>
+<span class="c1">#SBATCH --output=/mnt/nas/users/dummyuser/conda.log</span>
+
+<span class="c1"># The application(s) to execute along with its input arguments and options:</span>
+
+<span class="nv">ENV_NAME</span><span class="o">=</span>myenv
+<span class="nv">ENV_PATH</span><span class="o">=</span>/mnt/nas/users/<span class="k">$(</span>whoami<span class="k">)</span>/.conda/envs/<span class="nv">$ENV_NAME</span>
+
+conda env remove --prefix <span class="nv">$ENV_PATH</span>
+conda create -y --prefix <span class="nv">$ENV_PATH</span> <span class="nv">python</span><span class="o">=</span>3.8 pandas numpy scikit-learn
+<span class="nb">source</span> activate <span class="nv">$ENV_PATH</span> <span class="o">&amp;&amp;</span> pip freeze
+</code></pre></td></tr></table>
+</div>
+</div><p>From line 15 to the end of the script are actual bash commands for the node to execute.</p>
+<ul>
+<li>Line 15~16  creates two local variables(<code>ENV_NAME</code> and <code>ENV_PATH</code>). In the above script a conda environment named <code>myenv</code> will be created under <code>/mnt/nas/users/dummyuser/.conda/envs/myenv</code>.</li>
+<li>Line 18 will remove the environment in <code>ENV_PATH</code> if it is present.</li>
+<li>Line 19 will create a conda environment in <code>ENV_PATH</code> thanks to the <code>-y(--yes)</code> flag. This environment will have a Python interpreter of version <code>3.8</code> along with listed packages(<code>pandas, numpy and scikit-learn</code>).</li>
+<li>Line 20 will activate the conda environment in <code>ENV_PATH</code> and then sequentially run a <code>pip freeze</code> to the <code>stdout</code>. Note that the <code>stdout</code> is saved in the log file from line 11(<code>/mnt/nas/users/dummyuser/conda.log</code>).</li>
+</ul>
+<p>To actually run a data science job, the only thing you have to do is to change the required packages for your environment, modify the <code>pip freeze</code> into <code>python your_script_to_run.py</code>.</p>
+<h2 id="step-4---submitting-the-script">Step 4 - Submitting the script<a hidden class="anchor" aria-hidden="true" href="#step-4---submitting-the-script">#</a></h2>
+<p>The submission of the script from the above is very simple.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sbatch test_script.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>You can check the current job queue with the following command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">squeue
+</code></pre></td></tr></table>
+</div>
+</div><p>When you want to cancel the job you have submitted, get the <code>JOBID</code> from the <code>squeue</code> command and use the <code>scancel</code> command in the following fashion. Suppose the <code>JOBID</code> is <code>23</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scancel <span class="m">23</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Note that ordinary users cannot cancel jobs that belong to other users, but the administrator can.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Creating Your Custom Jupyter Kernel from a Virtual Environment</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <p align="center">
+        <a href="http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment">
+        <img width='70%' src='https://hpc.stat.yonsei.ac.kr/images/logo.svg' alt='Yonsei BK logo'>
+        </a>
+        <br>
+    </p>
+    <span>&copy; 2022 <a href="https://hpc.stat.yonsei.ac.kr">Chili Pepper</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
