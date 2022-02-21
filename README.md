@@ -27,8 +27,10 @@ Go to the `/mnt/nas/public` directory and download the `deploy` branch likewise.
 
 ```bash
 cd /mnt/nas/public
-git clone git@github.com:Yonsei-Stats-and-Data-Science/landing-page.git -b deploy
+git clone git@github.com:Yonsei-Stats-and-Data-Science/chili-pepper-homepage.git landing-page -b deploy
 ```
+
+For updates, go to `/mnt/nas/public/landing-page` and do a `git pull`.
 
 
 ## Installation
