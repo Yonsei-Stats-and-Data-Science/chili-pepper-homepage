@@ -13,8 +13,6 @@ jobs:
     steps:
     - name: Checkout Repository and Submodules
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
         
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -22,10 +20,10 @@ jobs:
         hugo-version: '0.91.2'
         extended: true
 
-    - name: Build
+    - name: Build Static Files
       run: hugo
 
-    - name: Deploy
+    - name: Deploy To GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/main' }}
       with:
