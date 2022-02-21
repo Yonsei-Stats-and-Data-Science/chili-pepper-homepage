@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Creating Your Custom Jupyter Kernel from a Virtual Environment | Chili Pepper</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way.">
+<meta name="author" content="Dongook Son">
+<link rel="canonical" href="https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/" />
+<meta name="google-site-verification" content="XYZabc" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hpc.stat.yonsei.ac.kr/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hpc.stat.yonsei.ac.kr/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hpc.stat.yonsei.ac.kr/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hpc.stat.yonsei.ac.kr/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hpc.stat.yonsei.ac.kr/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.91.2" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Creating Your Custom Jupyter Kernel from a Virtual Environment" />
+<meta property="og:description" content="Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2021-11-28T22:24:04&#43;09:00" />
+<meta property="article:modified_time" content="2021-11-28T22:24:04&#43;09:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Creating Your Custom Jupyter Kernel from a Virtual Environment"/>
+<meta name="twitter:description" content="Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Docs",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Creating Your Custom Jupyter Kernel from a Virtual Environment",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Creating Your Custom Jupyter Kernel from a Virtual Environment",
+  "name": "Creating Your Custom Jupyter Kernel from a Virtual Environment",
+  "description": "Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.\n1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way.",
+  "keywords": [
+    
+  ],
+  "articleBody": "Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.\n1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way. Note that specifying ipykernel package will make the user easily create jupyter kernels from that environment. Also users can create virtual environments with various python versions(3.6 ~ 3.9). Activate the environment. If any warnings occur, read the warning and do the recommended procedure. Most of the time you will need to refresh your shell with bash.  1 2 3 4 5 6 7 8  # create environemnt conda create -n NAME_OF_VIRTUAL_ENV python=3.8 ipykernel # refresh your shell bash # activate environemnt conda activate NAME_OF_VIRTUAL_ENV   Install packages via pip.  1 2 3 4 5  # directly pip install PACKAGE_NAME # requirements.txt pip install -r YOUR_REQUIREMENTS.txt   Add the virtual environment as a kernel. This will be only available to each user.  1  python -m ipykernel install --user --name NAME_OF_VIRTUAL_ENV --display-name \"[displayKenrelName]\"   R  Launch a bash session via JupyterHub or SSH.  1  bash   Users then can create a virtual environment in the following way.  1 2 3 4 5 6 7 8  # create environemnt conda create -n NAME_OF_VIRTUAL_ENV r-essentials r-base r-irkernel # refresh your shell bash # activate environemnt conda activate NAME_OF_VIRTUAL_ENV   Install packages via install.packages().  1 2  # directly Rscript -e 'install.packages(c(\"dplyr\"))'   Add the virtual environment as a kernel. This will be only available to each user.  1  Rscript -e \"IRkernel::installspec(name='myRkernel', displayname='My R Kernel')\"   Removing Kernels To remove kernels use the jupyter command in terminal.\nView your current kernel list with the following command from a bash terminal.\n1  jupyter kernelspec list   Remove kernel with the following command.\n1  jupyter kernelspec remove KERNELNAME   ",
+  "wordCount" : "321",
+  "inLanguage": "en",
+  "datePublished": "2021-11-28T22:24:04+09:00",
+  "dateModified": "2021-11-28T22:24:04+09:00",
+  "author":{
+    "@type": "Person",
+    "name": "Dongook Son"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chili Pepper",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hpc.stat.yonsei.ac.kr/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hpc.stat.yonsei.ac.kr" accesskey="h" title="Chili Pepper (Alt + H)">Chili Pepper</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hpc.stat.yonsei.ac.kr/docs/" title="Docs">
+                    <span>Docs</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hpc.stat.yonsei.ac.kr">Home</a>&nbsp;»&nbsp;<a href="https://hpc.stat.yonsei.ac.kr/docs/">Docs</a></div>
+    <h1 class="post-title">
+      Creating Your Custom Jupyter Kernel from a Virtual Environment
+    </h1>
+    <div class="post-meta"><span title='2021-11-28 22:24:04 +0900 +0900'>November 28, 2021</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Dongook Son
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#creating-a-python-kernel" aria-label="Creating a Python Kernel">Creating a Python Kernel</a><ul>
+                        
+                <li>
+                    <a href="#admin-prerequisite" aria-label="Admin Prerequisite">Admin Prerequisite</a></li>
+                <li>
+                    <a href="#user-instructions" aria-label="User Instructions">User Instructions</a><ul>
+                        
+                <li>
+                    <a href="#python" aria-label="Python">Python</a></li>
+                <li>
+                    <a href="#r" aria-label="R">R</a></li>
+                <li>
+                    <a href="#removing-kernels" aria-label="Removing Kernels">Removing Kernels</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="creating-a-python-kernel">Creating a Python Kernel<a hidden class="anchor" aria-hidden="true" href="#creating-a-python-kernel">#</a></h2>
+<h3 id="admin-prerequisite">Admin Prerequisite<a hidden class="anchor" aria-hidden="true" href="#admin-prerequisite">#</a></h3>
+<p>Admin must enable <code>conda</code> for all users by creating a symlink. This will let users create their own virtual environment by using the <code>conda create</code> command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ln -s /opt/conda/bin/conda /usr/local/bin/conda
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="user-instructions">User Instructions<a hidden class="anchor" aria-hidden="true" href="#user-instructions">#</a></h3>
+<h4 id="python">Python<a hidden class="anchor" aria-hidden="true" href="#python">#</a></h4>
+<ol>
+<li>Users can launch a terminal session with either JupyterHub or SSH connections. Launch a <code>bash</code> session.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">bash
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>Users then can create a virtual environment in the following way. Note that specifying <code>ipykernel</code> package will make the user easily create jupyter kernels from that environment. Also users can create virtual environments with various python versions(3.6 ~ 3.9). Activate the environment. If any warnings occur, read the warning and do the recommended procedure. Most of the time you will need to refresh your shell with <code>bash</code>.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8">8</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># create environemnt</span>
+conda create -n NAME_OF_VIRTUAL_ENV <span class="nv">python</span><span class="o">=</span>3.8 ipykernel
+
+<span class="c1"># refresh your shell</span>
+bash
+
+<span class="c1"># activate environemnt</span>
+conda activate NAME_OF_VIRTUAL_ENV
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>Install packages via <code>pip</code>.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># directly</span>
+pip install PACKAGE_NAME
+
+<span class="c1"># requirements.txt</span>
+pip install -r YOUR_REQUIREMENTS.txt
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>Add the virtual environment as a kernel. This will be only available to each user.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python -m ipykernel install --user --name NAME_OF_VIRTUAL_ENV --display-name <span class="s2">&#34;[displayKenrelName]&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="r">R<a hidden class="anchor" aria-hidden="true" href="#r">#</a></h4>
+<ol>
+<li>Launch a <code>bash</code> session via JupyterHub or SSH.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">bash
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>Users then can create a virtual environment in the following way.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8">8</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># create environemnt</span>
+conda create -n NAME_OF_VIRTUAL_ENV r-essentials r-base r-irkernel
+
+<span class="c1"># refresh your shell</span>
+bash
+
+<span class="c1"># activate environemnt</span>
+conda activate NAME_OF_VIRTUAL_ENV
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>Install packages via <code>install.packages()</code>.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># directly</span>
+Rscript -e <span class="s1">&#39;install.packages(c(&#34;dplyr&#34;))&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>Add the virtual environment as a kernel. This will be only available to each user.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Rscript -e <span class="s2">&#34;IRkernel::installspec(name=&#39;myRkernel&#39;, displayname=&#39;My R Kernel&#39;)&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="removing-kernels">Removing Kernels<a hidden class="anchor" aria-hidden="true" href="#removing-kernels">#</a></h4>
+<p>To remove kernels use the <code>jupyter</code> command in terminal.</p>
+<p>View your current kernel list with the following command from a bash terminal.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">jupyter kernelspec list
+</code></pre></td></tr></table>
+</div>
+</div><p>Remove kernel with the following command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">jupyter kernelspec remove KERNELNAME
+</code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <p align="center">
+        <a href="http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment">
+        <img width='70%' src='https://hpc.stat.yonsei.ac.kr/images/logo.svg' alt='Yonsei BK logo'>
+        </a>
+        <br>
+    </p>
+    <span>&copy; 2022 <a href="https://hpc.stat.yonsei.ac.kr">Chili Pepper</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
