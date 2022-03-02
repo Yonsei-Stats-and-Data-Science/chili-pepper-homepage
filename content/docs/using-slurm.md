@@ -86,12 +86,12 @@ From the homepage the [SLURM batch scripting tool](https://hpc.stat.yonsei.ac.kr
 
 # The application(s) to execute along with its input arguments and options:
 
+CONDA_BIN_PATH=/opt/miniconda/bin
 ENV_NAME=myenv
 ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
-
-conda env remove --prefix $ENV_PATH
-conda create -y --prefix $ENV_PATH python=3.8 pandas numpy scikit-learn
-source activate $ENV_PATH && pip freeze
+$CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
+$CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8 pandas numpy scikit-learn
+source $CONDA_BIN_PATH/activate $ENV_PATH && pip freeze
 ```
 
 From line 15 to the end of the script are actual bash commands for the node to execute. 
