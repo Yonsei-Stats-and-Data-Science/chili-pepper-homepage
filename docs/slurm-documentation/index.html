@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>SLURM Documentation | Chili Pepper</title>
+<meta name="keywords" content="" />
+<meta name="description" content="1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &gt; Submitted batch job 210 # job_id: 210     squeue">
+<meta name="author" content="Gwanghee Kim">
+<link rel="canonical" href="https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/" />
+<meta name="google-site-verification" content="XYZabc" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hpc.stat.yonsei.ac.kr/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hpc.stat.yonsei.ac.kr/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hpc.stat.yonsei.ac.kr/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hpc.stat.yonsei.ac.kr/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hpc.stat.yonsei.ac.kr/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.91.2" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="SLURM Documentation" />
+<meta property="og:description" content="1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &gt; Submitted batch job 210 # job_id: 210     squeue" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2022-03-08T22:39:38&#43;09:00" />
+<meta property="article:modified_time" content="2022-03-08T22:39:38&#43;09:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SLURM Documentation"/>
+<meta name="twitter:description" content="1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &gt; Submitted batch job 210 # job_id: 210     squeue"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Docs",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "SLURM Documentation",
+      "item": "https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SLURM Documentation",
+  "name": "SLURM Documentation",
+  "description": "1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.\nIf you need more information, Please Visit https://slurm.schedmd.com/overview.html\n2. Basic SLURM Command   sbatch\n Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output \u0026gt; Submitted batch job 210 # job_id: 210     squeue",
+  "keywords": [
+    
+  ],
+  "articleBody": "1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.\nIf you need more information, Please Visit https://slurm.schedmd.com/overview.html\n2. Basic SLURM Command   sbatch\n Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output  Submitted batch job 210 # job_id: 210     squeue\n View the queue  1 2 3 4 5  $ squeue # output  JOBID PARTITION NAME USER ST TIME NODES NODELIST(REASON) 210 all test1 ghk R 0:29 1 cpu-compute     scancel\n Cancel a SLURM job  1  $ scancel [YOUR_JOBID]     sinfo\n See the state of system  1 2 3 4 5  $ sinfo # output  PARTITION AVAIL TIMELIMIT NODES STATE NODELIST all* up infinite 2 idle cpu-compute,gpu-compute     smap\n graphically view information about SLURM job    For more information about SLURM command, please visit website below.\n  SLURM Workload Manager\n  SLURM Command Cheatsheet\n  SLURM Reference Sheet(NeSI)\n  Submit your first job(NeSI)\n  3. How to make SLURM batch script? ‘Job submission file’ is the official SLURM name for the file you use to submit your program and ask for resources from the job scheduler. In this document, we will be using it ‘batch script’ or ‘script’.\nBasic example 1 2 3 4 5 6 7  #!/bin/bash #  # SBATCH --job-name=basic # SBATCH --mem=1gb # SBATCH --ntasks=1 # SBATCH --time=01:00 # SBATCH --output=/mnt/nas/users/testuser/basic.log   Asking 1 tasks, running for no more than 1 minutes limit memory less than 1gb. If any problem with your job, log file(in this case, ‘basic.log’) have information to help troubleshoot the issue.\nYou can also use gpu-nodes by using ‘—gres’ option. Here is an example.\n1 2 3 4 5 6 7 8 9 10 11  #!/bin/bash #  #SBATCH --job-name=basic #SBATCH --nodes=1 #SBATCH --gres=gpu:2 # max : 2 #SBATCH --time=01:00 #SBATCH --account=testuser #SBATCH --partition=all #SBATCH --output=/mnt/nas/users/testuser/torch.log source activate /opt/miniconda/envs/pytorch \u0026\u0026 python /mnt/nas/users/testuser/main.py   1 2 3 4 5 6 7 8 9 10  # main.py import torch print('is cuda avaiable? ', torch.cuda.is_available()) print('how many cuda devices? ',torch.cuda.device_count()) print('get first cuda device name = ', torch.cuda.get_device_name(0)) print('*** MEMORY INFO ***') t = torch.cuda.get_device_properties(0).total_memory print('total memory = ', t) print('total memory: ', t)   The job can then be submitted through sbatch\n1 2 3 4 5 6 7  $ sbatch basic.sh $ cat torch.log  is cuda avaiable? True  how many cuda devices? 2  get first cuda device name = Tesla T4  ***MEMORY INFO***  total memory = 16879583232   Beacuse we only have 2 gpu machine, this option can’t be set more than 2\nFor the convenience of users, we provide SLURM job configurator page in our website. Please visit SLURM job configurator and make your own SLURM batch script!\n",
+  "wordCount" : "461",
+  "inLanguage": "en",
+  "datePublished": "2022-03-08T22:39:38+09:00",
+  "dateModified": "2022-03-08T22:39:38+09:00",
+  "author":{
+    "@type": "Person",
+    "name": "Gwanghee Kim"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chili Pepper",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hpc.stat.yonsei.ac.kr/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hpc.stat.yonsei.ac.kr" accesskey="h" title="Chili Pepper (Alt + H)">Chili Pepper</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hpc.stat.yonsei.ac.kr/docs/" title="Docs">
+                    <span>Docs</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hpc.stat.yonsei.ac.kr">Home</a>&nbsp;»&nbsp;<a href="https://hpc.stat.yonsei.ac.kr/docs/">Docs</a></div>
+    <h1 class="post-title">
+      SLURM Documentation
+    </h1>
+    <div class="post-meta"><span title='2022-03-08 22:39:38 +0900 +0900'>March 8, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Gwanghee Kim
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-what-is-slurm" aria-label="1. What is SLURM?">1. What is SLURM?</a></li>
+                <li>
+                    <a href="#2-basic-slurm-command" aria-label="2. Basic SLURM Command">2. Basic SLURM Command</a></li>
+                <li>
+                    <a href="#3-how-to-make-slurm-batch-script" aria-label="3. How to make SLURM batch script?">3. How to make SLURM batch script?</a><ul>
+                        
+                <li>
+                    <a href="#basic-example" aria-label="Basic example">Basic example</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="1-what-is-slurm">1. What is SLURM?<a hidden class="anchor" aria-hidden="true" href="#1-what-is-slurm">#</a></h2>
+<p>Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.</p>
+<p>If you need more information, Please Visit <a href="https://slurm.schedmd.com/overview.html">https://slurm.schedmd.com/overview.html</a></p>
+<h2 id="2-basic-slurm-command">2. Basic SLURM Command<a hidden class="anchor" aria-hidden="true" href="#2-basic-slurm-command">#</a></h2>
+<ul>
+<li>
+<p>sbatch</p>
+<ul>
+<li>Submit a batch script to SLURM</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sbatch <span class="o">[</span>YOUR_SCRIPT<span class="o">]</span>
+
+<span class="c1"># output</span>
+&gt; Submitted batch job <span class="m">210</span> <span class="c1"># job_id: 210</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>squeue</p>
+<ul>
+<li>View the queue</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ squeue
+
+<span class="c1"># output</span>
+&gt; JOBID PARTITION     NAME     USER   ST   TIME   NODES  NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+  <span class="m">210</span>   all           test1    ghk    R    0:29   <span class="m">1</span>      cpu-compute
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>scancel</p>
+<ul>
+<li>Cancel a SLURM job</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ scancel <span class="o">[</span>YOUR_JOBID<span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>sinfo</p>
+<ul>
+<li>See the state of system</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sinfo
+
+<span class="c1"># output</span>
+&gt; PARTITION AVAIL  TIMELIMIT  NODES  STATE  NODELIST
+  all*      up     infinite   <span class="m">2</span>      idle   cpu-compute,gpu-compute
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>smap</p>
+<ul>
+<li>graphically view information about SLURM job</li>
+</ul>
+</li>
+</ul>
+<p>For more information about SLURM command, please visit website below.</p>
+<ul>
+<li>
+<p><a href="https://slurm.schedmd.com/quickstart.html">SLURM Workload Manager</a></p>
+</li>
+<li>
+<p><a href="https://slurm.schedmd.com/pdfs/summary.pdf">SLURM Command Cheatsheet</a></p>
+</li>
+<li>
+<p><a href="https://support.nesi.org.nz/hc/en-gb/articles/360000691716">SLURM Reference Sheet(NeSI)</a></p>
+</li>
+<li>
+<p><a href="https://support.nesi.org.nz/hc/en-gb/articles/360000684396">Submit your first job(NeSI)</a></p>
+</li>
+</ul>
+<h2 id="3-how-to-make-slurm-batch-script">3. How to make SLURM batch script?<a hidden class="anchor" aria-hidden="true" href="#3-how-to-make-slurm-batch-script">#</a></h2>
+<p>&lsquo;Job submission file&rsquo; is the official SLURM name for the file you use to submit your program and ask for resources from the job scheduler. In this document, we will be using it ‘batch script’ or ‘script’.</p>
+<h3 id="basic-example">Basic example<a hidden class="anchor" aria-hidden="true" href="#basic-example">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash 
+</span><span class="cp"></span><span class="c1"># </span>
+<span class="c1"># SBATCH --job-name=basic</span>
+<span class="c1"># SBATCH --mem=1gb</span>
+<span class="c1"># SBATCH --ntasks=1</span>
+<span class="c1"># SBATCH --time=01:00</span>
+<span class="c1"># SBATCH --output=/mnt/nas/users/testuser/basic.log</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Asking 1 tasks, running for no more than 1 minutes limit memory less than 1gb. If any problem with your job, log file(in this case, &lsquo;basic.log&rsquo;) have information to help troubleshoot the issue.</p>
+<p>You can also use gpu-nodes by using &lsquo;—gres&rsquo; option. Here is an example.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span class="lnt" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span class="lnt" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span class="lnt" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash 
+</span><span class="cp"></span><span class="c1"># </span>
+<span class="c1">#SBATCH --job-name=basic</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --gres=gpu:2 # max : 2</span>
+<span class="c1">#SBATCH --time=01:00</span>
+<span class="c1">#SBATCH --account=testuser</span>
+<span class="c1">#SBATCH --partition=all</span>
+<span class="c1">#SBATCH --output=/mnt/nas/users/testuser/torch.log</span>
+
+<span class="nb">source</span> activate /opt/miniconda/envs/pytorch <span class="o">&amp;&amp;</span> python /mnt/nas/users/testuser/main.py
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span class="lnt" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span class="lnt" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span class="lnt" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># main.py</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;is cuda avaiable? &#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;how many cuda devices? &#39;</span><span class="p">,</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get first cuda device name =&gt; &#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*** MEMORY INFO ***&#39;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">total_memory</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;total memory =&gt; &#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;total memory: &#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The job can then be submitted through sbatch</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span class="lnt" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span class="lnt" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span class="lnt" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span class="lnt" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span class="lnt" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span class="lnt" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sbatch basic.sh
+$ cat torch.log
+&gt; is cuda avaiable?  True
+&gt; how many cuda devices?  <span class="m">2</span>
+&gt; get first cuda device <span class="nv">name</span> <span class="o">=</span>&gt;  Tesla T4
+&gt; ***MEMORY INFO***
+&gt; total <span class="nv">memory</span> <span class="o">=</span>&gt;  <span class="m">16879583232</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Beacuse we only have 2 gpu machine, this option can’t be set more than 2</p>
+<p>For the convenience of users, we provide SLURM job configurator page in our website. Please visit <a href="https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html">SLURM job configurator</a> and make your own SLURM batch script!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="https://hpc.stat.yonsei.ac.kr/docs/using-slurm/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>How do I use the Chili Pepper Cluster?</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <p align="center">
+        <a href="http://bk21-bigdata.yonsei.ac.kr/bbs/page.php?hid=equipment">
+        <img width='70%' src='https://hpc.stat.yonsei.ac.kr/images/logo.svg' alt='Yonsei BK logo'>
+        </a>
+        <br>
+    </p>
+    <span>&copy; 2022 <a href="https://hpc.stat.yonsei.ac.kr">Chili Pepper</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

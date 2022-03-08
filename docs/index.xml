@@ -5,7 +5,19 @@
     <link>https://hpc.stat.yonsei.ac.kr/docs/</link>
     <description>Recent content in Docs on Chili Pepper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 21 Feb 2022 12:12:53 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Mar 2022 22:39:38 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SLURM Documentation</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</link>
+      <pubDate>Tue, 08 Mar 2022 22:39:38 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</guid>
+      <description>1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &amp;gt; Submitted batch job 210 # job_id: 210     squeue</description>
+    </item>
+    
     <item>
       <title>How do I use the Chili Pepper Cluster?</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</link>

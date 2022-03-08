@@ -3,10 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://hpc.stat.yonsei.ac.kr/</loc>
-    <lastmod>2022-02-21T12:12:53+09:00</lastmod>
+    <lastmod>2022-03-08T22:39:38+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/</loc>
-    <lastmod>2022-02-21T12:12:53+09:00</lastmod>
+    <lastmod>2022-03-08T22:39:38+09:00</lastmod>
+  </url><url>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</loc>
+    <lastmod>2022-03-08T22:39:38+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</loc>
     <lastmod>2022-02-21T12:12:53+09:00</lastmod>
