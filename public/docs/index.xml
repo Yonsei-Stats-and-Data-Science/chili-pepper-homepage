@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Docs on Chili Pepper</title>
+    <link>https://hpc.stat.yonsei.ac.kr/docs/</link>
+    <description>Recent content in Docs on Chili Pepper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 21 Feb 2022 12:12:53 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How do I use the Chili Pepper Cluster?</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</link>
+      <pubDate>Mon, 21 Feb 2022 12:12:53 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/using-slurm/</guid>
+      <description>Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/.</description>
+    </item>
+    
+    <item>
+      <title>Creating Your Custom Jupyter Kernel from a Virtual Environment</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/</link>
+      <pubDate>Sun, 28 Nov 2021 22:24:04 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/</guid>
+      <description>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way.</description>
+    </item>
+    
+  </channel>
+</rss>
