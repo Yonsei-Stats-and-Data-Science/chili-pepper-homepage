@@ -11,13 +11,17 @@
 
 		}
 
+		table tbody tr {
+			border-collapse: separate;
+			border-spacing: 0 30px;
+		}
+
 		div {
 			width: 100px;
 			height: 100px;
 		}
 
 		pre {
-
 			width: 500px;
 			height: 300px;
 		}
@@ -29,16 +33,17 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 	<title> Make SLURM Script </title>
 
-	<script type="text/javascript">
+	<script type="text/javascript">		
 
 		function submitinfo() {
+			
 			var printme = "#!/bin/bash <br>" +
-				"# <br>" +
-				"# SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-				"# SBATCH --mem=" + document.config.mem.value + "<br>" +
-				"# SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
-				"# SBATCH --time=" + document.config.job_time.value + "<br>" +
-				"# SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
+				"#<br>" +
+				"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
+				"#SBATCH --mem=" + document.config.mem.value + "<br>" +
+				"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
+				"#SBATCH --time=" + document.config.job_time.value + "<br>" +
+				"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
 				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 
 			document.open();
@@ -47,14 +52,58 @@
 		}
 
 		function printinfo() {
-			var printme = "#!/bin/bash <br>" +
-				"# <br>" +
-				"# SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-				"# SBATCH --mem=" + document.config.mem.value + "<br>" +
-				"# SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
-				"# SBATCH --time=" + document.config.job_time.value + "<br>" +
-				"# SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
-				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+			// 0,1 means num of check box == document.config.jobselect.length
+			if (document.config.jobselect[0].checked == true && document.config.jobselect[1].checked == false){
+				var check_job = document.config.jobselect[0].value
+			}
+			else if (document.config.jobselect[0].checked == false && document.config.jobselect[1].checked == true){
+				var check_job = document.config.jobselect[1].value
+			}
+			else if (document.config.jobselect[0].checked == true && document.config.jobselect[1].checked == true){
+				var check_job = "both"
+			}
+			else{
+				var check_job = "none"
+			}
+
+			var conda_script = "CONDA_BIN_PATH=/opt/miniconda/bin" + "<br>" + 
+								"ENV_NAME=" + document.config.envname.value + "<br>" + 
+								"ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAM" + "<br>" + 
+								"source $CONDA_BIN_PATH/activate $ENV_PATH"
+
+			var job_script = "#!/bin/bash <br>" +
+								"#<br>" +
+								"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
+								"#SBATCH --partition=all" + "<br>" +
+								"#SBATCH --mem=" + document.config.mem.value + "<br>" +
+								"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
+								"#SBATCH --time=" + document.config.job_time.value + "<br>" +
+								"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
+								"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>"
+			
+			var gpu_script = "#SBATCH --gres=gpu:1" + "<br>" + "#SBATCH --nodes=1"
+			
+			if (check_job == "conda"){
+				var printme =  job_script + 
+								"<br>" + 
+								conda_script + "<br>" + 
+								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+			}
+			else if (check_job == "gpu"){
+				var printme = job_script + 
+								gpu_script + "<br>" + 
+								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+			}
+			else if (check_job == "both"){
+				var printme = job_script + 
+								gpu_script + "<br>" + 
+								"<br>" + conda_script + "<br>" + 
+								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+			}
+			else if (check_job == "none"){
+				var printme = job_script + 
+								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+			}
 
 			if (!document.config.script.value) {
 				document.querySelector("#result").innerHTML = printme + document.config.script.placeholder
@@ -80,13 +129,15 @@
 			document.getElementById("config").reset();
 
 			var printme = "#!/bin/bash <br>" +
-				"# <br>" +
-				"# SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-				"# SBATCH --mem=" + document.config.mem.value + "<br>" +
-				"# SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
-				"# SBATCH --time=" + document.config.job_time.value + "<br>" +
-				"# SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
-				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+				"#<br>" +
+				"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
+				"#SBATCH --partition=all" + "<br>" +
+				"#SBATCH --mem=" + document.config.mem.value + "<br>" +
+				"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
+				"#SBATCH --time=" + document.config.job_time.value + "<br>" +
+				"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
+				"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>" +
+				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>') 
 
 			document.querySelector("#result").innerHTML = printme + document.config.script.placeholder;
 		}
@@ -100,6 +151,12 @@
 
 		<h1>Slurm batch file</h1>
 		<p>Slurm batch script를 쉽게 만들기 위한 페이지입니다.</p>
+
+		<p style = "font-size:24px;"> <br> Select Job Options </p>
+		<label><input type="checkbox" name="jobselect" value="conda"> Conda activate </label>
+		<label><input type="checkbox" name="jobselect" value="gpu" onclick="getcheckboxvalue(event)"> Using GPU </label>
+		<br>
+		<br>
 		<table>
 			<tr>
 				<td>JOBNAME: </td>
@@ -115,16 +172,21 @@
 			</tr>
 			<tr>
 				<td>TIME: </td>
-				<td><input type="text" name="job_time" size="12" value="01:00"> </td>
+				<td><input type="text" name="job_time" size="12" value="00:01:00"> </td>
 			</tr>
 			<tr>
 				<td>USERNAME: </td>
 				<td><input type="text" name="id" size="12" value="username"></td>
 			</tr>
 			<tr>
+				<td>ENVNAME: </td>
+				<td><input type="text" name="envname" size="12" value="envname"></td>
+			</tr>		
+			
+			<tr>
 				<td>Script: </td>
 				<td><textarea name="script" rows="5" cols="40"
-						placeholder="conda activate ENVIRONMENT_NAME && python /mnt/nas/users/USERNAME/main.py"></textarea>
+						placeholder="python /mnt/nas/users/$(whoami)/main.py"></textarea>
 				</td>
 			</tr>
 			<tr>
