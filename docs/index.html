@@ -106,6 +106,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>How to Use GPU Node for SLURM
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>How to use GPU node for SLURM Step 1. Export your conda setting conda 환경을 동일하게 맞춰주기 위해 local에서 생성된 가상환경으로부터 환경설정 파일을 만들고, 서버에서 conda 가상환경을 만들 때 사용한다.
+1 2 3 4 5 6 7 8 9 10 11  # export conda setting conda activate [YOUR ENV NAME] conda env export -n [ENV NAME] -f [FILENAME].yml --no-builds # 이러면 조금은 해결되긴 함 # create environment from file conda create --name [YOUR ENV NAME] python = [VESTION] # same env name in yml file conda env create -f [FILENAME]....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-03-15 14:54:35 +0900 +0900'>March 15, 2022</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Gwnaghee Kim</footer>
+  <a class="entry-link" aria-label="post link to How to Use GPU Node for SLURM" href="https://hpc.stat.yonsei.ac.kr/docs/how-to-use-gpu-node-for-slurm/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>SLURM Documentation
     </h2>
   </header>
