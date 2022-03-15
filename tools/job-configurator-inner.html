@@ -142,15 +142,15 @@
 			var printme = "#!/bin/bash <br>" +
 							"#<br>" +
 							"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-							"#SBATCH --partition=all" + "<br>" +
-							"#SBATCH --nodelist=cpu-compute" + "<br>" +
+							"#SBATCH --partition=all" + "<br>" +							
 							"#SBATCH --account=" + document.config.id.value + "<br>" +
 							"#SBATCH --mem=" + document.config.mem.value + "<br>" +
 							"#SBATCH --ntasks=1" + "<br>" +
 							"#SBATCH --cpus-per-task=" + document.config.ntask.value + "<br>" +
 							"#SBATCH --time=" + document.config.job_time.value + "<br>" +
 							"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
-							"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>"
+							"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>" +
+							"#SBATCH --nodelist=cpu-compute" + "<br>" + 
 							"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 
 			document.querySelector("#result").innerHTML = printme + document.config.script.placeholder;
@@ -206,10 +206,10 @@
 			<tr>
 				<td>
 					<!-- <input type="button" value="Submit" onClick="javascript:submitinfo()"> -->
-					<input type="button" value="Print" onClick="javascript:printinfo()">
+					<input type="button" value="Print & Copy" onClick="javascript:printinfo()">
 					<!-- <input type="reset" value="Reset"> -->
 					<input type="button" value="Reset" onclick="javascript:resetinfo()">
-					<input type="button" value="Copy to Clipboard" onClick="javascript:saveinfo()">
+					<!-- <input type="button" value="Copy to Clipboard" onClick="javascript:saveinfo()"> -->
 				</td>
 
 			</tr>
@@ -220,7 +220,7 @@
 		<pre>
                 <div id="result"> 
                     <script>
-						printinfo()
+						resetinfo()
 					</script>
                 </div>
             </pre>
