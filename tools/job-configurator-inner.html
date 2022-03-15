@@ -38,13 +38,18 @@
 		function submitinfo() {
 			
 			var printme = "#!/bin/bash <br>" +
-				"#<br>" +
-				"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-				"#SBATCH --mem=" + document.config.mem.value + "<br>" +
-				"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
-				"#SBATCH --time=" + document.config.job_time.value + "<br>" +
-				"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
-				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
+							"#<br>" +
+							"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
+							"#SBATCH --partition=all" + "<br>" +
+							"#SBATCH --nodelist=cpu-compute" + "<br>" +
+							"#SBATCH --account=" + document.config.id.value + "<br>" +
+							"#SBATCH --mem=" + document.config.mem.value + "<br>" +
+							"#SBATCH --ntasks=1" + "<br>" +
+							"#SBATCH --cpus-per-task=" + document.config.ntask.value + "<br>" +
+							"#SBATCH --time=" + document.config.job_time.value + "<br>" +
+							"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
+							"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>"
+							"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 
 			document.open();
 			document.write(printme);
@@ -75,18 +80,21 @@
 								"#<br>" +
 								"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
 								"#SBATCH --partition=all" + "<br>" +
+								"#SBATCH --account=" + document.config.id.value + "<br>" +
 								"#SBATCH --mem=" + document.config.mem.value + "<br>" +
-								"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
+								"#SBATCH --ntasks=1" + "<br>" +
+								"#SBATCH --cpus-per-task=" + document.config.ntask.value + "<br>" +
 								"#SBATCH --time=" + document.config.job_time.value + "<br>" +
 								"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
 								"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>"
 			
-			var gpu_script = "#SBATCH --gres=gpu:1" + "<br>" + "#SBATCH --nodes=1"
+			var gpu_script = "#SBATCH --gres=gpu:1" + "<br>" + "#SBATCH --nodelist=gpu-compute"
 			
 			if (check_job == "conda"){
-				var printme =  job_script + 
+				var printme =  job_script +  
+								"#SBATCH --nodelist=cpu-compute" + "<br>" +
 								"<br>" + 
-								conda_script + "<br>" + 
+								conda_script + "<br>" +
 								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 			}
 			else if (check_job == "gpu"){
@@ -102,6 +110,7 @@
 			}
 			else if (check_job == "none"){
 				var printme = job_script + 
+								"#SBATCH --nodelist=cpu-compute" + "<br>" +
 								"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 			}
 
@@ -129,15 +138,18 @@
 			document.getElementById("config").reset();
 
 			var printme = "#!/bin/bash <br>" +
-				"#<br>" +
-				"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
-				"#SBATCH --partition=all" + "<br>" +
-				"#SBATCH --mem=" + document.config.mem.value + "<br>" +
-				"#SBATCH --ntasks=" + document.config.ntask.value + "<br>" +
-				"#SBATCH --time=" + document.config.job_time.value + "<br>" +
-				"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
-				"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>" +
-				"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>') 
+							"#<br>" +
+							"#SBATCH --job-name=" + document.config.job_name.value + "<br>" +
+							"#SBATCH --partition=all" + "<br>" +
+							"#SBATCH --nodelist=cpu-compute" + "<br>" +
+							"#SBATCH --account=" + document.config.id.value + "<br>" +
+							"#SBATCH --mem=" + document.config.mem.value + "<br>" +
+							"#SBATCH --ntasks=1" + "<br>" +
+							"#SBATCH --cpus-per-task=" + document.config.ntask.value + "<br>" +
+							"#SBATCH --time=" + document.config.job_time.value + "<br>" +
+							"#SBATCH --output=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".log" + "<br>" +
+							"#SBATCH --error=/mnt/nas/users/" + document.config.id.value + "/" + document.config.job_name.value + ".err" + "<br>"
+							"<br>" + document.config.script.value.replace(/(\n|\r\n)/g, '<br>')
 
 			document.querySelector("#result").innerHTML = printme + document.config.script.placeholder;
 		}
