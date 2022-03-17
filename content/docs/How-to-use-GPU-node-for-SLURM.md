@@ -1,22 +1,121 @@
 ---
-title: "How to Use GPU Node for SLURM"
-author: "Gwnaghee Kim"
+title: "4. GPU node 사용법(Python)"
+author: "Gwnaghee Kim", "Jongmin Mun"
 date: 2022-03-15T14:54:35+09:00
 draft: false
 ---
 
-# How to use GPU node for SLURM
+# 4. GPU node 사용법(Python)
+2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
-## Step 1. Export your conda setting
+`GPU-compute` node에서는 `Python`만 사용 가능합니다.
+## Step 4. Export your conda setting
 
-conda 환경을 동일하게 맞춰주기 위해 local에서 생성된 가상환경으로부터 환경설정 파일을 만들고, 서버에서 conda 가상환경을 만들 때 사용한다. 
+### 버전 관리
+딥러닝 라이브러리를 사용할 때에는 버전 관리가 중요합니다. 
+- GPU 드라이버 버전(`418.67`)
+- Python 버전
+- CUDA 버전([호환성 표](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html))
+- cuDNN, 딥러닝 라이브러리(`tensorflow`, `pytorch`) 버전(호환성 표: [tensorflow](https://www.tensorflow.org/install/source#gpu), [pytorch](https://pytorch.org/get-started/previous-versions/))
+
+이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `GPU-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
+
+GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브러리 버전을 정한 다음 conda create 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다. 이 튜토리얼에서는 이 방법을 사용합니다.
+
+이 튜토리얼에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
+
+### 1. local에서 conda environment 생성
 
 ```bash
+conda create -n testEnvGPU python=3.7
+```
+
+성공적으로 생성되면 아래와 같은 결과가 나옵니다.
+
+```text
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate testEnv
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+```
+
+아래 커맨드를 통해 virtual environment가 제대로 생성되었는지 확인합니다.
+```bash
+conda info --env
+```
+
+```text
+# conda environments:
+#
+base                  *  /opt/miniconda3
+testEnvGPU               /opt/miniconda3/envs/testEnvGPU
+```
+
+Virtual environment에 진입한 뒤 패키지를 설치합니다.
+- pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
+- [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
+- 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
+- 패키지 버전을 명시할 때는 **=**를 사용합니다.
+
+```bash
+conda activate testEnvGPU
+
+#For example,
+conda install -c anaconda tensorflow-gpu=2.2.0 cudatoolkit cudnn matplotlib scikit-learn pandas numpy
+```
+
+아래 명령어로 cudatoolkit, cudnn 버전을 확인하여 batch 
+```bash
+conda list
+```
+
+### 2. GPU-compute node에서 동일한 conda environment 구축
+
+#### 2.1. 중요 패키지의 버전만 맞추기
+2번 문서(CPU node 사용법(Python))에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `GPU-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
+- 이 방법은 2번 문서의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
+- Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
+- 이 튜토리얼에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
+
+ ```bash
+    #!/bin/bash
+    #SBATCH --job-name=conda-env-create
+    #SBATCH --nodes=1
+    #SBATCH --mem=4gb
+    #SBATCH --partition=all
+    #SBATCH --nodelist=gpu-compute
+    #SBATCH --output=testEnvGPU.log
+    #SBATCH --error=testEnvGPU.err
+    CONDA_BIN_PATH=/opt/miniconda/bin
+    ENV_NAME=testEnvGPU #local에서와 같은 이름으로 입력
+    ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
+    $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
+    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.7
+    source $CONDA_BIN_PATH/activate $ENV_PATH
+    conda install tensorflow-gpu=2.2.0
+  ```
+
+#### 2.2. local environment export하기
+
+Local에서 생성된 가상환경으로부터 환경설정 `yml` 파일을 만들고, 이를 이용해 `GPU-compute` node에서 conda environment를 생성하여 conda 환경을 동일하게 맞출 수도 있습니다. 이게 가장 이상적인 방법이지만, local OS가 linux가 아닐 경우 문제가 발생할 수 있습니다. 이 문서에서는 이 방법을 설명합니다. 
+
+Local에서 아래 커맨드로 `yml` 파일을 추출합니다.
+```bash
 # export conda setting
-
 conda activate [YOUR ENV NAME]
-conda env export -n [ENV NAME] -f [FILENAME].yml --no-builds # 이러면 조금은 해결되긴 함
+conda env export -n [ENV NAME] -f [FILENAME].yml --no-builds # 이러면 문제가 해결될 수 있습니다.
+```
 
+`yml` 파일을 클러스터 내 user home directory로 옮기고 아래 커맨드를 slurm job script에 추가하고 sbatch로 실행합니다. 이 때 Slurm job configurator에서 `Using GPU`에 체크해야 합니다.
+
+```bash
 # create environment from file
 
 conda create --name [YOUR ENV NAME] python = [VESTION] # same env name in yml file
@@ -25,16 +124,16 @@ conda env create -f [FILENAME].yml
 conda env create -p [prefix path] -f [filename].yml
 ```
 
-**—no-builds** 옵션은 서로 다른 OS에서 conda 가상환경 파일 내 패키지들의 버전 충돌을 방지하기 위한 것이다.  다만 경우에 따라 완전히 문제를 예방하지는 못하기 때문에 사용자들이 직접 env 파일을 수정하는 상황이 발생할 수 있다. 이런 경우 **ResolvePackageNotFound** 아래의 패키지들을 env 파일에서 삭제해주면 문제가 해결된다.
+**—no-builds** 옵션은 서로 다른 OS에서 conda environment 내 패키지들의 버전 충돌을 방지하기 위한 것입니다. 이 옵션만으로 문제가 해결되기도 하지만, 해결되지 않으면 user가 직접 `yml` 파일을 수정해야 합니다. 에러 메시지에 **ResolvePackageNotFound**라는 문구가 나오는데, 이 문구 아래의 패키지들을 `yml` 파일에서 삭제해주면 문제가 해결될 수 있습니다.
 
 ```bash
 conda env create -f test.yml
 Collecting package metadata: done
 Solving environment: failed
 
-# yml 파일에서 아래에 등장하는 패키지들을 지워주면 된다.
+# yml 파일에서 아래에 등장하는 패키지들을 지워줍니다.
 ResolvePackageNotFound: 
-  - libgfortran==3.0.1=h93005f0_2 # --no-builds는 패키지 버전 옆의 빌드 정보를 제거한다.
+  - libgfortran==3.0.1=h93005f0_2 # --no-builds 옵션을 쓰면 패키지 버전 옆의 빌드 정보가 나오지 않습니다.
   - pyzmq==17.0.0=py36h1de35cc_1
   - python==3.6.6=h4a56312_1003
   - prompt_toolkit==1.0.15=py36haeda067_0
@@ -49,25 +148,8 @@ ResolvePackageNotFound:
   - ptyprocess==0.5.2=py36he6521c3_0
 ```
 
-## Step 2. make env file and upload file to user’s workspace
-
-로컬에서 만들어진 env 파일을 서버로 옮길 때는 **scp**를 사용한다. 간단한 사용법은 아래와 같다.
-
-```bash
-# scp 사용법
-# File upload
-scp [FILEPATH] ghk@[IP address]:~/ # upload from local, ~/ means home directory
-# File download
-scp ghk@[IP address]:[FILEPATH] ./ # scp [server file path] [local save path]
-
-# directory 전체 다운, 업로드 할 때는 -r 옵션을 사용한다.
-```
-
-Windows 사용자라면 **[WinSCP](https://winscp.net/eng/download.php)** 라는 이름의 프로그램을 사용하면 로컬과 서버 간 파일 전송을 보다 쉽게 처리할 수 있다. 
-
 <aside>
-💡 env file을 이용한 conda 환경 설정은 로컬과 서버 작업 환경을 동일하게 설정할 수 있는 신뢰할 수 있는 방법이다. 그러나 conda 환경 설정 과정이 너무 번거롭다면 requirements.txt를 만들어 패키지 버전만 관리해도 충돌을 방지할 수 있다.
-
+💡 `yml` file을 이용한 conda 환경 설정은 로컬과 서버 작업 환경을 동일하게 설정할 수 있는 신뢰할 수 있는 방법이지만, conda 환경 설정 과정이 너무 번거롭다면 requirements.txt를 만들어 패키지 버전만 관리할 수도 있습니다.
 </aside>
 
 ```bash
@@ -80,9 +162,14 @@ conda install --force-reinstall -y -q -c conda-forge --file requirements.txt
 # conda-forge is recommended
 ```
 
-## Step 3. make SLRUM batch script and run code in server
 
-앞선 단계에서 conda환경이 잘 만들어졌다면 해당 가상환경을 activate하여 코드를 돌리는 SLURM batch script를 작성할 수 있다. 사용자들의 이해를 돕기 위해 TensorFlow 공식 페이지에 게시된 [초보자용 튜토리얼](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드를 SLURM을 통해 실행시키는 예제를 공유한다. 먼저, 튜토리얼 코드는 다음과 같다.
+## Step 5. Slrum batch script 작성하여 서버에 제출하기
+
+### 1. Python 코드 작성
+이제 클러스터에서 실행할 Python 코드를 local에서 작성합니다. 먼저 local에서 코드가 오류 없이 돌아가는지 확인합니다. 그 후 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
+
+아래는 TensorFlow 공식 페이지에 게시된 [초보자용 튜토리얼](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, **model.evaluate(x_test,  y_test, verbose=2)**가 결과를 콘솔에 출력하기 때문에 로그 파일에서 결과를 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
+
 
 ```python
 # tensor.py
@@ -110,53 +197,78 @@ model.fit(x_train, y_train, epochs=5)
 model.evaluate(x_test,  y_test, verbose=2)
 ```
 
+### 2. 현재 클러스터 자원 사용량 확인
+아래 커맨드를 통해 `cpu-compute` 노드의 cpu와 RAM 사용 현황을 볼 수 있습니다.
 ```bash
-#!/bin/bash
+sinfo -o "%n %e %m %a %c %C"
+```
+
+아래와 같은 결과가 나옵니다.
+```
+HOSTNAMES FREE_MEM MEMORY AVAIL CPUS CPUS(A/I/O/T)
+cpu-compute 105589 128916 up 32 0/32/0/32
+gpu-compute 53318 80532 up 16 0/16/0/16
+```
+- CPUS의 A/I/O/T는 allocated/idle/other/total을 의미합니다. 
+- 자신의 job이 바로 실행되기를 원한다면, Slurm batch script를 작성할 때 
+  - RAM 용량을 FREE_MEM보다 적게 설정해야 합니다. 
+  - CPU 코어 개수를 CPUS idle보다 적게 설정해야 합니다.
+- 현재 가용 자원보다 더 많은 자원을 요구하는 script를 작성하면, job이 바로 실행되지 않습니다. 대기 상태에 있다가 다른 사용자들의 job이 끝나고 자원이 반환되면 job이 실행됩니다.
+
+
+### 3. Slurm batch script 작성
+앞선 단계에서 만든 해당 conda environment를 activate하고 코드를 실행하는 Slurm batch script를 작성합니다. 클러스터 소개 페이지의 [slurm job configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html)를 사용하면 script를 쉽게 작성할 수 있습니다. 
+
+![slurm_config](/img/slurm_config.png)
+- Conda activate에 체크합니다.
+- Using GPU에 체크합니다.
+- 빈칸들을 채웁니다.
+- Script란에 **python xxx.py**라고 작성합니다. 이는 home directory에 있는 **xxx.py** 파일을 Python으로 실행하라는 의미입니다.
+- **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
+
+이 문서에서 사용한 Slurm batch script의 내용은 아래와 같습니다.
+
+```bash
+#!/bin/bash 
 #
-#SBATCH --job-name=gpu-tensor-test
-#SBATCH --mem=4gb
-#SBATCH --nodelist=gpu-compute
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --gres=gpu:1
-#SBATCH --time=00:20:00
-#SBATCH --account=ghk
+#SBATCH --job-name=tensor
 #SBATCH --partition=all
-#SBATCH --output=/mnt/nas/users/ghk/code/gputest.log
+#SBATCH --account=mjm
+#SBATCH --mem=16gb
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --time=00:30:00
+#SBATCH --output=/mnt/nas/users/mjm/tensor.log
+#SBATCH --error=/mnt/nas/users/mjm/tensor.err
+#SBATCH --gres=gpu:1
+#SBATCH --nodelist=gpu-compute
 
 CONDA_BIN_PATH=/opt/miniconda/bin
-ENV_NAME=tensor
+ENV_NAME=testEnvGPU
 ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
-
-## $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-## $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8 tensorflow pandas numpy
-
 source $CONDA_BIN_PATH/activate $ENV_PATH
-## pip uninstall keras
-## pip install keras==2.6.0
-python /mnt/nas/users/ghk/code/tensor.py
+
+python tensor.py
 ```
 
-- **—job-name**: 수행할 작업의 이름
-- **—mem**: memory limit
-- **—nodelist**: 작업할 노드의 이름
-- **—ntasks**: 작업의 수
-- **—cpus-per-task**: 각 작업에서 사용할 cpu 코어의 수
-- **—gres=gpu** : 작업에서 사용할 gpu의 개수, gpu-compute 노드에는 총 2개의 gpu가 사용 가능하다.
-- **—time**: 작업 제한시간
-- **—accoun**t: 해당 작업을 수행하는 계정의 이름
-- **—partition**: group of nodes with specific characteristics
-- **—output**: 코드 실행 결과 log
+`tensor.job`이라는 이름으로 클러스터의 user home directory에 저장합니다.
+  
+sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
-제시한 대로 python 파일과 batch script 파일이 잘 만들어졌다면 **sbatch** 명령어를 입력하여 계산을 실행할 수 있다.
+### 4. Slurm batch script 실행
+Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 job 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
+
+**squeue**나 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
 
 ```bash
-sbatch tensor.sh
-smap -i 1 # 작업 현황을 1초마다 갱신하여 보여준다. ctrl+c로 escape 할 수 있다.
+sbatch tensor.job
+smap -i 1 # 작업 현황을 1초마다 갱신하여 보여줍니다. ctrl+c로 escape 할 수 있습니다.
+cat tensor.log
+tail -f tensor.err
 ```
 
+로그 파일에 콘솔 아웃풋이 기록됩니다.
 ```bash
-ghk@proxy:~/code$ cat gputest.log
 2022-03-15 14:27:34.877232: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 2022-03-15 14:27:34.887611: I tensorflow/core/common_runtime/process_util.cc:146] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
@@ -175,7 +287,6 @@ Epoch 5/5
 [0.078231580555439, 0.9779000282287598]
 ```
 
-SLURM batch script를 사용자들이 보다 편하게 만들 수 있도록 [SLURM Job Configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html) 를 새롭게 작성하였다. 사용자들은 gpu 옵션을 체크하거나 해제하여 gpu-compute node 사용 여부를 결정할 수 있다. 해당되는 옵션을 체크하고 **Print** 버튼을 누르면 손쉽게 batch script를 작성할 수 있다.
 
 ## 더 알아보기
 

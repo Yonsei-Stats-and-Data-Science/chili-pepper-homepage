@@ -435,6 +435,8 @@ cat python_test_cpu.log
 tail -f python_test_cpu.err
 ```
 
+`ctrl+shift+~`를 눌러 터미널을 여러 개 띄울 수 있습니다. 따라서 한 터미널에서는 **smap -i 1**으로 slurm 작업 현황을 보고, 다른 터미널에서는 **tail -f xxx.log**로 코드가 내는 콘솔 아웃풋을 확인할 수 있습니다.
+
 현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다.
 
 ```bash
