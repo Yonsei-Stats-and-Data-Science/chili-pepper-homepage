@@ -31,15 +31,15 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 
 ### 1. Visual Studio Code extensions에서 Remote Development 설치[fn^3]
 Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다. Remote-WSL, Remote-Containers, Remote-SSH가 자동적으로 같이 설치됩니다.
-![vscode_ssh_1](/assets/vscode_ssh_1.png)
-![vscode_ssh_2](/assets/vscode_ssh_2.png)
+![vscode_ssh_1](/img/vscode_ssh_1.png)
+![vscode_ssh_2](/img/vscode_ssh_2.png)
 
 ### 2. Remote Explorer에서 SSH Targets를 선택 후, Add New 클릭
-![vscode_ssh_3](/assets/vscode_ssh_3.png)
+![vscode_ssh_3](/img/vscode_ssh_3.png)
 
 ### 3. ssh 접속 커맨드 입력
 아래와 같은 창이 뜨면 ssh 커맨드를 입력하여 `proxy node`에 접속합니다. 
-![vscode_ssh_4](/assets/vscode_ssh_4.png)
+![vscode_ssh_4](/img/vscode_ssh_4.png)
 
 아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희의 클러스터는 보안상 이유로 다른 port를 사용합니다.
 ```bash
@@ -48,34 +48,34 @@ ssh -p [port] [username]@[ip]
 
 ### 4. SSH configuration file을 저장할 장소 선택
 **Select SSH configuration file to update**가 나오면 맨 위 항목을 선택합니다.
-![vscode_ssh_5](/assets/vscode_ssh_5.png)
+![vscode_ssh_5](/img/vscode_ssh_5.png)
 
 **Host added!** 라는 메시지가 우측 하단에 나옵니다.
-![vscode_ssh_6](/assets/vscode_ssh_6.png)
+![vscode_ssh_6](/img/vscode_ssh_6.png)
 
 ### 5. Remote Explore에서 Connect to Host in New Window 선택
 
-![vscode_ssh_7](/assets/vscode_ssh_7.png)
+![vscode_ssh_7](/img/vscode_ssh_7.png)
 
 
 
 ### 6. 서버 Platform 선택
 Linux를 선택합니다.
-![vscode_ssh_8](/assets/vscode_ssh_8.png)
+![vscode_ssh_8](/img/vscode_ssh_8.png)
 
 ### 7. Password 입력
 안내받은 password를 입력하여 로그인합니다. 
-![vscode_ssh_9](/assets/vscode_ssh_9.png)
+![vscode_ssh_9](/img/vscode_ssh_9.png)
 
 ### 8. 파일 시스템 마운트
 좌측 탭의 파일 모양 아이콘을 클릭하고 **Open Folder** 버튼을 클릭합니다.
-![vscode_ssh_10](/assets/vscode_ssh_10.png)
+![vscode_ssh_10](/img/vscode_ssh_10.png)
 
 기본적으로 user home directory 경로가 입력되어 있습니다. OK를 누릅니다.
-![vscode_ssh_11](/assets/vscode_ssh_11.png)
+![vscode_ssh_11](/img/vscode_ssh_11.png)
 
 ### 9. 둘러보기
-![vscode_ssh_12](/assets/vscode_ssh_12.png)
+![vscode_ssh_12](/img/vscode_ssh_12.png)
 - 좌측 file explorer에서 파일을 관리합니다. Windows 탐색기나 MacOS Finder에서 drag&drop으로 파일을 옮길 수 있습니다. 클러스터 내부의 파일을 user의 local 컴퓨터로 가져오는 것도 drag&drop으로 가능합니다.
 
 - `ctrl + shift + ~`키를 누르면 터미널이 열립니다. 여기서 서버 사용에 필요한 커맨드를 입력합니다.
@@ -376,7 +376,7 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 ### 3. Slurm batch script 작성
 앞선 단계에서 만든 해당 conda environment를 activate하고 코드를 실행하는 Slurm batch script를 작성합니다. 클러스터 소개 페이지의 [slurm job configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html)를 사용하면 script를 쉽게 작성할 수 있습니다. 
 
-![slurm_config](/assets/slurm_config.png)
+![slurm_config](/img/slurm_config.png)
 - Conda activate에 체크합니다.
 - 빈칸들을 채웁니다.
 - Script란에 **python xxx.py**라고 작성합니다. 이는 home directory에 있는 **xxx.py** 파일을 Python으로 실행하라는 의미입니다.
@@ -470,7 +470,7 @@ UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
    Power=
 ```
 작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
-![vscode_file](/assets/vscode_file.png)
+![vscode_file](/img/vscode_file.png)
 
 작업이 끝나기 전에 취소하려면 **scance** 커맨드를 사용합니다.
 ```bash
