@@ -251,16 +251,16 @@
 <h2 id="step-2---proxy-node-ssh-접속">Step 2 - proxy node SSH 접속<a hidden class="anchor" aria-hidden="true" href="#step-2---proxy-node-ssh-접속">#</a></h2>
 <h3 id="1-visual-studio-code-extensions에서-remote-development-설치fn3">1. Visual Studio Code extensions에서 Remote Development 설치<a href="https://jstar0525.tistory.com/14">fn^3</a><a hidden class="anchor" aria-hidden="true" href="#1-visual-studio-code-extensions에서-remote-development-설치fn3">#</a></h3>
 <p>Microsoft가 제공하는 <code>Remote Development</code> extension pack을 설치합니다. Remote-WSL, Remote-Containers, Remote-SSH가 자동적으로 같이 설치됩니다.
-<img loading="lazy" src="/assets/vscode_ssh_1.png" alt="vscode_ssh_1"  />
+<img loading="lazy" src="/img/vscode_ssh_1.png" alt="vscode_ssh_1"  />
 
-<img loading="lazy" src="/assets/vscode_ssh_2.png" alt="vscode_ssh_2"  />
+<img loading="lazy" src="/img/vscode_ssh_2.png" alt="vscode_ssh_2"  />
 </p>
 <h3 id="2-remote-explorer에서-ssh-targets를-선택-후-add-new-클릭">2. Remote Explorer에서 SSH Targets를 선택 후, Add New 클릭<a hidden class="anchor" aria-hidden="true" href="#2-remote-explorer에서-ssh-targets를-선택-후-add-new-클릭">#</a></h3>
-<p><img loading="lazy" src="/assets/vscode_ssh_3.png" alt="vscode_ssh_3"  />
+<p><img loading="lazy" src="/img/vscode_ssh_3.png" alt="vscode_ssh_3"  />
 </p>
 <h3 id="3-ssh-접속-커맨드-입력">3. ssh 접속 커맨드 입력<a hidden class="anchor" aria-hidden="true" href="#3-ssh-접속-커맨드-입력">#</a></h3>
 <p>아래와 같은 창이 뜨면 ssh 커맨드를 입력하여 <code>proxy node</code>에 접속합니다.
-<img loading="lazy" src="/assets/vscode_ssh_4.png" alt="vscode_ssh_4"  />
+<img loading="lazy" src="/img/vscode_ssh_4.png" alt="vscode_ssh_4"  />
 </p>
 <p>아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 <code>Enter</code>키를 누르면 됩니다. <code>SSH</code>의 default port는 <code>22</code>이지만, 저희의 클러스터는 보안상 이유로 다른 port를 사용합니다.</p>
 <div class="highlight"><div class="chroma">
@@ -273,31 +273,31 @@
 </div>
 </div><h3 id="4-ssh-configuration-file을-저장할-장소-선택">4. SSH configuration file을 저장할 장소 선택<a hidden class="anchor" aria-hidden="true" href="#4-ssh-configuration-file을-저장할-장소-선택">#</a></h3>
 <p><strong>Select SSH configuration file to update</strong>가 나오면 맨 위 항목을 선택합니다.
-<img loading="lazy" src="/assets/vscode_ssh_5.png" alt="vscode_ssh_5"  />
+<img loading="lazy" src="/img/vscode_ssh_5.png" alt="vscode_ssh_5"  />
 </p>
 <p><strong>Host added!</strong> 라는 메시지가 우측 하단에 나옵니다.
-<img loading="lazy" src="/assets/vscode_ssh_6.png" alt="vscode_ssh_6"  />
+<img loading="lazy" src="/img/vscode_ssh_6.png" alt="vscode_ssh_6"  />
 </p>
 <h3 id="5-remote-explore에서-connect-to-host-in-new-window-선택">5. Remote Explore에서 Connect to Host in New Window 선택<a hidden class="anchor" aria-hidden="true" href="#5-remote-explore에서-connect-to-host-in-new-window-선택">#</a></h3>
-<p><img loading="lazy" src="/assets/vscode_ssh_7.png" alt="vscode_ssh_7"  />
+<p><img loading="lazy" src="/img/vscode_ssh_7.png" alt="vscode_ssh_7"  />
 </p>
 <h3 id="6-서버-platform-선택">6. 서버 Platform 선택<a hidden class="anchor" aria-hidden="true" href="#6-서버-platform-선택">#</a></h3>
 <p>Linux를 선택합니다.
-<img loading="lazy" src="/assets/vscode_ssh_8.png" alt="vscode_ssh_8"  />
+<img loading="lazy" src="/img/vscode_ssh_8.png" alt="vscode_ssh_8"  />
 </p>
 <h3 id="7-password-입력">7. Password 입력<a hidden class="anchor" aria-hidden="true" href="#7-password-입력">#</a></h3>
 <p>안내받은 password를 입력하여 로그인합니다.
-<img loading="lazy" src="/assets/vscode_ssh_9.png" alt="vscode_ssh_9"  />
+<img loading="lazy" src="/img/vscode_ssh_9.png" alt="vscode_ssh_9"  />
 </p>
 <h3 id="8-파일-시스템-마운트">8. 파일 시스템 마운트<a hidden class="anchor" aria-hidden="true" href="#8-파일-시스템-마운트">#</a></h3>
 <p>좌측 탭의 파일 모양 아이콘을 클릭하고 <strong>Open Folder</strong> 버튼을 클릭합니다.
-<img loading="lazy" src="/assets/vscode_ssh_10.png" alt="vscode_ssh_10"  />
+<img loading="lazy" src="/img/vscode_ssh_10.png" alt="vscode_ssh_10"  />
 </p>
 <p>기본적으로 user home directory 경로가 입력되어 있습니다. OK를 누릅니다.
-<img loading="lazy" src="/assets/vscode_ssh_11.png" alt="vscode_ssh_11"  />
+<img loading="lazy" src="/img/vscode_ssh_11.png" alt="vscode_ssh_11"  />
 </p>
 <h3 id="9-둘러보기">9. 둘러보기<a hidden class="anchor" aria-hidden="true" href="#9-둘러보기">#</a></h3>
-<p><img loading="lazy" src="/assets/vscode_ssh_12.png" alt="vscode_ssh_12"  />
+<p><img loading="lazy" src="/img/vscode_ssh_12.png" alt="vscode_ssh_12"  />
 </p>
 <ul>
 <li>
@@ -820,7 +820,7 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 </ul>
 <h3 id="3-slurm-batch-script-작성">3. Slurm batch script 작성<a hidden class="anchor" aria-hidden="true" href="#3-slurm-batch-script-작성">#</a></h3>
 <p>앞선 단계에서 만든 해당 conda environment를 activate하고 코드를 실행하는 Slurm batch script를 작성합니다. 클러스터 소개 페이지의 <a href="https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html">slurm job configurator</a>를 사용하면 script를 쉽게 작성할 수 있습니다.</p>
-<p><img loading="lazy" src="/assets/slurm_config.png" alt="slurm_config"  />
+<p><img loading="lazy" src="/img/slurm_config.png" alt="slurm_config"  />
 </p>
 <ul>
 <li>Conda activate에 체크합니다.</li>
@@ -974,7 +974,7 @@ tail -f python_test_cpu.err
 </code></pre></td></tr></table>
 </div>
 </div><p>작업이 완료되면 <strong>squeue</strong> <code>Visual Stuio Code</code>의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
-<img loading="lazy" src="/assets/vscode_file.png" alt="vscode_file"  />
+<img loading="lazy" src="/img/vscode_file.png" alt="vscode_file"  />
 </p>
 <p>작업이 끝나기 전에 취소하려면 <strong>scance</strong> 커맨드를 사용합니다.</p>
 <div class="highlight"><div class="chroma">
