@@ -106,72 +106,47 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>[Tip] Filezilla로 파일 전송하기
+    <h2>SLURM Documentation
     </h2>
   </header>
   <section class="entry-content">
-    <p>Filezilla로 파일 전송하기 Filezilla는 MacOS, Windows, Linux에서 사용할 수 있는 FTP 클라이언트입니다. Filezilla로 scp도 이용할 수 있기 때문에, drag &amp; drop으로 편리하게 파일을 전송할 수 있습니다.
-Filezilla를 실행한 뒤 파일-&gt;사이트 관리자를 누릅니다. 좌측 하단의 ‘New site’를 클릭하고, 오른쪽에
- 프로토콜: SFTP - SSH File Transfer Protocol 호스트: hpc.stat.yonsei.ac.kr 포트: 공지된 SSH port 로그온 유형: 비밀번호 묻기 사용자: 본인의 user name 을 입력하고 연결을 클릭합니다.  Password를 묻는 창이 나오면 리눅스 user password를 입력합니다....</p>
+    <p>1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &gt; Submitted batch job 210 # job_id: 210     squeue...</p>
   </section>
-  <footer class="entry-footer"><span title='2022-03-15 14:54:35 +0900 +0900'>March 15, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Jongmin Mun</footer>
-  <a class="entry-link" aria-label="post link to [Tip] Filezilla로 파일 전송하기" href="https://hpc.stat.yonsei.ac.kr/docs/filezilla/"></a>
+  <footer class="entry-footer"><span title='2022-03-08 22:39:38 +0900 +0900'>March 8, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Gwanghee Kim</footer>
+  <a class="entry-link" aria-label="post link to SLURM Documentation" href="https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>How to Use GPU Node for SLURM
+    <h2>How do I use the Chili Pepper Cluster?
     </h2>
   </header>
   <section class="entry-content">
-    <p>yml 파일 이용해 local과 동일한 conda 환경 구축하기 conda env export 커맨드를 이용해 environment 전체를 .yml 파일로 만들고 이를 이용해 cpu-compute 노드에서 environment를 구축하는 것이 가장 이상적인 방법입니다. 하지만 이 방법은 user의 local 컴퓨터가 linux가 아니면(특히 Windows일 경우) 자잘한 오류가 발생합니다[^fn2]. 차선책으로 설치된 패키지 목록과 버전만을 requirements.txt로 추출하여 노드에서 cpu-compute에서 설치할 수 있습니다.
-  User의 local 컴퓨터에서에서 아래의 커맨드를 통해 virtual environment로부터 환경설정 파일을 추출합니다. —no-builds는 서로 다른 OS에서 conda environment 내 패키지들의 버전 충돌을 방지하기 위한 옵션입니다....</p>
+    <p>Intro This documentation will go over the basics of using the Chili Pepper cluster. Please go through this documentation step-by-step. Contact the server administrator via email or use the Q&amp;A channel in the Slack Group.
+Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS which contains user home directories and other shared files. All users and groups are consistent across all nodes. The prefix for the user directory is /mnt/nas/users/....</p>
   </section>
-  <footer class="entry-footer"><span title='2022-03-15 14:54:35 +0900 +0900'>March 15, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Gwnaghee Kim, Jongmin Mun</footer>
-  <a class="entry-link" aria-label="post link to How to Use GPU Node for SLURM" href="https://hpc.stat.yonsei.ac.kr/docs/conda_env_export_yml/"></a>
+  <footer class="entry-footer"><span title='2022-02-21 12:12:53 +0900 +0900'>February 21, 2022</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Dongook Son</footer>
+  <a class="entry-link" aria-label="post link to How do I use the Chili Pepper Cluster?" href="https://hpc.stat.yonsei.ac.kr/docs/using-slurm-copy/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>How to Use GPU Node for SLURM
+    <h2>Creating Your Custom Jupyter Kernel from a Virtual Environment
     </h2>
   </header>
   <section class="entry-content">
-    <p>How to use CPU node for SLURM Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러스터를 사용합니다. 터미널 환경과 vi 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우, Visual Studio Code를 사용하는 것을 추천하며, 이 튜토리얼에서는 Visual Studio Code를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
- Windows, MacOS, Linux에서 모두 사용 가능합니다. Web Version도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다. 또한 터미널과 에디터, 파일 브라우저가 통합되어 있기 때문에 불편하게 vi나 nano등의 CUI 기반 텍스트 에디터를 사용할 필요가 없으며, 파일 전송도 scp등의 복잡한 프로토콜을 사용할 필요 없이 drag &amp; drop으로 수행할 수 있습니다....</p>
+    <p>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
+1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way....</p>
   </section>
-  <footer class="entry-footer"><span title='2022-03-15 14:54:35 +0900 +0900'>March 15, 2022</span>&nbsp;·&nbsp;10 min&nbsp;·&nbsp;Jongmin Mun</footer>
-  <a class="entry-link" aria-label="post link to How to Use GPU Node for SLURM" href="https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>How to Use GPU Node for SLURM
-    </h2>
-  </header>
-  <section class="entry-content">
-    <p>How to use GPU node for SLURM Step 1. Export your conda setting conda 환경을 동일하게 맞춰주기 위해 local에서 생성된 가상환경으로부터 환경설정 파일을 만들고, 서버에서 conda 가상환경을 만들 때 사용한다.
-1 2 3 4 5 6 7 8 9 10 11  # export conda setting conda activate [YOUR ENV NAME] conda env export -n [ENV NAME] -f [FILENAME].yml --no-builds # 이러면 조금은 해결되긴 함 # create environment from file conda create --name [YOUR ENV NAME] python = [VESTION] # same env name in yml file conda env create -f [FILENAME]....</p>
-  </section>
-  <footer class="entry-footer"><span title='2022-03-15 14:54:35 +0900 +0900'>March 15, 2022</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Gwnaghee Kim</footer>
-  <a class="entry-link" aria-label="post link to How to Use GPU Node for SLURM" href="https://hpc.stat.yonsei.ac.kr/docs/how-to-use-gpu-node-for-slurm/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Intro
-    </h2>
-  </header>
-  <section class="entry-content">
-    <p>요약 Chili Pepper는
- 총 세 개의 컴퓨터로 구성된 컴퓨팅 클러스터입니다. Cpu node 하나와 gpu node 하나, 그리고 이 둘을 관리하는 proxy node로 구성되어 있습니다. Slurm이라는 job scheduler로 여러 사용자의 작업을 각 node에 효율적으로 할당합니다. 각 사용자는 자신만의 conda environment를 스스로 생성하여 사용합니다. 기본적으로 non-interactive입니다.사용자가 자신의 로컬 컴퓨터에서 작성 및 테스트한 코드를 서버에 제출하면 서버가 해당 코드를 실행합니다. 주피터 노트북 환경은 실행 가능하지만, 꼭 필요한 경우에 한하여 요청 시 제공합니다. 이는 노트북 환경은 작업 단위가 아닌 시간 단위로 실행되기 때문에 서버의 RAM 자원을 지나치게 많이 점유하고 다른 작업의 실행을 방해하기 때문입니다....</p>
-  </section>
-  <footer class="entry-footer"><span title='2022-03-14 22:24:04 +0900 +0900'>March 14, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Jongmin Mun</footer>
-  <a class="entry-link" aria-label="post link to Intro" href="https://hpc.stat.yonsei.ac.kr/docs/intro/"></a>
+  <footer class="entry-footer"><span title='2021-11-28 22:24:04 +0900 +0900'>November 28, 2021</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Dongook Son</footer>
+  <a class="entry-link" aria-label="post link to Creating Your Custom Jupyter Kernel from a Virtual Environment" href="https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="next" href="https://hpc.stat.yonsei.ac.kr/docs/page/2/">Next Page »</a>
+    <a class="prev" href="https://hpc.stat.yonsei.ac.kr/docs/">« Prev Page</a>
   </nav>
 </footer>
     </main>
