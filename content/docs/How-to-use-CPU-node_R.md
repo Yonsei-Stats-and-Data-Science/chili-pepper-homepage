@@ -13,7 +13,7 @@ draft: false
 
 `R`은 `cpu-compute`에만 설치되어 있습니다. `R`은 conda environment를 사용하지 않습니다. `R` 패키지들은 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다. 실행할 `R` 코드를 script로 작성한 다음 Slurm batch script 내에 해당 script를 실행하도록 **Rscript xxx.R** command를 적어주면 됩니다.
 
-아래의 샘플 코드는 `xgboost`와 `caret`을 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `cpu_test_R.R`로 저장하여 user home directory에 둡니다.
+아래의 샘플 코드는 `xgboost`와 `caret`을 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `R_test_cpu.R`로 저장하여 user home directory에 둡니다.
 
 **install.packages()**에서
 - **force = FALSE** 옵션은 이미 설치된 패키지를 또 설치하는 것을 막아줍니다[^fn4].
@@ -87,42 +87,31 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 작성한 코드를 `cpu-compute` node에서 실행하는 Slurm batch script를 작성합니다. 클러스터 소개 페이지의 [slurm job configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html)를 사용하면 script를 쉽게 작성할 수 있습니다.
  
 
-![slurm_config](/assets/slurm_config.png)
+![slurm_config](/img/R_slurm_config.png)
 - `Python`과 달리 conda environment를 사용하지 않으므로, conda activate에 체크합니다.
 - 빈칸들을 채웁니다.
 - Script란에 **Rscript xxx.R**라고 작성합니다. 이는 home directory에 있는 **xxx.R** 파일을 `R`로 실행하라는 의미입니다.
 - **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
 
-`cpu_test_R.job`이라는 이름으로 클러스터의 user home directory에 저장합니다.
+`R_test_cpu.job`이라는 이름으로 클러스터의 user home directory에 저장합니다.
 
-Slurm batch script의 내용은 아래와 같습니다.
+Configurator로 생성한 Slurm batch script의 내용은 아래와 같습니다.
 ```
 #!/bin/bash 
 #
-#SBATCH --job-name=cpu_test_R
+#SBATCH --job-name=R_test_cpu
 #SBATCH --partition=all
 #SBATCH --account=mjm
 #SBATCH --mem=16gb
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --time=00:50:00
-#SBATCH --output=/mnt/nas/users/mjm/cpu_test_R.log
-#SBATCH --error=/mnt/nas/users/mjm/cpu_test_R.err
+#SBATCH --output=/mnt/nas/users/mjm/R_test_cpu.log
+#SBATCH --error=/mnt/nas/users/mjm/R_test_cpu.err
 #SBATCH --nodelist=cpu-compute
 
-Rscript cpu_test_R.R
+Rscript R_test_cpu.R
 ```
-
-Rscript cpu_test_R.R
-
-### 1. Python 코드 작성
-
-
-
-
-
-
-
 Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 - **—job-name**: 수행할 작업의 이름
 - **—mem**: memory limit
@@ -139,15 +128,15 @@ Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
 ### 4. Slurm batch script 실행
-Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 job 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
+**sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 job 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
 
 **squeue**나 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
 
 ```bash
-sbatch python_test_cpu.job
+sbatch R_test_cpu.job
 smap -i 1 # 작업 현황을 1초마다 갱신하여 보여줍니다. ctrl+c로 escape 할 수 있습니다.
-cat python_test_cpu.log
-tail -f python_test_cpu.err
+cat R_test_cpu.log
+tail -f R_test_cpu.err
 ```
 
 현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다.
