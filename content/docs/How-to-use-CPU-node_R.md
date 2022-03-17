@@ -1,142 +1,26 @@
 ---
-title: "CPU node 사용법(Python)"
+title: "3. CPU node 사용법(R)"
 author: "Jongmin Mun"
 date: 2022-03-17T14:54:35+09:00
 draft: false
 ---
 
-# How to use CPU node for SLURM
-
-
-## Step 1 - terminal 앱 고르기
-User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. 터미널 환경과 `vi` 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우, [Visual Studio Code](https://code.visualstudio.com/download)를 사용하는 것을 추천하며, 이 튜토리얼에서는 `Visual Studio Code`를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
-- Windows, MacOS, Linux에서 모두 사용 가능합니다.
-- [Web Version](https://code.visualstudio.com/docs/editor/vscode-web)도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다.
-- 또한 터미널과 에디터, 파일 브라우저가 통합되어 있기 때문에 불편하게 `vi`나 `nano`등의 CUI 기반 텍스트 에디터를 사용할 필요가 없으며, 파일 전송도 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
-
-### proxy node
-- `proxy` node는 user가 로그인하여 파일을 정리하고 job을 `cpu-compute`와 `gpu-compute` node에 제출하는 용도로만 쓰이는 컴퓨터입니다. 
-- 터미널에서 ssh 접속만 할 수 있다면 어떤 기기에서도 `proxy` node에 접속하여 job을 제출할 수 있습니다.
-- 일단 job을 제출하면, 터미널이 종료되고 user와 `proxy` node 간의 연결이 끊겨도 job은 계속 `cpu-compute`나 `gpu-compute` node에서 실행됩니다.
-- Standard output(Python, R에서 console에 출력되는 메시지)이 로그 파일에 기록되므로, 나중에 다시 터미널에 접속하여 job 실행 현황을 확인할 수 있습니다.
-
-`Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
-- Windows 10: PowerShell보다는 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))를 추천합니다.
-- MacOS: 기본 터미널을 사용해도 되지만, [iTerm2](https://iterm2.com)를 추천합니다.
-- iOS: [Blink](https://apps.apple.com/app/id1594898306)
-- Android: [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=ko&gl=US)
-  
-
-## Step 2 - proxy node SSH 접속 
-
-### 1. Visual Studio Code extensions에서 Remote Development 설치[fn^3]
-Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다. Remote-WSL, Remote-Containers, Remote-SSH가 자동적으로 같이 설치됩니다.
-![vscode_ssh_1](/assets/vscode_ssh_1.png)
-![vscode_ssh_2](/assets/vscode_ssh_2.png)
-
-### 2. Remote Explorer에서 SSH Targets를 선택 후, Add New 클릭
-![vscode_ssh_3](/assets/vscode_ssh_3.png)
-
-### 3. ssh 접속 커맨드 입력
-아래와 같은 창이 뜨면 ssh 커맨드를 입력하여 `proxy node`에 접속합니다. 
-![vscode_ssh_4](/assets/vscode_ssh_4.png)
-
-아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희의 클러스터는 보안상 이유로 다른 port를 사용합니다.
-```bash
-ssh -p [port] [username]@[ip] 
-```
-
-### 4. SSH configuration file을 저장할 장소 선택
-**Select SSH configuration file to update**가 나오면 맨 위 항목을 선택합니다.
-![vscode_ssh_5](/assets/vscode_ssh_5.png)
-
-**Host added!** 라는 메시지가 우측 하단에 나옵니다.
-![vscode_ssh_6](/assets/vscode_ssh_6.png)
-
-### 5. Remote Explore에서 Connect to Host in New Window 선택
-
-![vscode_ssh_7](/assets/vscode_ssh_7.png)
-
-
-
-### 6. 서버 Platform 선택
-Linux를 선택합니다.
-![vscode_ssh_8](/assets/vscode_ssh_8.png)
-
-### 7. Password 입력
-안내받은 password를 입력하여 로그인합니다. 
-![vscode_ssh_9](/assets/vscode_ssh_9.png)
-
-### 8. 파일 시스템 마운트
-좌측 탭의 파일 모양 아이콘을 클릭하고 **Open Folder** 버튼을 클릭합니다.
-![vscode_ssh_10](/assets/vscode_ssh_10.png)
-
-기본적으로 user home directory 경로가 입력되어 있습니다. OK를 누릅니다.
-![vscode_ssh_11](/assets/vscode_ssh_11.png)
-
-### 9. 둘러보기
-![vscode_ssh_12](/assets/vscode_ssh_12.png)
-- 좌측 file explorer에서 파일을 관리합니다. Windows 탐색기나 MacOS Finder에서 drag&drop으로 파일을 옮길 수 있습니다. 클러스터 내부의 파일을 user의 local 컴퓨터로 가져오는 것도 drag&drop으로 가능합니다.
-
-- `ctrl + shift + ~`키를 누르면 터미널이 열립니다. 여기서 서버 사용에 필요한 커맨드를 입력합니다.
-
-- text editor에서 코드와 스크립트를 수정하고 이미지 파일 등을 열람합니다.
-
-
-## Step 3. 파일 시스템 구조 이해
-
-NAS(Network Attached Storage)에 각 user의 home directory가 있습니다. NAS는 모든 node에 마운트되어 있으며, 모든 node에서 user명과 group명 및 관련 설정이 동일합니다. User명은 컴퓨팅 클러스터 사용 신청시 제출하신 이메일 주소의 @ 앞 부분과 동일합니다.
-
-User home directory의 prefix는 `/mnt/nas/users/`입니다. 예를 들어, `dummyuser`라는 user의 home directory의 경로는 `/mnt/nas/users/dummyuser/`입니다. 다른 user의 home directory를 열람할 수 없도록 권한설정이 되어 있습니다. 각 user는 데이터와 코드, 설정 파일 등을 자신의 home directory 내에 저장합니다.
-
-- Linux에서 directory를 이동하는 명령어는 `cd`입니다.
-- home directory를 나타내는 기호는 `~`입니다.
-- 현재 directory를 확인하는 명령어는 `pwd`입니다
-- 파일 목록을 확인하는 명령어는 `ls`입니다. 
-
-따라서 user는 proxy node아래의 명령어를 통해 자신의 홈 directory로 이동해 그 안에 있는 파일 목록을 확인할 수 있습니다.
-```
-cd ~
-ls
-``` 
-```txt
-# with the tree command the home directory will typically look like this
-/mnt/nas/users/dummyuser/
-├── .bash_history
-├── .bash_logout
-├── .bashrc
-├── .conda
-├── .config
-├── GettingStarted.md
-├── .gnupg
-├── .ipynb_checkpoints
-├── .ipython
-├── .jupyter
-├── .local
-├── logs
-├── .npm
-├── .profile
-├── .python_history
-├── some_script.sh
-├── .ssh
-└── .viminfo
-```
-~~
-
+# 3. CPU node 사용법(R)
+Step 1, 2, 3은 2번 문서와 내용이 같고 Step 4, 5만 다릅니다. 따라서 이 문서에서는 Step 4, 5만 작성합니다.
 
 ## Step 4. Conda environment 생성
-- `cpu-compute` node에는 conda version 4.11.0이 설치되어 있으며 Python version을 3.10까지 지원합니다[fn^1].
-- `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으며 Python version을 3.8까지 지원합니다.
+- `cpu-compute` node에는 conda version 4.11.0이 설치되어 있습니다.[fn^1].
+- `gpu-compute` node에는 conda version 4.6.14가 설치되어 있습니다.
 
 여기서는 `cpu-compute` node에서 conda environment를 생성하는 방법을 설명합니다. local에서 작성한 코드가 `cpu-compute` node에서 오류 없이 작동하도록 하기 위해, local과 `cpu-compute` node에서 동일한 conda environment를 구축해야 합니다. 
 
 ### 1. local에서 conda environment 생성
 이 섹션의 작업은 모두 클러스터가 아니라 user의 local 컴퓨터에서 진행합니다.
 
-[miniconda](https://docs.conda.io/en/latest/miniconda.html)를 설치한 다음, local 컴퓨터의 터미널에서 아래 커맨드로 virtual environment를 설정합니다. `testEnv` 자리에 원하는 이름을 넣고, `python=` 뒤에 사용할 Python version을 명시합니다. 
+[miniconda](https://docs.conda.io/en/latest/miniconda.html)를 설치한 다음, local 컴퓨터의 터미널에서 아래 커맨드로 virtual environment를 설정합니다. `testEnv` 자리에 원하는 이름을 넣습니다.
 
 ```bash
-conda create -n testEnv python=3.6
+conda create -n r_env r-base
 ```
 
 성공적으로 생성되면 아래와 같은 결과가 나옵니다.
@@ -164,19 +48,17 @@ conda info --env
 # conda environments:
 #
 base                  *  /opt/miniconda3
-testEnv                  /opt/miniconda3/envs/testEnv
+r_env                  /opt/miniconda3/envs/r_env
 ```
 
-Virtual environment에 진입한 뒤 패키지를 설치합니다.
-- pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
-- [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
-- 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
-- 패키지 버전을 명시할 때는 **==**를 사용합니다.
+Virtual environment에 진입한 뒤 패키지를 설치합니다. Conda에서 R 패키지 버전 관리가 잘 되지 않고 있기 때문에, conda로 설치하는 것은 추천하지 않습니다.
+
+**install.packages()**를 사용하여 패키지를 설치합니다. CRAN mirror를 명시해 주어야 합니다. [CRAN mirror의 목록](https://cran.r-project.org/mirrors.html)을 참고하세요.
 ```bash
-conda activate testEnv
+conda activate r_env
 
 #For example,
-conda install -c conda-forge lightgbm==2.0.7 matplotlib scikit-learn pandas numpy
+Rscript -e 'install.packages(c("dplyr", "ggplot2", "lightgbm"), repos="https://cloud.r-project.org/")'
 ```
 
 또는 user가 사용할 중요한 패키지들이 있을 경우 environment를 생성할 때 사용할 패키지 목록을 지정할 수도 있습니다. 
@@ -208,24 +90,23 @@ conda remove --name testEnv --all
     #SBATCH --mem=4gb
     #SBATCH --partition=all
     #SBATCH --nodelist=cpu-compute
-    #SBATCH --output=testEnv.log
-    #SBATCH --error=testEnv.err
+    #SBATCH --output=testEnvR.log
+    #SBATCH --error=testEnvR.err
     CONDA_BIN_PATH=/opt/miniconda/bin
-    ENV_NAME=testEnv #local에서와 같은 이름으로 입력
+    ENV_NAME=testEnvR #local에서와 같은 이름으로 입력
     ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
     $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.6
+    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH r-base
     source $CONDA_BIN_PATH/activate $ENV_PATH
-    conda install -c conda-forge lightgbm==2.0.7 matplotlib scikit-learn pandas numpy
+    Rscript -e 'install.packages(c("dplyr", "ggplot2", "lightgbm"), repos="https://cloud.r-project.org/")'
     ```
     
     위 내용에서
     - 7번 라인의 **#SBATCH --output=testEnv.out**의 output log 파일명
     - 8번 라인의 **#SBATCH --error=testEnv.err**의 error log 파일명
     - 10번 라인의 environment name
-    - 13번 라인의 python version
     - 14번 라인의 패키지 설치 커맨드
-    를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤,클러스터 내 user home directory에 `testEnv.job`으로 저장합니다.
+    를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤,클러스터 내 user home directory에 `testEnvR.job`으로 저장합니다.
 
 
 2. 작성한 스크립트 실행하기. `Visual Studio Code` 하단 터미널에
@@ -487,4 +368,4 @@ scancel [job number]
 [fn^1]: https://docs.conda.io/projects/conda/en/latest/release-notes.html
 [fn^2]: https://github.com/conda/conda/issues/9399
 [fn^3]: https://jstar0525.tistory.com/14
-[fn^4]: https://www.kaggle.com/samanemami/script-lightgbm-mnist
+[fn^4]: https://docs.anaconda.com/anaconda/user-guide/tasks/using-r-language/
