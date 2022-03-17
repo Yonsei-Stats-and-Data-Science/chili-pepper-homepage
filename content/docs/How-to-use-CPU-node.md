@@ -1,7 +1,7 @@
 ---
 title: "How to Use GPU Node for SLURM"
 author: "Jongmin Mun"
-date: 2022-03-15T14:54:35+09:00
+date: 2022-03-17T14:54:35+09:00
 draft: false
 ---
 
@@ -79,7 +79,7 @@ Linux를 선택합니다.
 - text editor에서 코드와 스크립트를 수정하고 이미지 파일 등을 열람합니다.
 
 
-## Step 3 - 파일 시스템 구조 이해
+## Step 3. 파일 시스템 구조 이해
 
 NAS(Network Attached Storage)에 각 user의 home directory가 있습니다. NAS는 모든 node에 마운트되어 있으며, 모든 node에서 user명과 group명 및 관련 설정이 동일합니다. User명은 컴퓨팅 클러스터 사용 신청시 제출하신 이메일 주소의 @ 앞 부분과 동일합니다.
 
@@ -117,46 +117,8 @@ ls
 ├── .ssh
 └── .viminfo
 ```
+~~
 
-## Step 3 - Data Transfer
-
-파일을 옮길 때에는 크게 'SCP'와 'Git' 두 가지 방법이 있습니다.
-
-### 방법 1. scp
-`scp`는 `SSH`와 같은 port를 사용합니다. 아래 커맨드를 이용해 파일을 보내고 받을 수 있습니다. `dummyuser`를 본인의 user명으로 바꾸고 파일명, directory명을 적절히 바꾸면 됩니다.
-
-### Sending a local file(`some_file.txt`) to the remote home directory
-
-```bash
-scp -P [port] some_file.txt dummyuser@hpc.stat.yonsei.ac.kr:~/
-```
-
-### Sending a local directory(`some_files/`) to the remote home directory
-
-```bash
-scp -P [port] -r some_files dummyuser@hpc.stat.yonsei.ac.kr:~/
-# /mnt/nas/users/dummyuser/some_files/ will be created
-```
-
-### Recieving a remote file(`some_file.txt`) in the home directory to the current local directory
-
-```bash
-scp -P [port] dummyuser@hpc.stat.yonsei.ac.kr:~/some_file.txt
-```
-
-### Recieving a remote directory(`/mnt/nas/users/dummyuser/some_files`) in the home directory to the current local directory
-
-```bash
-scp -P [port] -r dummyuser@hpc.stat.yonsei.ac.kr:~/some_files ./
-```
-이 외의 scp 옵션들은 [여기서](https://www.pcwdld.com/what-is-scp#wbounce-modal) 확인할 수 있습니다. 
-
-윈도우에서는 [winscp](https://winscp.net/eng/download.php) 를 이용해 `scp`를 drag & drop으로 편리하게 이용할 수 있습니다.
-
-MacOS에서는 [filezilla](https://filezilla-project.org)를 사용할 수 있습니다. 이에 대한 안내는 별도의 글로 작성되어 있습니다.
-
-### 방법 2. Git
-`Git`이 이미 설치되어 있으므로, 클러스터 내 적절한 directory에서 `git clone`을 사용합니다.
 
 ## Step 4. Conda environment 생성
 - `cpu-compute` node에는 conda version 4.11.0이 설치되어 있으며 Python version을 3.10까지 지원합니다[fn^1].
@@ -165,7 +127,7 @@ MacOS에서는 [filezilla](https://filezilla-project.org)를 사용할 수 있�
 여기서는 `cpu-compute` node에서 conda environment를 생성하는 방법을 설명합니다. local에서 작성한 코드가 `cpu-compute` node에서 오류 없이 작동하도록 하기 위해, local과 `cpu-compute` node에서 동일한 conda environment를 구축해야 합니다. 
 
 ### 1. local에서 conda environment 생성
-이 섹션의 작업은 모두 user의 local 컴퓨터에서 진행합니다.
+이 섹션의 작업은 모두 클러스터가 아니라 user의 local 컴퓨터에서 진행합니다.
 
 [miniconda](https://docs.conda.io/en/latest/miniconda.html)를 설치한 다음, local 컴퓨터의 터미널에서 아래 커맨드로 virtual environment를 설정합니다. `testEnv` 자리에 원하는 이름을 넣고, `python=` 뒤에 사용할 Python version을 명시합니다. 
 
@@ -201,12 +163,16 @@ base                  *  /opt/miniconda3
 testEnv                  /opt/miniconda3/envs/testEnv
 ```
 
-Virtual environment에 진입한 뒤 패키지를 설치합니다. pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다. [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 위 사이트는 설치 커맨드도 제공합니다. 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
+Virtual environment에 진입한 뒤 패키지를 설치합니다.
+- pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
+- [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
+- 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
+- 패키지 버전을 명시할 때는 **==**를 사용합니다.
 ```bash
 conda activate testEnv
 
 #For example,
-conda install -c conda-forge lightgbm==2.0.7 scikit-learn matplotlib keras
+conda install -c conda-forge lightgbm==2.0.7 matplotlib scikit-learn pandas numpy
 ```
 
 또는 user가 사용할 중요한 패키지들이 있을 경우 environment를 생성할 때 사용할 패키지 목록을 지정할 수도 있습니다. 
@@ -221,7 +187,11 @@ conda remove --name testEnv --all
 ```
 ### 2. `cpu-compute` node에 local과 동일한 conda environment 구축하기
 
-**conda env export** 커맨드를 이용해 environment 전체를 `.yml` 파일로 만들고 이를 이용해 `cpu-compute` 노드에서 environment를 구축하는 것이 동일한 environment를 만드는 가장 이상적인 방법입니다. 또는 설치된 패키지 목록과 버전만을 `requirements.txt`로 추출하여 노드에서 `cpu-compute`에서 설치할 수 있습니다. 그러나 이 두 방법은 user의 local 컴퓨터가 linux가 아니면 오류가 발생할 확률이 매우 높습니다. 이는 유저가 패키지를 설치할 때 자동으로 설치되는 dependency들의 버전이 OS별로 다를 수 있기 때문입니다. 예를 들어 `lightgbm` 2.0.7버전은 Python 버전이 3.6일 때 linux와 MacOS에서 둘 다 설치 가능하지만, 이 패키지의 dependency 중 하나인 `libgfortran`은 MacOS에서는 4.0.0버전이 설치되지만 linux에서는 3.0.0버전까지만 지원되기 때문에 MacOS에서 만든 environment에서 추출한 yml 파일이나 list txt 파일을 클러스터에서 사용하면 오류가 발생합니다[^fn2]. 이 오류는 적절한 조치를 통해 해결할 수 있을 때도 있지만 해결하기 힘들 때도 있습니다.
+- **conda env export** 커맨드를 이용해 environment 전체를 `.yml` 파일로 만들고 이를 이용해 `cpu-compute` 노드에서 environment를 구축하는 것이 동일한 environment를 만드는 가장 이상적인 방법입니다.
+- 또는 설치된 패키지 목록과 버전만을 `requirements.txt`로 추출하여 노드에서 `cpu-compute`에서 설치할 수 있습니다.
+- 그러나 이 두 방법은 user의 local 컴퓨터가 linux가 아니면 오류가 발생할 확률이 매우 높습니다. 이는 유저가 패키지를 설치할 때 자동으로 설치되는 dependency들의 버전이 OS별로 다를 수 있기 때문입니다.
+  - 예를 들어 `lightgbm` 2.0.7버전은 Python 버전이 3.6일 때 linux와 MacOS에서 둘 다 설치 가능하지만, 이 패키지의 dependency 중 하나인 `libgfortran`은 MacOS에서는 4.0.0버전이 설치되지만 linux에서는 3.0.0버전까지만 지원되기 때문에 MacOS에서 만든 environment에서 추출한 yml 파일이나 list txt 파일을 클러스터에서 사용하면 오류가 발생합니다[^fn2].
+  - 이 오류는 적절한 조치를 통해 해결할 수 있을 때도 있지만 해결하기 힘들 때도 있습니다.
 
 따라서 local에서 만든 environment를 cluster로 옮기기보다는, local의 environment에서 사용하는 Python 버전과 중요 패키지들의 버전을 그대로 사용하여 cluster 내에서 environment를 생성하는 것을 추천하며, 이 문서에서는 그 절차를 안내합니다.
 
@@ -234,15 +204,15 @@ conda remove --name testEnv --all
     #SBATCH --mem=4gb
     #SBATCH --partition=all
     #SBATCH --nodelist=cpu-compute
-    #SBATCH --output=testEnv.out
+    #SBATCH --output=testEnv.log
     #SBATCH --error=testEnv.err
     CONDA_BIN_PATH=/opt/miniconda/bin
     ENV_NAME=testEnv #local에서와 같은 이름으로 입력
     ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
     $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.6 
+    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.6
     source $CONDA_BIN_PATH/activate $ENV_PATH
-    conda install -c conda-forge lightgbm==2.0.7 scikit-learn matplotlib keras pandas numpy
+    conda install -c conda-forge lightgbm==2.0.7 matplotlib scikit-learn pandas numpy
     ```
     
     위 내용에서
@@ -251,16 +221,12 @@ conda remove --name testEnv --all
     - 10번 라인의 environment name
     - 13번 라인의 python version
     - 14번 라인의 패키지 설치 커맨드
-    를 알맞게 수정한 뒤  local에서 `testEnv.sh`로 저장하여 `scp`로 클러스터 내 user home directory로 전송합니다. 또는 proxy node에 접속한 뒤 home directory에서
+    를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤,클러스터 내 user home directory에 `testEnv.job`으로 저장합니다.
 
-    ```bash
-    vi testEnv.sh
-    ```
-    를 입력하여 linux의 텍스트 에디터를 실행한 뒤 `ctrl+v`로 위 내용을 붙여넣기하고 `esc`, `:wq`, `ENTER`를 차례로 눌러 저장합니다.
 
-2. 작성한 스크립트 실행하기. proxy node에 SSH접속한 뒤 home directory에서 
+2. 작성한 스크립트 실행하기. `Visual Studio Code` 하단 터미널에
     ```bash
-    sbatch testEnv.sh
+    sbatch testEnv.job
     ```  
     를 입력해 slurm batch job submission을 수행합니다. 작업이 노드에서 성공적으로 실행되면
 
@@ -279,9 +245,9 @@ conda remove --name testEnv --all
     402     all       conda-en    mjm  R    0:01    1  cpu-compute
     ``` 
 
-    또는 아래 커맨드를 통해 실시간으로 작업 실행 현황을 확인할 수 있습니다.
+    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다.
     ```bash
-    smap -i 1
+    smap -i 1 # ctrl+c로 escape 할 수 있습니다.
     ```
 
     다음 커맨드를 통해 output log, error log파일의 내용을 확인할 수 있습니다.
@@ -291,148 +257,230 @@ conda remove --name testEnv --all
     
     error log 또는 output log는 다음 커맨드를 통해 실시간으로 확인할 수 있습니다.
     ```bash
-    tail -f testEnv.out
+    tail -f testEnv.log
     ```  
  
 
-## Step 2. make env file and upload file to user’s workspace
+## Step 5. Slrum batch script 작성하여 서버에 제출하기
 
-local에서 만들어진 env 파일을 서버로 옮길 때는 **scp**를 사용한다. 간단한 사용법은 아래와 같다.
+### 1. Python 코드 작성
+이제 클러스터에서 실행할 Python 코드를 local에서 작성합니다. 머신 러닝 코드일 경우, Epoch 수를 작게 하는 등의 작업을 통해 빨리 실행되는 코드를 가지고 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
 
-```bash
-# scp 사용법
-# File upload
-scp [FILEPATH] ghk@[IP address]:~/ # upload from local, ~/ means home directory
-# File download
-scp ghk@[IP address]:[FILEPATH] ./ # scp [server file path] [local save path]
-
-# directory 전체 다운, 업로드 할 때는 -r 옵션을 사용한다.
-```
-
-Windows 사용자라면 **[WinSCP](https://winscp.net/eng/download.php)** 라는 이름의 프로그램을 사용하면 local과 서버 간 파일 전송을 보다 쉽게 처리할 수 있다. 
-
-<aside>
-💡 env file을 이용한 conda 환경 설정은 local과 서버 작업 환경을 동일하게 설정할 수 있는 신뢰할 수 있는 방법이다. 그러나 conda 환경 설정 과정이 너무 번거롭다면 requirements.txt를 만들어 패키지 버전만 관리해도 충돌을 방지할 수 있다.
-
-</aside>
-
-```bash
-conda install --force-reinstall -y -q -c conda-forge --file requirements.txt
-
-# --force-reinstall : Install the package even if it already exists.
-# -y : Yes, do not ask for confirmation.
-# -q : Quiet, do not display progress bar.
-# -c : Channels, additional channels to search for packages
-# conda-forge is recommended
-```
-
-## Step 3. make SLRUM batch script and run code in server
-
-앞선 단계에서 conda환경이 잘 만들어졌다면 해당 가상환경을 activate하여 코드를 돌리는 SLURM batch script를 작성할 수 있다. 사용자들의 이해를 돕기 위해 TensorFlow 공식 페이지에 게시된 [초보자용 튜토리얼](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드를 SLURM을 통해 실행시키는 예제를 공유한다. 먼저, 튜토리얼 코드는 다음과 같다.
+아래는 tree 기반 boosting 알고리즘인 LightGBM으로 mnist dataset을 분류하는 코드입니다. Matplotlib으로 boost round에 대한 loss curve와 accuracy curve의 plot을 만들어 `loss_curve.jpg`라는 파일로 저장합니다[fn^4]. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 꼭 포함해야 합니다. 아래 코드를 `cpu_test_python.py`로 저장하여 user home directory에 둡니다.
 
 ```python
-# tensor.py
+import numpy as np
+from time import process_time
+import matplotlib.pyplot as plt
+from lightgbm import LGBMClassifier
+from sklearn.metrics import accuracy_score, log_loss
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
 
-import tensorflow as tf
 
-mnist = tf.keras.datasets.mnist
+def lgb(n=10, c=0, sequence=1):
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
+    mnist = fetch_openml('mnist_784')
+    x_train, x_test, y_train, y_test = train_test_split(mnist.data, mnist.target, test_size=0.33, random_state=42)
 
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=(28, 28)),
-  tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(10, activation='softmax')
-])
+   
 
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+    proba_test = np.zeros((n, y_test.shape[0], len(np.unique(y_test))))
+    proba_train = np.zeros((n, y_train.shape[0], len(np.unique(y_train))))
 
-model.fit(x_train, y_train, epochs=5)
+    test_score = []
+    train_score = []
 
-model.evaluate(x_test,  y_test, verbose=2)
+    tr_time = []
+    seq = []
+    while(n):
+
+        model = LGBMClassifier(n_estimators=sequence)
+
+        t0 = process_time()
+        model.fit(x_train, y_train)
+        tr_time.append(process_time() - t0)
+        test_score.append(accuracy_score(y_test, model.predict(x_test)))
+        train_score.append(accuracy_score(y_train, model.predict(x_train)))
+        proba_test[c, ] = model.predict_proba(x_test)
+        proba_train[c, ] = model.predict_proba(x_train)
+
+        seq.append(sequence)
+        sequence *= 2
+        n -= 1
+        c += 1
+
+        ce_train = []
+        ce_test = []
+
+    for i in range(10):
+        ce_test.append(log_loss(y_test, proba_test[i]))
+        ce_train.append(log_loss(y_train, proba_train[i]))
+        
+        np.savetxt('round'+ str(i) + 'proba_test.csv', proba_test[i])
+        np.savetxt('round'+ str(i) + 'proba_train.csv', proba_train[i])
+
+    np.savetxt('test_score.csv', test_score, delimiter=',')
+    np.savetxt('train_score.csv', train_score, delimiter=',')
+
+    np.savetxt('ce_test.csv', ce_test, delimiter=',')
+    np.savetxt('ce_train.csv', ce_train, delimiter=',')
+
+    
+    fig, ax1 = plt.subplots()
+
+    l1 = ax1.plot(seq, ce_test, ':', label='loss-test', color='r')
+    l2 = ax1.plot(seq, ce_train, ':', label='loss-train', color='b')
+    ax1.set_xlabel("Boost rounds")
+    ax1.set_ylabel("Cross Entropy")
+
+    ax2 = ax1.twinx()
+    l3 = ax2.plot(seq, test_score, label='accuracy-test', color='r')
+    l4 = ax2.plot(seq, train_score, label='accuracy-train', color='b')
+    ax2.set_ylabel("Accuracy")
+
+    lb = l1 + l2 + l3 + l4
+    label = [l.get_label() for l in lb]
+
+    ax1.legend(lb, label, loc=0)
+    plt.title('loss curve/ accuracy')
+    plt.savefig('loss_curve.jpg', dpi=500)
+
+
+if __name__ == '__main__':
+    lgb()
 ```
+### 2. 현재 클러스터 자원 사용량 확인
+아래 커맨드를 통해 `cpu-compute` 노드의 cpu와 RAM 사용 현황을 볼 수 있습니다.
+```bash
+sinfo -o "%n %e %m %a %c %C"
+```
+
+아래와 같은 결과가 나옵니다.
+```
+HOSTNAMES FREE_MEM MEMORY AVAIL CPUS CPUS(A/I/O/T)
+cpu-compute 105589 128916 up 32 0/32/0/32
+gpu-compute 53318 80532 up 16 0/16/0/16
+```
+- CPUS의 A/I/O/T는 allocated/idle/other/total을 의미합니다. 
+- 자신의 job이 바로 실행되기를 원한다면, Slurm batch script를 작성할 때 
+  - RAM 용량을 FREE_MEM보다 적게 설정해야 합니다. 
+  - CPU 코어 개수를 CPUS idle보다 적게 설정해야 합니다.
+- 현재 가용 자원보다 더 많은 자원을 요구하는 script를 작성하면, job이 바로 실행되지 않습니다. 대기 상태에 있다가 다른 사용자들의 job이 끝나고 자원이 반환되면 job이 실행됩니다.
+
+
+### 3. Slurm batch script 작성
+앞선 단계에서 만든 해당 conda environment를 activate하고 코드를 실행하는 Slurm batch script를 작성합니다. 클러스터 소개 페이지의 [slurm job configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html)를 사용하면 script를 쉽게 작성할 수 있습니다. 
+
+![slurm_config](/assets/slurm_config.png)
+- Conda activate에 체크합니다.
+- 빈칸들을 채웁니다.
+- Script란에 **python xxx.py**라고 작성합니다. 이는 home directory에 있는 **xxx.py** 파일을 Python으로 실행하라는 의미입니다.
+- **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
+
+Slurm batch script의 내용은 아래와 같습니다.
 
 ```bash
-#!/bin/bash
+#!/bin/bash 
 #
-#SBATCH --job-name=gpu-tensor-test
-#SBATCH --mem=4gb
-#SBATCH --nodelist=gpu-compute
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --gres=gpu:1
-#SBATCH --time=00:20:00
-#SBATCH --account=ghk
+#SBATCH --job-name=python_test_cpu
 #SBATCH --partition=all
-#SBATCH --output=/mnt/nas/users/ghk/code/gputest.log
+#SBATCH --account=mjm
+#SBATCH --mem=4gb
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --time=01:00:00
+#SBATCH --output=/mnt/nas/users/mjm/python_test_cpu.log
+#SBATCH --error=/mnt/nas/users/mjm/python_test_cpu.err
+#SBATCH --nodelist=cpu-compute
 
 CONDA_BIN_PATH=/opt/miniconda/bin
-ENV_NAME=tensor
+ENV_NAME=testEnv
 ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
-
-## $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-## $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8 tensorflow pandas numpy
-
 source $CONDA_BIN_PATH/activate $ENV_PATH
-## pip uninstall keras
-## pip install keras==2.6.0
-python /mnt/nas/users/ghk/code/tensor.py
+
+python python_test_cpu.py
 ```
 
+`python_test_cpu.job`이라는 이름으로 클러스터의 user home directory에 저장합니다.
+
+Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 - **—job-name**: 수행할 작업의 이름
 - **—mem**: memory limit
 - **—nodelist**: 작업할 노드의 이름
 - **—ntasks**: 작업의 수
 - **—cpus-per-task**: 각 작업에서 사용할 cpu 코어의 수
-- **—gres=gpu** : 작업에서 사용할 gpu의 개수, gpu-compute 노드에는 총 2개의 gpu가 사용 가능하다.
 - **—time**: 작업 제한시간
 - **—accoun**t: 해당 작업을 수행하는 계정의 이름
 - **—partition**: group of nodes with specific characteristics
-- **—output**: 코드 실행 결과 log
+- **--nodelist**: 사용할 node의 이름
+- **—output**: 코드 실행 결과 log 파일. 확장자는 out이나 log가 가능합니다.
+- **—error**: 코드 실행 결과 log
+  
+sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
-제시한 대로 python 파일과 batch script 파일이 잘 만들어졌다면 **sbatch** 명령어를 입력하여 계산을 실행할 수 있다.
+### 4. Slurm batch script 실행
+Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 job 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
+
+**squeue**나 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
 
 ```bash
-sbatch tensor.sh
-smap -i 1 # 작업 현황을 1초마다 갱신하여 보여준다. ctrl+c로 escape 할 수 있다.
+sbatch python_test_cpu.job
+smap -i 1 # 작업 현황을 1초마다 갱신하여 보여줍니다. ctrl+c로 escape 할 수 있습니다.
+cat python_test_cpu.log
+tail -f python_test_cpu.err
 ```
+
+현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다.
 
 ```bash
-ghk@proxy:~/code$ cat gputest.log
-2022-03-15 14:27:34.877232: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2022-03-15 14:27:34.887611: I tensorflow/core/common_runtime/process_util.cc:146] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
-2022-03-15 14:27:38.063857: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
-Epoch 1/5
-1875/1875 [==============================] - 36s 19ms/step - loss: 0.2993 - accuracy: 0.9140
-Epoch 2/5
-1875/1875 [==============================] - 18s 10ms/step - loss: 0.1436 - accuracy: 0.9575
-Epoch 3/5
-1875/1875 [==============================] - 17s 9ms/step - loss: 0.1080 - accuracy: 0.9675
-Epoch 4/5
-1875/1875 [==============================] - 19s 10ms/step - loss: 0.0866 - accuracy: 0.9739
-Epoch 5/5
-1875/1875 [==============================] - 52s 28ms/step - loss: 0.0750 - accuracy: 0.9762
-313/313 - 4s - loss: 0.0782 - accuracy: 0.9779
-[0.078231580555439, 0.9779000282287598]
+scontrol show job [job number]
 ```
 
-SLURM batch script를 사용자들이 보다 편하게 만들 수 있도록 [SLURM Job Configurator](https://hpc.stat.yonsei.ac.kr/tools/job-configurator.html) 를 새롭게 작성하였다. 사용자들은 gpu 옵션을 체크하거나 해제하여 gpu-compute node 사용 여부를 결정할 수 있다. 해당되는 옵션을 체크하고 **Print** 버튼을 누르면 손쉽게 batch script를 작성할 수 있다.
+```text
+UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
+   Priority=4294901694 Nice=0 Account=mjm QOS=(null)
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:05 TimeLimit=01:00:00 TimeMin=N/A
+   SubmitTime=2022-03-17T15:31:01 EligibleTime=2022-03-17T15:31:01
+   StartTime=2022-03-17T15:31:01 EndTime=2022-03-17T16:31:01 Deadline=N/A
+   PreemptTime=None SuspendTime=None SecsPreSuspend=0
+   LastSchedEval=2022-03-17T15:31:01
+   Partition=all AllocNode:Sid=proxy:30897
+   ReqNodeList=cpu-compute ExcNodeList=(null)
+   NodeList=cpu-compute
+   BatchHost=cpu-compute
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,mem=4G,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=4G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   Gres=(null) Reservation=(null)
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/mnt/nas/users/mjm/python_test_cpu.job
+   WorkDir=/mnt/nas/users/mjm
+   StdErr=/mnt/nas/users/mjm/python_test_cpu.err
+   StdIn=/dev/null
+   StdOut=/mnt/nas/users/mjm/python_test_cpu.log
+   Power=
+```
+작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면
+![vscode_file](/assets/vscode_file.png)
 
+작업이 끝나기 전에 취소하려면
+```bash
+scancel [job number]
+```
 ## 더 알아보기
 
 [Submitting a slurm job script](https://ubccr.freshdesk.com/support/solutions/articles/5000688140-submitting-a-slurm-job-script)
 
 [SLRUM Job Examples](https://doc.zih.tu-dresden.de/jobs_and_resources/slurm_examples/)
 
-[TensorFlow on the HPC Clusters](https://researchcomputing.princeton.edu/support/knowledge-base/tensorflow)
-
 
 # Refernece
 [fn^1]: https://docs.conda.io/projects/conda/en/latest/release-notes.html
 [fn^2]: https://github.com/conda/conda/issues/9399
 [fn^3]: https://jstar0525.tistory.com/14
+[fn^4]: https://www.kaggle.com/samanemami/script-lightgbm-mnist
