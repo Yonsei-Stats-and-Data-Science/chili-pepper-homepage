@@ -1,5 +1,5 @@
 ---
-title: "How to Use GPU Node for SLURM"
+title: "CPU node 사용법(Python)"
 author: "Jongmin Mun"
 date: 2022-03-17T14:54:35+09:00
 draft: false
@@ -14,7 +14,11 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 - [Web Version](https://code.visualstudio.com/docs/editor/vscode-web)도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다.
 - 또한 터미널과 에디터, 파일 브라우저가 통합되어 있기 때문에 불편하게 `vi`나 `nano`등의 CUI 기반 텍스트 에디터를 사용할 필요가 없으며, 파일 전송도 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
 
-터미널에서 ssh 접속만 할 수 있다면 어떤 기기에서도 `proxy` node에 접속하여 작업을 제출할 수 있으며, 터미널이 종료되어도 작업은 계속 실행됩니다. Standard output(Python, R에서 console에 출력되는 메시지)가 로그 파일에 기록되므로, 나중에 다시 터미널에 접속하여 job 실행 현황을 확인할 수 있습니다.
+### proxy node
+- `proxy` node는 user가 로그인하여 파일을 정리하고 job을 `cpu-compute`와 `gpu-compute` node에 제출하는 용도로만 쓰이는 컴퓨터입니다. 
+- 터미널에서 ssh 접속만 할 수 있다면 어떤 기기에서도 `proxy` node에 접속하여 job을 제출할 수 있습니다.
+- 일단 job을 제출하면, 터미널이 종료되고 user와 `proxy` node 간의 연결이 끊겨도 job은 계속 `cpu-compute`나 `gpu-compute` node에서 실행됩니다.
+- Standard output(Python, R에서 console에 출력되는 메시지)이 로그 파일에 기록되므로, 나중에 다시 터미널에 접속하여 job 실행 현황을 확인할 수 있습니다.
 
 `Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
 - Windows 10: PowerShell보다는 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))를 추천합니다.
@@ -465,10 +469,10 @@ UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
    StdOut=/mnt/nas/users/mjm/python_test_cpu.log
    Power=
 ```
-작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면
+작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
 ![vscode_file](/assets/vscode_file.png)
 
-작업이 끝나기 전에 취소하려면
+작업이 끝나기 전에 취소하려면 **scance** 커맨드를 사용합니다.
 ```bash
 scancel [job number]
 ```
