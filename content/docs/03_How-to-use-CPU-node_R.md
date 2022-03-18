@@ -5,7 +5,7 @@ date: 2022-03-17T13:54:35+09:00
 draft: false
 ---
 
-# 3. CPU node 사용법(R)
+# 3. CPU node에서 R 코드 실행하기
 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
 
 ### 1. R 코드 작성
@@ -17,7 +17,7 @@ draft: false
 
 **install.packages()**에서
 - **force = FALSE** 옵션은 이미 설치된 패키지를 또 설치하는 것을 막아줍니다[^fn4].
-- **INSTALL_opts = c('--no-lock')** 옵션은 설치가 이전에 강제 중단 되어서 directory에 락이 걸렸을 때 락을 무시하고 설치하게 합니다[^fn5].
+- **INSTALL_opts = c('--no-lock')** 옵션은 설치가 이전에 강제로 중단되어서 directory에 락이 걸렸을 때 락을 무시하고 설치하게 합니다[^fn5].
 
 ```R
 install.packages("xgboost", force = FALSE, INSTALL_opts = c('--no-lock'))
@@ -88,7 +88,7 @@ gpu-compute 53318 80532 up 16 0/16/0/16
  
 
 ![slurm_config](/img/R_slurm_config.png)
-- `Python`과 달리 conda environment를 사용하지 않으므로, conda activate에 체크합니다.
+- `Python`과 달리 conda environment를 사용하지 않으므로, conda activate에 체크하지 않습니다.
 - 빈칸들을 채웁니다.
 - Script란에 **Rscript xxx.R**라고 작성합니다. 이는 home directory에 있는 **xxx.R** 파일을 `R`로 실행하라는 의미입니다.
 - **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
@@ -128,58 +128,12 @@ Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
 ### 4. Slurm batch script 실행
-**sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 job 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
-
-**squeue**나 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
+**sbatch** 커맨드를 통해 job을 제출합니다. 2번 문서의 Step 4에서처럼, `ctrl+shift+~`를 눌러 터미널을 여러 개 띄우고 **smap -i**로 작업 현황을 확인하고, **tail -f xxx.out**, **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다. 작업은 5분 이내에 끝납니다.
 
 ```bash
 sbatch R_test_cpu.job
-smap -i 1 # 작업 현황을 1초마다 갱신하여 보여줍니다. ctrl+c로 escape 할 수 있습니다.
-cat R_test_cpu.log
-tail -f R_test_cpu.err
 ```
 
-현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다.
-
-```bash
-scontrol show job [job number]
-```
-
-```text
-UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
-   Priority=4294901694 Nice=0 Account=mjm QOS=(null)
-   JobState=RUNNING Reason=None Dependency=(null)
-   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
-   RunTime=00:00:05 TimeLimit=01:00:00 TimeMin=N/A
-   SubmitTime=2022-03-17T15:31:01 EligibleTime=2022-03-17T15:31:01
-   StartTime=2022-03-17T15:31:01 EndTime=2022-03-17T16:31:01 Deadline=N/A
-   PreemptTime=None SuspendTime=None SecsPreSuspend=0
-   LastSchedEval=2022-03-17T15:31:01
-   Partition=all AllocNode:Sid=proxy:30897
-   ReqNodeList=cpu-compute ExcNodeList=(null)
-   NodeList=cpu-compute
-   BatchHost=cpu-compute
-   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
-   TRES=cpu=4,mem=4G,node=1,billing=4
-   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
-   MinCPUsNode=4 MinMemoryNode=4G MinTmpDiskNode=0
-   Features=(null) DelayBoot=00:00:00
-   Gres=(null) Reservation=(null)
-   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
-   Command=/mnt/nas/users/mjm/python_test_cpu.job
-   WorkDir=/mnt/nas/users/mjm
-   StdErr=/mnt/nas/users/mjm/python_test_cpu.err
-   StdIn=/dev/null
-   StdOut=/mnt/nas/users/mjm/python_test_cpu.log
-   Power=
-```
-작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
-![vscode_file](https://github.com/Yonsei-Stats-and-Data-Science/chili-pepper-homepage/blob/main/assets/vscode_file.png?raw=true)
-
-작업이 끝나기 전에 취소하려면 **scance** 커맨드를 사용합니다.
-```bash
-scancel [job number]
-```
 ## 더 알아보기
 
 [Submitting a slurm job script](https://ubccr.freshdesk.com/support/solutions/articles/5000688140-submitting-a-slurm-job-script)
@@ -187,7 +141,7 @@ scancel [job number]
 [SLRUM Job Examples](https://doc.zih.tu-dresden.de/jobs_and_resources/slurm_examples/)
 
 
-# Refernece
+## References
 [^fn1]: https://docs.conda.io/projects/conda/en/latest/release-notes.html
 [^fn2]: https://github.com/conda/conda/issues/9399
 [^fn3]: https://jstar0525.tistory.com/14
