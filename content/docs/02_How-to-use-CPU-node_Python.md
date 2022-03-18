@@ -178,7 +178,7 @@ Virtual environment에 진입한 뒤 패키지를 설치합니다.
 - pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
 - [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
 - 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
-- 패키지 버전을 명시할 때는 **=**를 사용합니다.
+- 패키지 버전을 명시할 때는 =를 사용합니다.
 ```bash
 conda activate testEnv
 
