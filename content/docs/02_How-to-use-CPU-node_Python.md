@@ -1,7 +1,7 @@
 ---
 title: "2. CPU node 사용법(Python)"
 author: "Jongmin Mun"
-date: 2022-03-17T12:54:35+09:00
+date: 2022-03-17T14:54:35+09:00
 draft: false
 ---
 # CPU node에서 Python 코드 실행하기
@@ -244,7 +244,7 @@ conda remove --name testEnv --all
     ```text
     Submitted batch job 401
     ```
-    와 같은 메시지가 뜨고 job 번호가 할당됩니다. 
+    와 같은 메시지가 뜨고 job 번호가 할당됩니다. 할당되는 job 번호는 나중에 squeue를 통해 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
 
     ```bash
     squeue
@@ -430,17 +430,15 @@ Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
 ### 5.4. Slurm batch script 실행
-Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다.
+Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 squeue를 통해 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
 
-Step 4에서처럼, `ctrl+shift+~`를 눌러 터미널을 여러 개 띄우고 **smap -i**로 작업 현황을 확인하고, **tail -f xxx.out**, **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
+Step 4에서처럼, `ctrl+shift+~`를 눌러 터미널을 여러 개 띄우고 **smap -i**로 작업 현황을 확인하고, **tail -f xxx.out**, **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다. 작업은 4분 정도 걸립니다.
 
 ```bash
 sbatch python_test_cpu.job
 ```
 
- 따라서 한 터미널에서는 **smap -i 1**으로 slurm 작업 현황을 보고, 다른 터미널에서는 **tail -f xxx.log**로 코드가 내는 콘솔 아웃풋을 확인할 수 있습니다. 작업은 4분 정도 걸립니다.
-
-현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다.
+현재 작업이 자원을 얼마나 할당받았는지 확인하려면 다음 커맨드를 사용합니다. NumCPUs=4가 코어를 4개 할당받았다는 뜻이고, mem=4G가 RAM을 4gb 할당받았다는 뜻입니다. 이 커맨드는 다른 user가 제출한 job에 대해서도 사용할 수 있습니다.
 
 ```bash
 scontrol show job [job number]
