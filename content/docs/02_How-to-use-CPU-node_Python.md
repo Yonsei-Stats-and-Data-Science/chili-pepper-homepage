@@ -9,7 +9,7 @@ draft: false
 ## Step 1 - terminal 앱 고르기
 User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. 터미널 환경과 `vi` 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 [Visual Studio Code](https://code.visualstudio.com/download)를 사용하는 것을 추천합니다. 이 문서에서는 `Visual Studio Code`를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
 - Windows, MacOS, Linux에서 모두 사용 가능합니다.
-- [Web Version](https://code.visualstudio.com/docs/editor/vscode-web)도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다.
+- [Web Version](https://vscode.dev)도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다.
 - 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.
   - 불편하게 `vi`나 `nano`등의 CLI용 텍스트 에디터를 사용할 필요가 없습니다.
   - 파일 전송시 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
