@@ -18,89 +18,42 @@ draft: false
 - CUDA 버전([호환성 표](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html))
 - cuDNN, 딥러닝 라이브러리(`tensorflow`, `pytorch`) 버전(호환성 표: [tensorflow](https://www.tensorflow.org/install/source#gpu), [pytorch](https://pytorch.org/get-started/previous-versions/))
 
-이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `gpu-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
+이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `gpu-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 요소들의 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
 
-GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브러리 버전을 정한 다음 conda create 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다. 이 튜토리얼에서는 이 방법을 사용합니다.
+GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브러리 버전을 정한 다음 conda create 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다. 이 문서에서는 이 방법을 사용합니다.
 
-이 튜토리얼에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
+이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
 ### 1. local에서 conda environment 생성
-
-```bash
-conda create -n testEnvGPU python=3.7
-```
-
-성공적으로 생성되면 아래와 같은 결과가 나옵니다.
-
-```text
-Preparing transaction: done
-Verifying transaction: done
-Executing transaction: done
-#
-# To activate this environment, use
-#
-#     $ conda activate testEnv
-#
-# To deactivate an active environment, use
-#
-#     $ conda deactivate
-```
-
-아래 커맨드를 통해 virtual environment가 제대로 생성되었는지 확인합니다.
-```bash
-conda info --env
-```
-
-```text
-# conda environments:
-#
-base                  *  /opt/miniconda3
-testEnvGPU               /opt/miniconda3/envs/testEnvGPU
-```
-
-Virtual environment에 진입한 뒤 패키지를 설치합니다.
-- pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
-- [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
-- 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
-- 패키지 버전을 명시할 때는 **=**를 사용합니다.
-
-```bash
-conda activate testEnvGPU
-
-#For example,
-conda install -c anaconda tensorflow-gpu=2.2.0 cudatoolkit cudnn matplotlib scikit-learn pandas numpy
-```
-
-아래 명령어로 cudatoolkit, cudnn 버전을 확인하여 batch 
-```bash
-conda list
-```
+문서 2의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
 
 ### 2. gpu-compute node에서 동일한 conda environment 구축
-
+두 가지 방법을 소개합니다.
 #### 2.1. 중요 패키지의 버전만 맞추기
 2번 문서(CPU node 사용법(Python))에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
 - 이 방법은 2번 문서의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
-- 이 튜토리얼에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
+- 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
- ```bash
-    #!/bin/bash
-    #SBATCH --job-name=conda-env-create
-    #SBATCH --nodes=1
-    #SBATCH --mem=4gb
-    #SBATCH --partition=all
-    #SBATCH --nodelist=gpu-compute
-    #SBATCH --output=testEnvGPU.log
-    #SBATCH --error=testEnvGPU.err
-    CONDA_BIN_PATH=/opt/miniconda/bin
-    ENV_NAME=testEnvGPU #local에서와 같은 이름으로 입력
-    ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
-    $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.7
-    source $CONDA_BIN_PATH/activate $ENV_PATH
-    conda install tensorflow-gpu=2.2.0
-  ```
+```bash
+#!/bin/bash
+#SBATCH --job-name=testEnvGPU
+#SBATCH --nodes=1
+#SBATCH --mem=4gb
+#SBATCH --partition=all
+#SBATCH --nodelist=gpu-compute
+#SBATCH --output=testEnvGPU.log
+#SBATCH --error=testEnvGPU.err
+CONDA_BIN_PATH=/opt/miniconda/bin
+ENV_NAME=testEnvGPU #local에서와 같은 이름으로 입력
+ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
+$CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
+$CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.7
+source $CONDA_BIN_PATH/activate $ENV_PATH
+conda install -y tensorflow-gpu=2.2.0
+```
+
+cudatoolkit, cudnn 등이 용량이 커서 시간이 조금 오래 걸립니다.
 
 #### 2.2. local environment export하기
 
@@ -168,7 +121,7 @@ conda install --force-reinstall -y -q -c conda-forge --file requirements.txt
 ### 1. Python 코드 작성
 이제 클러스터에서 실행할 Python 코드를 local에서 작성합니다. 먼저 local에서 코드가 오류 없이 돌아가는지 확인합니다. 그 후 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
 
-아래는 TensorFlow 공식 페이지에 게시된 [초보자용 튜토리얼](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, **model.evaluate(x_test,  y_test, verbose=2)**가 결과를 콘솔에 출력하기 때문에 로그 파일에서 결과를 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
+아래는 TensorFlow 공식 페이지에 게시된 [초보자용 문서](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, **model.evaluate(x_test,  y_test, verbose=2)**가 결과를 콘솔에 출력하기 때문에 로그 파일에서 결과를 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
 
 
 ```python
@@ -198,22 +151,8 @@ model.evaluate(x_test,  y_test, verbose=2)
 ```
 
 ### 2. 현재 클러스터 자원 사용량 확인
-아래 커맨드를 통해 `cpu-compute` 노드의 cpu와 RAM 사용 현황을 볼 수 있습니다.
-```bash
-sinfo -o "%n %e %m %a %c %C"
-```
-
-아래와 같은 결과가 나옵니다.
-```
-HOSTNAMES FREE_MEM MEMORY AVAIL CPUS CPUS(A/I/O/T)
-cpu-compute 105589 128916 up 32 0/32/0/32
-gpu-compute 53318 80532 up 16 0/16/0/16
-```
-- CPUS의 A/I/O/T는 allocated/idle/other/total을 의미합니다. 
-- 자신의 job이 바로 실행되기를 원한다면, Slurm batch script를 작성할 때 
-  - RAM 용량을 FREE_MEM보다 적게 설정해야 합니다. 
-  - CPU 코어 개수를 CPUS idle보다 적게 설정해야 합니다.
-- 현재 가용 자원보다 더 많은 자원을 요구하는 script를 작성하면, job이 바로 실행되지 않습니다. 대기 상태에 있다가 다른 사용자들의 job이 끝나고 자원이 반환되면 job이 실행됩니다.
+`gpu-compute`의 여유 cpu 코어 개수와 RAM은 문서2에 있는 방법을 통해 확인합니다. 
+GPU의 경우 한 user가 하나의 GPU만을 사용하도록 되어 있습니다. 따라서 `gpu-compute` node는 최대 2명의 user가 사용할 수 있습니다. **squeue** 커맨드를 통해 `gpu-compute` node에서 실행 중이거나 실행 대기 중인 job의 개수를 파악합니다.
 
 
 ### 3. Slurm batch script 작성
