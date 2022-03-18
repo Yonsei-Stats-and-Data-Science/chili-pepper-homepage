@@ -15,7 +15,7 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
   - 파일 전송시 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
 
 `Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
-- Windows 10: [WSL2(Windows Subsystem for Linux 2)](https://docs.microsoft.com/ko-kr/windows/wsl/install)과 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))을 설치하여 사용하는 것을 추천합니다.
+- Windows 10: [WSL2(Windows Subsystem for Linux 2)](https://docs.microsoft.com/ko-kr/windows/wsl/install)와 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))을 설치하여 사용하는 것을 추천합니다.
 - MacOS: 기본 터미널을 사용해도 되지만, [iTerm2](https://iterm2.com)를 추천합니다.
 - iOS: [Blink](https://apps.apple.com/app/id1594898306)
 - Android: [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=ko&gl=US)
@@ -23,7 +23,7 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 ### proxy node
 - `proxy` node는 user가 로그인하여 파일을 정리하고 `cpu-compute`나 `gpu-compute` node에 job을 제출하는 용도로만 쓰는 컴퓨터입니다. 
   - 따라서 `proxy` node는 성능이 낮습니다. `proxy` node에서는 Python 작업 등을 실행하지 마세요.
-- 터미널에서 ssh 접속만 할 수 있다면 어떤 기기에서도 `proxy` node에 접속하여 job을 제출할 수 있습니다.
+- 터미널에서 `SSH` 접속만 할 수 있다면 어떤 기기에서도 `proxy` node에 접속하여 job을 제출할 수 있습니다.
 - 일단 job을 제출하면, 터미널이 종료되고 user와 `proxy` node 간의 연결이 끊겨도 job은 계속 `cpu-compute`나 `gpu-compute` node에서 실행됩니다.
 - Standard output(Python, R에서 console에 출력되는 메시지)이 로그 파일에 기록되므로, 나중에 다시 터미널에 접속하여 job 실행 현황을 확인할 수 있습니다.
 
@@ -40,7 +40,7 @@ Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다
 ![vscode_ssh_3](/img/vscode_ssh_3.png)
 
 ### 3. ssh 접속 커맨드 입력
-아래와 같은 창이 뜨면 ssh 커맨드를 입력하여 `proxy node`에 접속합니다. 
+아래와 같은 창이 뜨면 `SSH` 커맨드를 입력하여 `proxy node`에 접속합니다. 
 ![vscode_ssh_4](/img/vscode_ssh_4.png)
 
 아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
@@ -206,7 +206,7 @@ conda remove --name testEnv --all
 따라서 local에서 만든 environment를 cluster로 옮기기보다는, local의 environment에서 사용하는 Python 버전과 중요 패키지들의 버전을 그대로 사용하여 cluster 내에서 environment를 생성하는 것을 추천하며, 이 문서에서는 그 절차를 안내합니다.
 
 
-1. Conda environment 생성 batch script를 작성합니다.
+1. Conda environment 생성 slurm batch script를 작성합니다.
     ```bash
     #!/bin/bash
     #SBATCH --job-name=testEnv
@@ -227,7 +227,7 @@ conda remove --name testEnv --all
     
     위 내용에서
     - 2번 라인의 **#SBATCH --job-name=testEnv**의 job name
-    - 7번 라인의 **#SBATCH --output=testEnv.out**의 output log 파일명
+    - 7번 라인의 **#SBATCH --output=testEnv.log**의 output log 파일명
     - 8번 라인의 **#SBATCH --error=testEnv.err**의 error log 파일명
     - 10번 라인의 environment name
     - 13번 라인의 python version
@@ -256,14 +256,14 @@ conda remove --name testEnv --all
     402     all       testEnv    mjm  R    0:01    1  cpu-compute
     ``` 
 
-    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다.
+    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다. `ctrl+c`로 escape 할 수 있습니다.
     ```bash
-    smap -i 1 # ctrl+c로 escape 할 수 있습니다.
+    smap -i 1 
     ```
 
     다음 커맨드를 통해 output log, error log파일의 내용을 확인할 수 있습니다.
     ```bash
-    cat [your_job-name].out
+    cat [your_job-name].log
     cat [your_job-name].err
     ```
     
@@ -273,7 +273,7 @@ conda remove --name testEnv --all
     tail -f [your_job_name].err
     ```  
     
-    터미널을 여러 개 띄워 놓고 `smap`과 `tail` 커맨드를 하나씩 입력하면 편리하게 실행 상황을 모니터링할 수 있습니다.
+    터미널을 여러 개 띄워 놓고 각각에 `smap`과 `tail` 커맨드를 입력하면 편리하게 실행 상황을 모니터링할 수 있습니다.
 
     위 샘플 코드는 약 3분 안에 작업이 완료됩니다. smap에서 작업 목록이 사라진 후 **cat**으로 로그 파일을 열어서
     
@@ -376,7 +376,7 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 - 자신의 job이 바로 실행되기를 원한다면, Slurm batch script를 작성할 때 
   - RAM 용량을 FREE_MEM보다 적게 설정해야 합니다. 
   - CPU 코어 개수를 CPUS idle보다 적게 설정해야 합니다.
-- 현재 가용 자원보다 더 많은 자원을 요구하는 script를 작성하면, job이 바로 실행되지 않습니다. 대기 상태에 있다가 다른 사용자들의 job이 끝나고 자원이 반환되면 job이 실행됩니다.
+- 현재 가용 자원보다 더 많은 자원을 요구하는 script를 작성하면, job이 바로 실행되지 않습니다. 대기 상태에 있다가 다른 user들의 job이 끝나고 자원이 반환되면 job이 실행됩니다.
 
 
 ### 5.3. Slurm batch script 작성
@@ -484,7 +484,7 @@ UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
 [SLRUM Job Examples](https://doc.zih.tu-dresden.de/jobs_and_resources/slurm_examples/)
 
 
-# Refernece
+## References
 [^fn1]: https://docs.conda.io/projects/conda/en/latest/release-notes.html
 [^fn2]: https://github.com/conda/conda/issues/9399
 [^fn3]: https://jstar0525.tistory.com/14

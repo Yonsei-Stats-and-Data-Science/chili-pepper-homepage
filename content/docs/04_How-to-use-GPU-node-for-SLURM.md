@@ -5,7 +5,7 @@ date: 2022-03-17T14:54:35+09:00
 draft: false
 ---
 
-# 4. GPU node 사용법(Python)
+# 4. GPU node에서 Python 코드 실행하기
 2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
 `gpu-compute` node에서는 `Python`만 사용 가능합니다.
@@ -25,13 +25,13 @@ GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브
 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
 ### 1. local에서 conda environment 생성
-문서 2의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
+[문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
 
 ### 2. gpu-compute node에서 동일한 conda environment 구축
 두 가지 방법을 소개합니다.
 #### 2.1. 중요 패키지의 버전만 맞추기
-2번 문서(CPU node 사용법(Python))에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
-- 이 방법은 2번 문서의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
+[문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
+- 이 방법은 [문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
 - 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
@@ -121,7 +121,7 @@ conda install --force-reinstall -y -q -c conda-forge --file requirements.txt
 ### 1. Python 코드 작성
 이제 클러스터에서 실행할 Python 코드를 local에서 작성합니다. 먼저 local에서 코드가 오류 없이 돌아가는지 확인합니다. 그 후 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
 
-아래는 TensorFlow 공식 페이지에 게시된 [초보자용 문서](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, **model.evaluate(x_test,  y_test, verbose=2)**가 결과를 콘솔에 출력하기 때문에 로그 파일에서 결과를 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
+아래는 TensorFlow 공식 페이지에 게시된 [초보자용 문서](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, `tensorflow`가 학습 과정을 콘솔에 출력하기 때문에 이를 로그 파일에서 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
 
 
 ```python
@@ -197,7 +197,7 @@ sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slu
 ### 4. Slurm batch script 실행
 Conda environment를 만들 때처럼, **sbatch** 커맨드를 통해 job을 제출합니다. 할당되는 job 번호는 나중에 squeue를 통해 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
 
-**squeue**나 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
+터미널을 여러 개 띄운 다음 **smap -i**로 작업 현황을 확인하고, **cat xxx.log**이나 **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다.
 
 ```bash
 sbatch tensor.job

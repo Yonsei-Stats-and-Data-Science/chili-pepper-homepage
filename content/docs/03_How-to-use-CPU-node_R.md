@@ -5,7 +5,7 @@ date: 2022-03-17T13:54:35+09:00
 draft: false
 ---
 
-# 3. CPU node 사용법(R)
+# 3. CPU node에서 R 코드 실행하기
 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
 
 ### 1. R 코드 작성
@@ -17,7 +17,7 @@ draft: false
 
 **install.packages()**에서
 - **force = FALSE** 옵션은 이미 설치된 패키지를 또 설치하는 것을 막아줍니다[^fn4].
-- **INSTALL_opts = c('--no-lock')** 옵션은 설치가 이전에 강제 중단 되어서 directory에 락이 걸렸을 때 락을 무시하고 설치하게 합니다[^fn5].
+- **INSTALL_opts = c('--no-lock')** 옵션은 설치가 이전에 강제로 중단되어서 directory에 락이 걸렸을 때 락을 무시하고 설치하게 합니다[^fn5].
 
 ```R
 install.packages("xgboost", force = FALSE, INSTALL_opts = c('--no-lock'))
@@ -141,7 +141,7 @@ sbatch R_test_cpu.job
 [SLRUM Job Examples](https://doc.zih.tu-dresden.de/jobs_and_resources/slurm_examples/)
 
 
-# Refernece
+## References
 [^fn1]: https://docs.conda.io/projects/conda/en/latest/release-notes.html
 [^fn2]: https://github.com/conda/conda/issues/9399
 [^fn3]: https://jstar0525.tistory.com/14
