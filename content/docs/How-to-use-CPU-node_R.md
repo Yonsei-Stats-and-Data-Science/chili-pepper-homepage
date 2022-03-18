@@ -1,7 +1,7 @@
 ---
 title: "3. CPU node 사용법(R)"
 author: "Jongmin Mun"
-date: 2022-03-17T14:54:35+09:00
+date: 2022-03-17T13:54:35+09:00
 draft: false
 ---
 
