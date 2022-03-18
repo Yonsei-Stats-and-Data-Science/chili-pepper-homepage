@@ -51,8 +51,41 @@ params:
 
     profileMode:
         enabled: true
-        title: "Chili Pepper<br><h3>HPC Data Science Cluster</h3>
-<br><p>Chili Pepper is a High Performance Computing(HPC) cluster configured to run heavy data science workloads via SLURM. Administrators are currently working on a web-based Jupyter sessions. Currently 2 compute nodes are available. The CPU dedicated server is equipped with 32 physical cores and 128GB of RAM. The GPU node has 16 physical cores and 80GB of RAM with 2 Tesla T4 GPUs with 16GB of vRAM each. The cluster is hosted via Naver Cloud Platform and configured by student administrators. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>"
+        title: '
+Chili Pepper<br><h3>HPC Data Science Cluster</h3>
+<br><table>
+<thead>
+<tr>
+<th align="center">NodeName</th>
+<th align="center">OS</th>
+<th align="center">Cores</th>
+<th align="center">RAM</th>
+<th align="center">vRAM</th>
+<th align="center">Conda</th>
+<th align="center">Cuda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">cpu-compute</td>
+<td align="center"><a target="_blank" rel="noopener noreferrer" href="https://camo.githubusercontent.com/2bb8cca55feefd0858ee2fb6a25f212bc57803507608e5539bad56c82d44e16c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d7562756e7475266d6573736167653d31382e30342e3626636f6c6f723d653935343230266c6f676f3d7562756e7475"><img src="https://camo.githubusercontent.com/2bb8cca55feefd0858ee2fb6a25f212bc57803507608e5539bad56c82d44e16c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d7562756e7475266d6573736167653d31382e30342e3626636f6c6f723d653935343230266c6f676f3d7562756e7475" alt="Ubuntu: 18.04" data-canonical-src="https://img.shields.io/static/v1?label=ubuntu&amp;message=18.04.6&amp;color=e95420&amp;logo=ubuntu" style="max-width: 100%;"></a></td>
+<td align="center">32</td>
+<td align="center">128GB</td>
+<td align="center">-</td>
+<td align="center"><a target="_blank" rel="noopener noreferrer" href="https://camo.githubusercontent.com/266cc3e5a0b8658f3e17cc4222febd8927964fed3172d2b839f18b668d37c594/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f6e6461253743636f6e64612d2d666f7267652d76342e31312e302d626c7565"><img src="https://camo.githubusercontent.com/266cc3e5a0b8658f3e17cc4222febd8927964fed3172d2b839f18b668d37c594/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f6e6461253743636f6e64612d2d666f7267652d76342e31312e302d626c7565" alt="Conda: 4.11.0" data-canonical-src="https://img.shields.io/badge/conda%7Cconda--forge-v4.11.0-blue" style="max-width: 100%;"></a></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">gpu-compute</td>
+<td align="center"><a target="_blank" rel="noopener noreferrer" href="https://camo.githubusercontent.com/2bb8cca55feefd0858ee2fb6a25f212bc57803507608e5539bad56c82d44e16c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d7562756e7475266d6573736167653d31382e30342e3626636f6c6f723d653935343230266c6f676f3d7562756e7475"><img src="https://camo.githubusercontent.com/2bb8cca55feefd0858ee2fb6a25f212bc57803507608e5539bad56c82d44e16c/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d7562756e7475266d6573736167653d31382e30342e3626636f6c6f723d653935343230266c6f676f3d7562756e7475" alt="Ubuntu: 18.04" data-canonical-src="https://img.shields.io/static/v1?label=ubuntu&amp;message=18.04.6&amp;color=e95420&amp;logo=ubuntu" style="max-width: 100%;"></a></td>
+<td align="center">16</td>
+<td align="center">80GB</td>
+<td align="center">32</td>
+<td align="center"><a target="_blank" rel="noopener noreferrer" href="https://camo.githubusercontent.com/776d77e94d64f41ece9e15f794e0fae4a194f6bc34e6d9ee0af3f2fe29fb9f88/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f6e6461253743636f6e64612d2d666f7267652d76342e362e31342d626c7565"><img src="https://camo.githubusercontent.com/776d77e94d64f41ece9e15f794e0fae4a194f6bc34e6d9ee0af3f2fe29fb9f88/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f6e6461253743636f6e64612d2d666f7267652d76342e362e31342d626c7565" alt="Conda: 4.6.14" data-canonical-src="https://img.shields.io/badge/conda%7Cconda--forge-v4.6.14-blue" style="max-width: 100%;"></a></td>
+<td align="center"><a target="_blank" rel="noopener noreferrer" href="https://camo.githubusercontent.com/0c26150b4002baae809d83f4fa37c308cc72c7748b4cfdfbf88ecc320ca8ac6d/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d63756461266d6573736167653d31302e3126636f6c6f723d373662393030266c6f676f3d6e7669646961"><img src="https://camo.githubusercontent.com/0c26150b4002baae809d83f4fa37c308cc72c7748b4cfdfbf88ecc320ca8ac6d/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f6c6162656c3d63756461266d6573736167653d31302e3126636f6c6f723d373662393030266c6f676f3d6e7669646961" alt="Cuda: 10.1" data-canonical-src="https://img.shields.io/static/v1?label=cuda&amp;message=10.1&amp;color=76b900&amp;logo=nvidia" style="max-width: 100%;"></a></td>
+</tr>
+</tbody>
+</table><br><p>Chili Pepper is a HPC cluster configured to run heavy data science workloads via SLURM. The cluster is hosted via Naver Cloud Platform and configured by student administrators. This project is funded by BK21 Foundation and Yonsei University Department of Statistics and Data Science.<br>To gain access to this server please send an email to the administrator.<br>Thank You.</p>'
         imageUrl: images/chili.png
         imageTitle: "ChiliPepper logo"
         # imageWidth: 500
