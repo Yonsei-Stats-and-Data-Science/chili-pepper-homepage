@@ -8,7 +8,7 @@ draft: false
 # 4. GPU node 사용법(Python)
 2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
-`GPU-compute` node에서는 `Python`만 사용 가능합니다.
+`gpu-compute` node에서는 `Python`만 사용 가능합니다.
 ## Step 4. Export your conda setting
 
 ### 버전 관리
@@ -18,7 +18,7 @@ draft: false
 - CUDA 버전([호환성 표](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html))
 - cuDNN, 딥러닝 라이브러리(`tensorflow`, `pytorch`) 버전(호환성 표: [tensorflow](https://www.tensorflow.org/install/source#gpu), [pytorch](https://pytorch.org/get-started/previous-versions/))
 
-이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `GPU-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
+이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `gpu-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
 
 GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브러리 버전을 정한 다음 conda create 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다. 이 튜토리얼에서는 이 방법을 사용합니다.
 
@@ -76,10 +76,10 @@ conda install -c anaconda tensorflow-gpu=2.2.0 cudatoolkit cudnn matplotlib scik
 conda list
 ```
 
-### 2. GPU-compute node에서 동일한 conda environment 구축
+### 2. gpu-compute node에서 동일한 conda environment 구축
 
 #### 2.1. 중요 패키지의 버전만 맞추기
-2번 문서(CPU node 사용법(Python))에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `GPU-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
+2번 문서(CPU node 사용법(Python))에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
 - 이 방법은 2번 문서의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
 - 이 튜토리얼에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
@@ -104,7 +104,7 @@ conda list
 
 #### 2.2. local environment export하기
 
-Local에서 생성된 가상환경으로부터 환경설정 `yml` 파일을 만들고, 이를 이용해 `GPU-compute` node에서 conda environment를 생성하여 conda 환경을 동일하게 맞출 수도 있습니다. 이게 가장 이상적인 방법이지만, local OS가 linux가 아닐 경우 문제가 발생할 수 있습니다. 이 문서에서는 이 방법을 설명합니다. 
+Local에서 생성된 가상환경으로부터 환경설정 `yml` 파일을 만들고, 이를 이용해 `gpu-compute` node에서 conda environment를 생성하여 conda 환경을 동일하게 맞출 수도 있습니다. 이게 가장 이상적인 방법이지만, local OS가 linux가 아닐 경우 문제가 발생할 수 있습니다. 이 문서에서는 이 방법을 설명합니다. 
 
 Local에서 아래 커맨드로 `yml` 파일을 추출합니다.
 ```bash
