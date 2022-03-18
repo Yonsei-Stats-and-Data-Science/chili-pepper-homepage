@@ -5,21 +5,11 @@
     <link>https://hpc.stat.yonsei.ac.kr/</link>
     <description>Recent content on Chili Pepper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 17 Mar 2022 14:54:35 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>2. CPU node 사용법(Python)</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</link>
-      <pubDate>Thu, 17 Mar 2022 14:54:35 +0900</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</guid>
-      <description>CPU node에서 Python 코드 실행하기 Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러스터를 사용합니다. 터미널 환경과 vi 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 Visual Studio Code를 사용하는 것을 추천합니다. 이 문서에서는 Visual Studio Code를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
- Windows, MacOS, Linux에서 모두 사용 가능합니다. Web Version도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다. 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.</description>
-    </item>
-    
+    <lastBuildDate>Mon, 14 Mar 2022 14:54:35 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>4. GPU node 사용법(Python)</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm/</link>
-      <pubDate>Thu, 17 Mar 2022 14:54:35 +0900</pubDate>
+      <pubDate>Mon, 14 Mar 2022 14:54:35 +0900</pubDate>
       
       <guid>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm/</guid>
       <description>4. GPU node에서 Python 코드 실행하기 2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
@@ -31,22 +21,12 @@ Step 4. Export your conda setting 버전 관리 딥러닝 라이브러리를 사
     <item>
       <title>3. CPU node 사용법(R)</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</link>
-      <pubDate>Thu, 17 Mar 2022 13:54:35 +0900</pubDate>
+      <pubDate>Sat, 12 Mar 2022 13:54:35 +0900</pubDate>
       
       <guid>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</guid>
       <description>3. CPU node에서 R 코드 실행하기 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
 1. R 코드 작성 클러스터에서 실행할 R 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, Visual Studio Code내에서 작성하여 저장합니다.
 R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사용하지 않습니다. R 패키지들은 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.</description>
-    </item>
-    
-    <item>
-      <title>1. Introduction</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</link>
-      <pubDate>Mon, 14 Mar 2022 22:24:04 +0900</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</guid>
-      <description>요약 Chili Pepper는
- 총 세 개의 컴퓨터로 구성된 컴퓨팅 클러스터입니다. CPU node 하나, GPU node 하나, 그리고 이 둘을 관리하는 proxy node로 구성되어 있습니다. Slurm이라는 job scheduler로 여러 user의 작업을 각 node에 효율적으로 할당합니다. 각 user는 자신만의 conda environment를 스스로 생성하여 사용합니다. 기본적으로 non-interactive입니다. User가 자신의 로컬 컴퓨터에서 작성 및 테스트한 코드를 서버에 제출하면 서버가 해당 코드를 실행합니다. 주피터 노트북 환경은 실행 가능하지만, 꼭 필요한 경우에 한하여 요청 시 제공합니다.</description>
     </item>
     
     <item>
@@ -59,6 +39,26 @@ R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사�
 If you need more information, Please Visit https://slurm.schedmd.com/overview.html
 2. Basic SLURM Command   sbatch
  Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &amp;gt; Submitted batch job 210 # job_id: 210     squeue</description>
+    </item>
+    
+    <item>
+      <title>2. CPU node 사용법(Python)</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</link>
+      <pubDate>Fri, 04 Mar 2022 14:54:35 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</guid>
+      <description>CPU node에서 Python 코드 실행하기 Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러스터를 사용합니다. 터미널 환경과 vi 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 Visual Studio Code를 사용하는 것을 추천합니다. 이 문서에서는 Visual Studio Code를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
+ Windows, MacOS, Linux에서 모두 사용 가능합니다. Web Version도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다. 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.</description>
+    </item>
+    
+    <item>
+      <title>1. Introduction</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</link>
+      <pubDate>Wed, 02 Mar 2022 22:24:04 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</guid>
+      <description>요약 Chili Pepper는
+ 총 세 개의 컴퓨터로 구성된 컴퓨팅 클러스터입니다. CPU node 하나, GPU node 하나, 그리고 이 둘을 관리하는 proxy node로 구성되어 있습니다. Slurm이라는 job scheduler로 여러 user의 작업을 각 node에 효율적으로 할당합니다. 각 user는 자신만의 conda environment를 스스로 생성하여 사용합니다. 기본적으로 non-interactive입니다. User가 자신의 로컬 컴퓨터에서 작성 및 테스트한 코드를 서버에 제출하면 서버가 해당 코드를 실행합니다. 주피터 노트북 환경은 실행 가능하지만, 꼭 필요한 경우에 한하여 요청 시 제공합니다.</description>
     </item>
     
     <item>
