@@ -52,7 +52,7 @@ Chili Pepper는
 HPC(High performance computing) 시스템은 개인용 컴퓨터와 달리 여러 사용자가 여러 node를 공유하며 사용합니다. 따라서 누구의 작업이 언제 어느 node에서 실행될지 결정해 주어야 합니다. 이러한 역할을 수행하는 것이 job scheduler입니다.
 
 Job scheduler를 식당의 웨이터에 비유할 수 있습니다. 식당에 사람이 많으면 줄을 서서 기다려야 합니다. 웨이터는 각 손님 그룹의 수에 맞는 자리가 나면 그 그룹을 테이블로 안내합니다[^fn1].
-![restaurant](/assets/restaurant_queue_manager.svg)
+![restaurant](./assets/restaurant_queue_manager.svg)
 
 #### 용어
 - Job: 사용자가 클러스터에서 실행하고자 하는 코드(bash, python, R 등을 모두 포함)
