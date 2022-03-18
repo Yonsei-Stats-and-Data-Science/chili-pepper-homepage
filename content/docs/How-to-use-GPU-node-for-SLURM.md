@@ -1,6 +1,6 @@
 ---
 title: "4. GPU node 사용법(Python)"
-author: "Gwnaghee Kim", "Jongmin Mun"
+author: "Gwnaghee Kim, Jongmin Mun"
 date: 2022-03-15T14:54:35+09:00
 draft: false
 ---

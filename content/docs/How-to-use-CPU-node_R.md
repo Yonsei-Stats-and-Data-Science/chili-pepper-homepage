@@ -174,7 +174,7 @@ UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
    Power=
 ```
 작업이 완료되면 **squeue** `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
-![vscode_file](/assets/vscode_file.png)
+![vscode_file](https://github.com/Yonsei-Stats-and-Data-Science/chili-pepper-homepage/blob/main/assets/vscode_file.png?raw=true)
 
 작업이 끝나기 전에 취소하려면 **scance** 커맨드를 사용합니다.
 ```bash
