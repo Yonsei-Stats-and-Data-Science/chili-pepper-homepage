@@ -14,14 +14,14 @@
     <loc>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</loc>
     <lastmod>2022-03-12T13:54:35+09:00</lastmod>
   </url><url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</loc>
-    <lastmod>2022-03-08T22:39:38+09:00</lastmod>
-  </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</loc>
     <lastmod>2022-03-04T14:54:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</loc>
     <lastmod>2022-03-02T22:24:04+09:00</lastmod>
+  </url><url>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</loc>
+    <lastmod>2022-02-28T22:39:38+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/using-slurm-copy/</loc>
     <lastmod>2022-02-21T12:12:53+09:00</lastmod>

@@ -40,8 +40,8 @@ If you need more information, Please Visit https://slurm.schedmd.com/overview.ht
  Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &gt; Submitted batch job 210 # job_id: 210     squeue" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2022-03-08T22:39:38&#43;09:00" />
-<meta property="article:modified_time" content="2022-03-08T22:39:38&#43;09:00" />
+<meta property="article:published_time" content="2022-02-28T22:39:38&#43;09:00" />
+<meta property="article:modified_time" content="2022-02-28T22:39:38&#43;09:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SLURM Documentation"/>
@@ -84,8 +84,8 @@ If you need more information, Please Visit https://slurm.schedmd.com/overview.ht
   "articleBody": "1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.\nIf you need more information, Please Visit https://slurm.schedmd.com/overview.html\n2. Basic SLURM Command   sbatch\n Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output  Submitted batch job 210 # job_id: 210     squeue\n View the queue  1 2 3 4 5  $ squeue # output  JOBID PARTITION NAME USER ST TIME NODES NODELIST(REASON) 210 all test1 ghk R 0:29 1 cpu-compute     scancel\n Cancel a SLURM job  1  $ scancel [YOUR_JOBID]     sinfo\n See the state of system  1 2 3 4 5  $ sinfo # output  PARTITION AVAIL TIMELIMIT NODES STATE NODELIST all* up infinite 2 idle cpu-compute,gpu-compute     smap\n graphically view information about SLURM job    For more information about SLURM command, please visit website below.\n  SLURM Workload Manager\n  SLURM Command Cheatsheet\n  SLURM Reference Sheet(NeSI)\n  Submit your first job(NeSI)\n  3. How to make SLURM batch script? ‘Job submission file’ is the official SLURM name for the file you use to submit your program and ask for resources from the job scheduler. In this document, we will be using it ‘batch script’ or ‘script’.\nBasic example 1 2 3 4 5 6 7  #!/bin/bash #  # SBATCH --job-name=basic # SBATCH --mem=1gb # SBATCH --ntasks=1 # SBATCH --time=01:00 # SBATCH --output=/mnt/nas/users/testuser/basic.log   Asking 1 tasks, running for no more than 1 minutes limit memory less than 1gb. If any problem with your job, log file(in this case, ‘basic.log’) have information to help troubleshoot the issue.\nYou can also use gpu-nodes by using ‘—gres’ option. Here is an example.\n1 2 3 4 5 6 7 8 9 10 11  #!/bin/bash #  #SBATCH --job-name=basic #SBATCH --nodes=1 #SBATCH --gres=gpu:2 # max : 2 #SBATCH --time=01:00 #SBATCH --account=testuser #SBATCH --partition=all #SBATCH --output=/mnt/nas/users/testuser/torch.log source activate /opt/miniconda/envs/pytorch \u0026\u0026 python /mnt/nas/users/testuser/main.py   1 2 3 4 5 6 7 8 9 10  # main.py import torch print('is cuda avaiable? ', torch.cuda.is_available()) print('how many cuda devices? ',torch.cuda.device_count()) print('get first cuda device name = ', torch.cuda.get_device_name(0)) print('*** MEMORY INFO ***') t = torch.cuda.get_device_properties(0).total_memory print('total memory = ', t) print('total memory: ', t)   The job can then be submitted through sbatch\n1 2 3 4 5 6 7  $ sbatch basic.sh $ cat torch.log  is cuda avaiable? True  how many cuda devices? 2  get first cuda device name = Tesla T4  ***MEMORY INFO***  total memory = 16879583232   Beacuse we only have 2 gpu machine, this option can’t be set more than 2\nFor the convenience of users, we provide SLURM job configurator page in our website. Please visit SLURM job configurator and make your own SLURM batch script!\n",
   "wordCount" : "461",
   "inLanguage": "en",
-  "datePublished": "2022-03-08T22:39:38+09:00",
-  "dateModified": "2022-03-08T22:39:38+09:00",
+  "datePublished": "2022-02-28T22:39:38+09:00",
+  "dateModified": "2022-02-28T22:39:38+09:00",
   "author":{
     "@type": "Person",
     "name": "Gwanghee Kim"
@@ -158,7 +158,7 @@ If you need more information, Please Visit https://slurm.schedmd.com/overview.ht
     <h1 class="post-title">
       SLURM Documentation
     </h1>
-    <div class="post-meta"><span title='2022-03-08 22:39:38 +0900 +0900'>March 8, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Gwanghee Kim
+    <div class="post-meta"><span title='2022-02-28 22:39:38 +0900 +0900'>February 28, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Gwanghee Kim
 
 </div>
   </header> <div class="toc">
@@ -398,15 +398,15 @@ $ cat torch.log
 
   <footer class="post-footer">
 <nav class="paginav">
-  <a class="prev" href="https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/">
+  <a class="prev" href="https://hpc.stat.yonsei.ac.kr/docs/01_intro/">
     <span class="title">« Prev Page</span>
     <br>
-    <span>3. CPU node 사용법(R)</span>
+    <span>1. Introduction</span>
   </a>
-  <a class="next" href="https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/">
+  <a class="next" href="https://hpc.stat.yonsei.ac.kr/docs/using-slurm-copy/">
     <span class="title">Next Page »</span>
     <br>
-    <span>2. CPU node 사용법(Python)</span>
+    <span>How do I use the Chili Pepper Cluster?</span>
   </a>
 </nav>
 

@@ -30,18 +30,6 @@ R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사�
     </item>
     
     <item>
-      <title>SLURM Documentation</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</link>
-      <pubDate>Tue, 08 Mar 2022 22:39:38 +0900</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</guid>
-      <description>1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
-If you need more information, Please Visit https://slurm.schedmd.com/overview.html
-2. Basic SLURM Command   sbatch
- Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &amp;gt; Submitted batch job 210 # job_id: 210     squeue</description>
-    </item>
-    
-    <item>
       <title>2. CPU node 사용법(Python)</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</link>
       <pubDate>Fri, 04 Mar 2022 14:54:35 +0900</pubDate>
@@ -59,6 +47,18 @@ If you need more information, Please Visit https://slurm.schedmd.com/overview.ht
       <guid>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</guid>
       <description>요약 Chili Pepper는
  총 세 개의 컴퓨터로 구성된 컴퓨팅 클러스터입니다. CPU node 하나, GPU node 하나, 그리고 이 둘을 관리하는 proxy node로 구성되어 있습니다. Slurm이라는 job scheduler로 여러 user의 작업을 각 node에 효율적으로 할당합니다. 각 user는 자신만의 conda environment를 스스로 생성하여 사용합니다. 기본적으로 non-interactive입니다. User가 자신의 로컬 컴퓨터에서 작성 및 테스트한 코드를 서버에 제출하면 서버가 해당 코드를 실행합니다. 주피터 노트북 환경은 실행 가능하지만, 꼭 필요한 경우에 한하여 요청 시 제공합니다.</description>
+    </item>
+    
+    <item>
+      <title>SLURM Documentation</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</link>
+      <pubDate>Mon, 28 Feb 2022 22:39:38 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/slurm-documentation/</guid>
+      <description>1. What is SLURM? Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained.
+If you need more information, Please Visit https://slurm.schedmd.com/overview.html
+2. Basic SLURM Command   sbatch
+ Submit a batch script to SLURM  1 2 3 4  $ sbatch [YOUR_SCRIPT] # output &amp;gt; Submitted batch job 210 # job_id: 210     squeue</description>
     </item>
     
     <item>
