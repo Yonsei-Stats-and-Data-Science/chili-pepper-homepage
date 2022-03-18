@@ -9,7 +9,6 @@ draft: false
 ## Step 1 - terminal 앱 고르기
 User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. 터미널 환경과 `vi` 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 [Visual Studio Code](https://code.visualstudio.com/download)를 사용하는 것을 추천합니다. 이 문서에서는 `Visual Studio Code`를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
 - Windows, MacOS, Linux에서 모두 사용 가능합니다.
-- [Web Version](https://code.visualstudio.com/docs/editor/vscode-web)도 있기 때문에 모바일 디바이스에서도 사용할 수 있습니다.
 - 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.
   - 불편하게 `vi`나 `nano`등의 CLI용 텍스트 에디터를 사용할 필요가 없습니다.
   - 파일 전송시 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
@@ -178,7 +177,7 @@ Virtual environment에 진입한 뒤 패키지를 설치합니다.
 - pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
 - [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
 - 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
-- 패키지 버전을 명시할 때는 **=**를 사용합니다.
+- 패키지 버전을 명시할 때는 =를 사용합니다.
 ```bash
 conda activate testEnv
 
