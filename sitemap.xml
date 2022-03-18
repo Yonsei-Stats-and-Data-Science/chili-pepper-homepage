@@ -2,10 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/</loc>
-    <lastmod>2022-03-17T14:54:35+09:00</lastmod>
-  </url><url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_r/</loc>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-gpu-node-for-slurm/</loc>
     <lastmod>2022-03-17T14:54:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/</loc>
@@ -14,8 +11,11 @@
     <loc>https://hpc.stat.yonsei.ac.kr/docs/</loc>
     <lastmod>2022-03-17T14:54:35+09:00</lastmod>
   </url><url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-gpu-node-for-slurm/</loc>
-    <lastmod>2022-03-15T14:54:35+09:00</lastmod>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_r/</loc>
+    <lastmod>2022-03-17T13:54:35+09:00</lastmod>
+  </url><url>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/</loc>
+    <lastmod>2022-03-17T12:54:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/intro/</loc>
     <lastmod>2022-03-14T22:24:04+09:00</lastmod>
