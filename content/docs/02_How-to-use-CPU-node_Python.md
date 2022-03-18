@@ -1,7 +1,7 @@
 ---
 title: "2. CPU node 사용법(Python)"
 author: "Jongmin Mun"
-date: 2022-03-17T14:54:35+09:00
+date: 2022-03-17T12:54:35+09:00
 draft: false
 ---
 # CPU node에서 Python 코드 실행하기
