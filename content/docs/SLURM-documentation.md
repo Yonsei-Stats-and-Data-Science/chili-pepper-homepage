@@ -1,7 +1,7 @@
 ---
 title: "SLURM Documentation"
 author: "Gwanghee Kim"
-date: 2022-03-08T22:39:38+09:00
+date: 2022-02-28T22:39:38+09:00
 draft: False
 ---
 
