@@ -6,7 +6,7 @@ draft: false
 ---
 
 # 3. CPU node에서 R 코드 실행하기
-2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
 
 ### 1. R 코드 작성
 클러스터에서 실행할 `R` 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
@@ -128,7 +128,7 @@ Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
 ### 4. Slurm batch script 실행
-**sbatch** 커맨드를 통해 job을 제출합니다. 2번 문서의 Step 4에서처럼, `ctrl+shift+~`를 눌러 터미널을 여러 개 띄우고 **smap -i**로 작업 현황을 확인하고, **tail -f xxx.out**, **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다. 작업은 5분 이내에 끝납니다.
+**sbatch** 커맨드를 통해 job을 제출합니다. [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 Step 4에서처럼, `ctrl+shift+~`를 눌러 터미널을 여러 개 띄우고 **smap -i**로 작업 현황을 확인하고, **tail -f xxx.out**, **tail -f xxx.err**으로 콘솔 출력이나 error를 확인합니다. 작업은 5분 이내에 끝납니다.
 
 ```bash
 sbatch R_test_cpu.job

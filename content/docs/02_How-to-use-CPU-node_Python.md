@@ -16,7 +16,7 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 `Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
 - Windows 10: [WSL2(Windows Subsystem for Linux 2)](https://docs.microsoft.com/ko-kr/windows/wsl/install)와 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))을 설치하여 사용하는 것을 추천합니다.
 - MacOS: 기본 터미널을 사용해도 되지만, [iTerm2](https://iterm2.com)를 추천합니다.
-- iOS: [Blink](https://apps.apple.com/app/id1594898306)
+- iOS: [5번 문서](https://hpc.stat.yonsei.ac.kr/docs/05_ipad)를 참조하세요.
 - Android: [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=ko&gl=US)
 
 ### proxy node
@@ -42,9 +42,15 @@ Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다
 아래와 같은 창이 뜨면 `SSH` 커맨드를 입력하여 `proxy node`에 접속합니다. 
 ![vscode_ssh_4](/img/vscode_ssh_4.png)
 
-아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
+아래 코드에 Slack으로 안내받은 port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
+
 ```bash
-ssh -p [port] [username]@[ip] 
+ssh -p [port] [username]@hpc.stat.yonsei.ac.kr 
+```
+또는 안내받은 proxy node의 ip를 입력해도 됩니다.
+
+```bash
+ssh -p [port] [username]@[ip]
 ```
 
 ### 4. SSH configuration file을 저장할 장소 선택

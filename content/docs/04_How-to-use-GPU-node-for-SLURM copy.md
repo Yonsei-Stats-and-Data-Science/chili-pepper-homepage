@@ -6,7 +6,7 @@ draft: false
 ---
 
 # 4. GPU node에서 Python 코드 실행하기
-2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)를 먼저 숙지하시기 바랍니다. 이 문서는 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
 `gpu-compute` node에서는 `Python`만 사용 가능합니다.
 ## Step 4. Export your conda setting
@@ -25,13 +25,13 @@ GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브
 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
 ### 1. local에서 conda environment 생성
-[문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
 
 ### 2. gpu-compute node에서 동일한 conda environment 구축
 두 가지 방법을 소개합니다.
 #### 2.1. 중요 패키지의 버전만 맞추기
-[문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
-- 이 방법은 [문서 2](https://hpc.stat.yonsei.ac.kr/docs/how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
+- 이 방법은 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
 - 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
@@ -151,7 +151,7 @@ model.evaluate(x_test,  y_test, verbose=2)
 ```
 
 ### 2. 현재 클러스터 자원 사용량 확인
-`gpu-compute`의 여유 cpu 코어 개수와 RAM은 문서2에 있는 방법을 통해 확인합니다. 
+`gpu-compute`의 여유 cpu 코어 개수와 RAM은 문서2[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)에 있는 방법을 통해 확인합니다. 
 GPU의 경우 한 user가 하나의 GPU만을 사용하도록 되어 있습니다. 따라서 `gpu-compute` node는 최대 2명의 user가 사용할 수 있습니다. **squeue** 커맨드를 통해 `gpu-compute` node에서 실행 중이거나 실행 대기 중인 job의 개수를 파악합니다.
 
 
