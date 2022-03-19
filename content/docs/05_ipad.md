@@ -14,20 +14,21 @@ draft: false
 1. 좌측 상단의 2번째 아이콘을 클릭하여 **FTP/SFTP** 설정으로 들어갑니다.
 2. 좌측 하단의 + 버튼을 누르면 **New FTP Connection** 설정 창이 나옵니다.
 
-![koder_2](/img/koder_2.jpg)
 3. 아래 내용을 입력한 다음 **Create**를 누릅니다.
    1. 먼저, **Connection**을 **SFTP**로 바꿉니다.
    2. **Name**은 이 connection 설정의 이름을 의미합니다. 원하는 이름을 입력합니다.
    3. **Host Name**에 **hpc.stat.yonsei.ac.kr**을 입력합니다.
    4. **Username, Password**에 linux username, password를 입력합니다.
    5. **Port**에 Slack에서 안내한 `SSH` 포트번호를 입력합니다.
+![koder_2](/img/koder_2.jpg)
 
-4. 화면 좌측 탭에 connection이 생성됩니다.
+
+4. 화면 좌측 탭에 connection이 생성되면 클릭하여 접속합니다.
 ![koder_3](/img/koder_3.jpg)
 
-5. 화면 좌측 탭에 connection이 생성됩니다. 이를 클릭하여 접속합니다.
 
-6. User home directory의 파일들이 나옵니다. 파일을 클릭하면 오른쪽의 텍스트 에디터 창에 내용이 표시됩니다. 파일 내용을 수정한 뒤 저장하려면 우측 탭 상단에 있는 업로드 모양 아이콘을 누릅니다.
+5. User home directory의 파일들이 나옵니다. 파일을 클릭하면 오른쪽의 텍스트 에디터 창에 내용이 표시됩니다.
+6. 파일 내용을 수정한 뒤 저장하려면 우측 탭 상단에 있는 업로드 모양 아이콘을 누릅니다.
 ![koder_4](/img/koder_4.jpg)
 
 
@@ -44,7 +45,7 @@ draft: false
    4. 그 다음 칸에는 Slack에서 공지한 `SSH` 포트번호를 입력합니다.
 
 3. SSH로 proxy node에 접속되고 터미널 환경이 나타납니다. 이제 Visual Studio Code에서 했던 것처럼 클러스터를 사용합니다.
-![koder_ssh_2](/img/koder_ssh_1.jpg)
+![koder_ssh_2](/img/koder_ssh_2.jpg)
 
 
 
