@@ -1,12 +1,12 @@
 ---
-title: "4. GPU node 사용법(Python)"
-author: "Gwnaghee Kim, Jongmin Mun"
-date: 2022-03-14T14:54:35+09:00
+title: "5. [Tip] iOS에서 사용하기"
+author: "Jongmin Mun"
+date: 2022-03-19T14:54:35+09:00
 draft: false
 ---
 
-# 4. GPU node에서 Python 코드 실행하기
-2번 문서(CPU node 사용법(Python))를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
+# 5. iOS에서 클러스터 사용하기
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
 `gpu-compute` node에서는 `Python`만 사용 가능합니다.
 ## Step 4. Export your conda setting

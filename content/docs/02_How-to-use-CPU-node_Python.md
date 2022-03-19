@@ -47,6 +47,11 @@ Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다
 ```bash
 ssh -p [port] [username]@hpc.stat.yonsei.ac.kr 
 ```
+또는 안내받은 proxy node의 ip를 입력해도 됩니다.
+
+```bash
+ssh -p [port] [username]@[ip]
+```
 
 ### 4. SSH configuration file을 저장할 장소 선택
 **Select SSH configuration file to update**가 나오면 맨 위 항목을 선택합니다.
