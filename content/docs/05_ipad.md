@@ -6,7 +6,7 @@ draft: false
 ---
 
 # 5. iOS에서 클러스터 사용하기
-[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)에서 설명했듯이, 어느 환경에서든 `SSH` 접속만 가능하다면 클러스터 이용이 가능합니다. 이 문서는 iPad에서 [koder](https://apps.apple.com/kr/app/koder-code-editor/id1447489375)라는 앱을 이용해 클러스터를 이용하는 예제를 다룹니다.
+[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)에서 설명했듯이, 어느 환경에서든 `SSH` 접속만 가능하다면 클러스터 이용이 가능합니다. `Visual Studio Code`를 쓸 수 있다면 좋겠지만, iOS 버전이 없습니다. Web version은 `SSH`를 지원하지 않습니다. 이 문서는 iPad에서 [koder](https://apps.apple.com/kr/app/koder-code-editor/id1447489375)라는 앱을 이용해 클러스터를 이용하는 예제를 다룹니다.
 
 ## 1. 파일 시스템 접속
 클러스터의 파일 시스템에 접속하여 파일을 열람하고 수정할 수 있습니다.
