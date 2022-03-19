@@ -1,7 +1,7 @@
 ---
 title: "5. iOS에서 클러스터 사용하기"
 author: "Jongmin Mun"
-date: 2022-03-19T14:54:35+09:00
+date: 2022-03-19T14:55:35+09:00
 draft: false
 ---
 
