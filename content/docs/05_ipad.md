@@ -44,7 +44,7 @@ draft: false
    4. 그 다음 칸에는 Slack에서 공지한 `SSH` 포트번호를 입력합니다.
 
 3. SSH로 proxy node에 접속되고 터미널 환경이 나타납니다. 이제 Visual Studio Code에서 했던 것처럼 클러스터를 사용합니다.
-![koder_ssh_2](/img/koder_ssh_2.jpg)
+![koder_ssh_2](/img/koder_ssh_1.jpg)
 
 
 
