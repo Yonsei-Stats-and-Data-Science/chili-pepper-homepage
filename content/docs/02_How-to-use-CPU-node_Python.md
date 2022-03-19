@@ -42,9 +42,10 @@ Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다
 아래와 같은 창이 뜨면 `SSH` 커맨드를 입력하여 `proxy node`에 접속합니다. 
 ![vscode_ssh_4](/img/vscode_ssh_4.png)
 
-아래 코드에 Slack으로 안내받은 ip, port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
+아래 코드에 Slack으로 안내받은 port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
+
 ```bash
-ssh -p [port] [username]@[ip] 
+ssh -p [port] [username]@hpc.stat.yonsei.ac.kr 
 ```
 
 ### 4. SSH configuration file을 저장할 장소 선택
