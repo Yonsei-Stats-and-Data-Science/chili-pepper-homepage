@@ -16,7 +16,7 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 `Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
 - Windows 10: [WSL2(Windows Subsystem for Linux 2)](https://docs.microsoft.com/ko-kr/windows/wsl/install)와 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))을 설치하여 사용하는 것을 추천합니다.
 - MacOS: 기본 터미널을 사용해도 되지만, [iTerm2](https://iterm2.com)를 추천합니다.
-- iOS: [Blink](https://apps.apple.com/app/id1594898306)
+- iOS: [5번 문서](https://hpc.stat.yonsei.ac.kr/docs/05_ipad)를 참조하세요.
 - Android: [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=ko&gl=US)
 
 ### proxy node
