@@ -191,7 +191,7 @@ R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사�
 </div>
 
   <div class="post-content"><h1 id="3-cpu-node에서-r-코드-실행하기">3. CPU node에서 R 코드 실행하기<a hidden class="anchor" aria-hidden="true" href="#3-cpu-node에서-r-코드-실행하기">#</a></h1>
-<p>2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.</p>
+<p><a href="https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/">2번 문서</a>의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.</p>
 <h3 id="1-r-코드-작성">1. R 코드 작성<a hidden class="anchor" aria-hidden="true" href="#1-r-코드-작성">#</a></h3>
 <p>클러스터에서 실행할 <code>R</code> 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, <code>Visual Studio Code</code>내에서 작성하여 저장합니다.</p>
 <p><code>R</code>은 <code>cpu-compute</code>에만 설치되어 있습니다. <code>R</code>은 conda environment를 사용하지 않습니다. <code>R</code> 패키지들은 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다. 실행할 <code>R</code> 코드를 script로 작성한 다음 Slurm batch script 내에 해당 script를 실행하도록 <strong>Rscript xxx.R</strong> command를 적어주면 됩니다.</p>
@@ -385,7 +385,7 @@ Rscript R_test_cpu.R
 </ul>
 <p>sbatch에 대한 더 자세한 정보는 <a href="https://slurm.schedmd.com/sbatch.html">Slurm 공식 웹페이지</a>를 참조하세요.</p>
 <h3 id="4-slurm-batch-script-실행">4. Slurm batch script 실행<a hidden class="anchor" aria-hidden="true" href="#4-slurm-batch-script-실행">#</a></h3>
-<p><strong>sbatch</strong> 커맨드를 통해 job을 제출합니다. 2번 문서의 Step 4에서처럼, <code>ctrl+shift+~</code>를 눌러 터미널을 여러 개 띄우고 <strong>smap -i</strong>로 작업 현황을 확인하고, <strong>tail -f xxx.out</strong>, <strong>tail -f xxx.err</strong>으로 콘솔 출력이나 error를 확인합니다. 작업은 5분 이내에 끝납니다.</p>
+<p><strong>sbatch</strong> 커맨드를 통해 job을 제출합니다. <a href="https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/">2번 문서</a>의 Step 4에서처럼, <code>ctrl+shift+~</code>를 눌러 터미널을 여러 개 띄우고 <strong>smap -i</strong>로 작업 현황을 확인하고, <strong>tail -f xxx.out</strong>, <strong>tail -f xxx.err</strong>으로 콘솔 출력이나 error를 확인합니다. 작업은 5분 이내에 끝납니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
@@ -418,7 +418,7 @@ Rscript R_test_cpu.R
 
   <footer class="post-footer">
 <nav class="paginav">
-  <a class="prev" href="https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm/">
+  <a class="prev" href="https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/">
     <span class="title">« Prev Page</span>
     <br>
     <span>4. GPU node 사용법(Python)</span>
