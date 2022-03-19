@@ -28,7 +28,7 @@ draft: false
 5. 화면 좌측 탭에 connection이 생성됩니다. 이를 클릭하여 접속합니다.
 
 6. User home directory의 파일들이 나옵니다. 파일을 클릭하면 오른쪽의 텍스트 에디터 창에 내용이 표시됩니다. 파일 내용을 수정한 뒤 저장하려면 우측 탭 상단에 있는 업로드 모양 아이콘을 누릅니다.
-![koder_4](/img/koder_3.jpg)
+![koder_4](/img/koder_4.jpg)
 
 
 ## 2. SSH 접속
