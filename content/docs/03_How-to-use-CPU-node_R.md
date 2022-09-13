@@ -54,16 +54,29 @@ install.packages(
 
 
 
-아래의 샘플 코드는 `xgboost`와 `caret`을 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `R_test_cpu.R`로 저장하여 user home directory에 둡니다.
-
+아래의 샘플 코드는 `xgboost`와 `caret`을 개인 디렉토리에 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. `library(xgboost, lib.loc = lib_r_packages)` 에서 `lib.loc` 옵션이 개인 디렉토리에 설치된 패키지를 로드하는 옵션입니다.
+Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `R_test_cpu.R`로 저장하여 user home directory에 둡니다.
 
 
 ```R
-install.packages("xgboost", force = FALSE, INSTALL_opts = c('--no-lock'))
-install.packages("caret", force = FALSE, INSTALL_opts = c('--no-lock'))
+lib_r_packages = "/mnt/nas/users/mjm/R_packages"
 
-library(xgboost)
-library(caret)
+install.packages("xgboost",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+  )
+
+install.packages("caret",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+  )
+
+library(xgboost, lib.loc = lib_r_packages)
+library(caret, lib.loc = lib_r_packages)
 
 boston = MASS::Boston
 str(boston)
