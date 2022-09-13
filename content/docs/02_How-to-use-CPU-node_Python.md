@@ -323,8 +323,8 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 
 ![slurm_config](/img/slurm_config.png)
 - Conda activate에 체크합니다.
-- 빈칸들을 채웁니다.
-- Script란에 **python xxx.py**라고 작성합니다. 이는 home directory에 있는 **xxx.py** 파일을 Python으로 실행하라는 의미입니다.
+- 빈칸들을 채웁니다. 사용 시간을 넉넉하게 입력할 것을 권장합니다.
+- Script란에 **python xxx.py**라고 작성합니다. 이는 home directory에 있는 **xxx.py** 파일을 Python으로 실행하라는 의미입니다. Job script를 작성하거나 sbatch 명령어를 사용할 때, visual studio code의 explorer에서 파일명을 마우스 우클릭하고 경로 복사를 사용하면 편리합니다.
 - **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
 
 Slurm batch script의 내용은 아래와 같습니다.
@@ -365,7 +365,7 @@ Script 윗부분의 #SBATCH 옵션들의 의미는 다음과 같습니다.
 - **--nodelist**: 사용할 node의 이름
 - **—output**: 코드 실행 결과 log 파일. 확장자는 out이나 log가 가능합니다.
 - **—error**: 코드 실행 결과 log
-  
+  error 파일과 log 파일의 파일명과 저장 경로는 원하는 데로 수정할 수 있습니다.
 sbatch에 대한 더 자세한 정보는 [Slurm 공식 웹페이지](https://slurm.schedmd.com/sbatch.html)를 참조하세요.
 
 ### 5.4. Slurm batch script 실행
