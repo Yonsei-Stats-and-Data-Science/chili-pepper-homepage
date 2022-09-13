@@ -7,11 +7,11 @@ draft: false
 # CPU node에서 Python 코드 실행하기
 
 ## Step 1 - terminal 앱 고르기
-User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. 터미널 환경과 `vi` 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 [Visual Studio Code](https://code.visualstudio.com/download)를 사용하는 것을 추천합니다. 이 문서에서는 `Visual Studio Code`를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
+User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. 터미널 환경과 `vi` 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 [`Visual Studio Code`](https://code.visualstudio.com/download)를 사용하는 것을 추천합니다. 이 문서에서는 `Visual Studio Code`를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
 - Windows, MacOS, Linux에서 모두 사용 가능합니다.
 - 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.
   - 불편하게 `vi`나 `nano`등의 CLI용 텍스트 에디터를 사용할 필요가 없습니다.
-  - 파일 전송시 `scp`등의 복잡한 프로토콜을 사용할 필요 없이 drag & drop으로 수행할 수 있습니다.
+  - 파일 전송시 `scp`등의 복잡한 프로토콜을 사용하지 않고 drag & drop으로 수행할 수 있습니다.
 
 `Visual Studio Code`외에 다른 앱을 사용하실 경우 추천하는 앱은 다음과 같습니다.
 - Windows 10: [WSL2(Windows Subsystem for Linux 2)](https://docs.microsoft.com/ko-kr/windows/wsl/install)와 [Windows Terminal]((https://docs.microsoft.com/ko-kr/windows/terminal/install))을 설치하여 사용하는 것을 추천합니다.
@@ -30,7 +30,7 @@ User는 `SSH`로 `proxy` node에 접속하여 클러스터를 사용합니다. �
 ## Step 2 - proxy node SSH 접속 
 [Visual Studio Code](https://code.visualstudio.com/download)를 설치하고 아래 안내에 따라 설정합니다.
 
-### 1. Visual Studio Code extensions에서 Remote Development 설치[fn^3]
+### 1. Visual Studio Code extensions에서 Remote Development 설치[^fn3]
 Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다. Remote-WSL, Remote-Containers, Remote-SSH가 자동적으로 같이 설치됩니다.
 ![vscode_ssh_1](/img/vscode_ssh_1.png)
 ![vscode_ssh_2](/img/vscode_ssh_2.png)
@@ -42,7 +42,7 @@ Microsoft가 제공하는 `Remote Development` extension pack을 설치합니다
 아래와 같은 창이 뜨면 `SSH` 커맨드를 입력하여 `proxy node`에 접속합니다. 
 ![vscode_ssh_4](/img/vscode_ssh_4.png)
 
-아래 코드에 Slack으로 안내받은 port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
+아래 커맨드에 Slack으로 안내받은 port, username을 넣어서 위 창에 입력하고 `Enter`키를 누르면 됩니다. `SSH`의 default port는 `22`이지만, 저희는 보안상 이유로 다른 port를 사용합니다.
 
 ```bash
 ssh -p [port] [username]@hpc.stat.yonsei.ac.kr 
@@ -142,74 +142,8 @@ ls
 
 여기서는 `cpu-compute` node에서 conda environment를 생성하는 방법을 설명합니다. local에서 작성한 코드가 `cpu-compute` node에서 오류 없이 작동하도록 하기 위해, local과 `cpu-compute` node에서 동일한 conda environment를 구축해야 합니다. 
 
-### 4.1. local에서 conda environment 생성
-이 섹션의 작업은 모두 클러스터가 아니라 user의 local 컴퓨터에서 진행합니다.
 
-[miniconda](https://docs.conda.io/en/latest/miniconda.html)를 설치한 다음, local 컴퓨터의 터미널에서 아래 커맨드로 virtual environment를 설정합니다. `testEnv` 자리에 원하는 이름을 넣고, `python=` 뒤에 사용할 Python version을 명시합니다. 
-
-```bash
-conda create -n testEnv python=3.6
-```
-
-성공적으로 생성되면 아래와 같은 결과가 나옵니다.
-
-```text
-Preparing transaction: done
-Verifying transaction: done
-Executing transaction: done
-#
-# To activate this environment, use
-#
-#     $ conda activate testEnv
-#
-# To deactivate an active environment, use
-#
-#     $ conda deactivate
-```
-
-아래 커맨드를 통해 virtual environment가 제대로 생성되었는지 확인합니다.
-```bash
-conda info --env
-```
-
-```text
-# conda environments:
-#
-base                  *  /opt/miniconda3
-testEnv                  /opt/miniconda3/envs/testEnv
-```
-
-Virtual environment에 진입한 뒤 패키지를 설치합니다.
-- pip로 설치되는 패키지들은 conda로 설치된 패키지에 대한 정보를 모르기 때문에 의존성 충돌이 발생할 수 있으므로 conda만을 사용해서 설치하실 것을 권장합니다.
-- [anaconda 웹사이트](https://anaconda.org/anaconda/scikit-learn)에서 패키지명을 검색해서 linux-64를 지원하는 버전이 어디까지인지를 확인하고 설치하는 것을 추천합니다. 이 사이트는 설치 커맨드도 제공합니다.
-- 여러 패키지를 설치할 경우 한 커맨드 내에 명시하면 conda가 자동으로 dependency 충돌을 검사해 줍니다.
-- 패키지 버전을 명시할 때는 =를 사용합니다.
-```bash
-conda activate testEnv
-
-#For example,
-conda install -c conda-forge lightgbm=2.0.7 matplotlib scikit-learn pandas numpy
-```
-
-아래 커맨드로 설치된 패키지 목록을 확인합니다. 
-```bash
-conda list
-```
-
-Environment를 지우려면 아래 커맨드를 입력합니다.
-```bash
-conda remove --name testEnv --all
-```
-### 2. `cpu-compute` node에 local과 동일한 conda environment 구축하기
-
-- **conda env export** 커맨드를 이용해 environment 전체를 `.yml` 파일로 만들고 이를 이용해 `cpu-compute` 노드에서 environment를 구축하는 것이 동일한 environment를 만드는 가장 이상적인 방법입니다.
-- 또는 설치된 패키지 목록과 버전만을 `requirements.txt`로 추출하여 노드에서 `cpu-compute`에서 설치할 수 있습니다.
-- 그러나 이 두 방법은 user의 local 컴퓨터가 linux가 아니면 오류가 발생할 확률이 매우 높습니다. 이는 유저가 패키지를 설치할 때 자동으로 설치되는 dependency들의 버전이 OS별로 다를 수 있기 때문입니다.
-  - 예를 들어 `lightgbm` 2.0.7버전은 Python 버전이 3.6일 때 linux와 MacOS에서 둘 다 설치 가능하지만, 이 패키지의 dependency 중 하나인 `libgfortran`은 MacOS에서는 4.0.0버전이 설치되지만 linux에서는 3.0.0버전까지만 지원되기 때문에 MacOS에서 만든 environment에서 추출한 yml 파일이나 list txt 파일을 클러스터에서 사용하면 오류가 발생합니다[^fn2].
-  - 이 오류는 적절한 조치를 통해 해결할 수 있을 때도 있지만 해결하기 힘들 때도 있습니다.
-
-따라서 local에서 만든 environment를 cluster로 옮기기보다는, local의 environment에서 사용하는 Python 버전과 중요 패키지들의 버전을 그대로 사용하여 cluster 내에서 environment를 생성하는 것을 추천하며, 이 문서에서는 그 절차를 안내합니다.
-
+### 1. `cpu-compute` node에 conda environment 구축하기
 
 1. Conda environment 생성 slurm batch script를 작성합니다.
     ```bash
@@ -236,7 +170,7 @@ conda remove --name testEnv --all
     - 8번 라인의 **#SBATCH --error=testEnv.err**의 error log 파일명
     - 10번 라인의 environment name
     - 13번 라인의 python version
-    - 14번 라인의 패키지 설치 커맨드
+    - 15번 라인의 패키지 설치 커맨드
     를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤, 클러스터 내 user home directory에 `[your_env_name].job`으로 저장합니다.
 
 
@@ -261,7 +195,7 @@ conda remove --name testEnv --all
     402     all       testEnv    mjm  R    0:01    1  cpu-compute
     ``` 
 
-    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다. `ctrl+c`로 escape 할 수 있습니다.
+    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다. **ctrl+c**로 escape 할 수 있습니다.
     ```bash
     smap -i 1 
     ```
