@@ -7,24 +7,76 @@ draft: false
 
 # 3. CPU node에서 R 코드 실행하기
 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
+### 1. 필요한 R 패키지를 자신의 디렉토리에 설치하기
+`R`은 `cpu-compute`에만 설치되어 있습니다. `R`은 conda environment를 사용하지 않으며, `R` 패키지들은 `install.packages`를 통해 설치할 때 별도의 옵션을 주지 않으면 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.
 
-### 1. R 코드 작성
-클러스터에서 실행할 `R` 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
-
-`R`은 `cpu-compute`에만 설치되어 있습니다. `R`은 conda environment를 사용하지 않습니다. `R` 패키지들은 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다. 실행할 `R` 코드를 script로 작성한 다음 Slurm batch script 내에 해당 script를 실행하도록 **Rscript xxx.R** command를 적어주면 됩니다.
-
-아래의 샘플 코드는 `xgboost`와 `caret`을 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `R_test_cpu.R`로 저장하여 user home directory에 둡니다.
-
+아래의 샘플 코드는 R 패키지를 `/mnt/nas/users/mjm/R_packages` 라는 디렉토리에 설치합니다.
 **install.packages()**에서
+- **lib** 옵션을 통해 자신의 개인 디렉토리에 패키지를 설치할 수 있습니다. 이 옵션을 사용하지 않으면 사용자 간에 패키지 버전이 충돌할 수 있으므로 이 옵션을 사용하는 것을 강력히 권장합니다.
 - **force = FALSE** 옵션은 이미 설치된 패키지를 또 설치하는 것을 막아줍니다[^fn4].
 - **INSTALL_opts = c('--no-lock')** 옵션은 설치가 이전에 강제로 중단되어서 directory에 락이 걸렸을 때 락을 무시하고 설치하게 합니다[^fn5].
+```R
+lib_r_packages = "/mnt/nas/users/mjm/R_packages"
+install.packages(
+  "WeightSVM",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+)
+install.packages(
+  "e1071",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+)
+install.packages(
+  "mclust",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+)
+install.packages(
+  "caret",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+)
+```
+이제 이 설치 코드를 실행하는 slurm job script를 3번 항목을 참고해 생성한 다음 `sbatch`로 실행합니다.
+
+
+### 2. R 코드 작성
+클러스터에서 실행할 `R` 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
+
+
+
+아래의 샘플 코드는 `xgboost`와 `caret`을 개인 디렉토리에 설치 및 로드하고 learning과 prediction을 수행한 다음 prediction 결과 plot을 jpeg로 저장하는 코드입니다. `library(xgboost, lib.loc = lib_r_packages)` 에서 `lib.loc` 옵션이 개인 디렉토리에 설치된 패키지를 로드하는 옵션입니다.
+Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드를 `R_test_cpu.R`로 저장하여 user home directory에 둡니다.
+
 
 ```R
-install.packages("xgboost", force = FALSE, INSTALL_opts = c('--no-lock'))
-install.packages("caret", force = FALSE, INSTALL_opts = c('--no-lock'))
+lib_r_packages = "/mnt/nas/users/mjm/R_packages"
 
-library(xgboost)
-library(caret)
+install.packages("xgboost",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+  )
+
+install.packages("caret",
+  lib = lib_r_packages,
+  dependencies = TRUE,
+  force = FALSE,
+  INSTALL_opts = c('--no-lock')
+  )
+
+library(xgboost, lib.loc = lib_r_packages)
+library(caret, lib.loc = lib_r_packages)
 
 boston = MASS::Boston
 str(boston)
@@ -90,7 +142,7 @@ gpu-compute 53318 80532 up 16 0/16/0/16
 ![slurm_config](/img/R_slurm_config.png)
 - `Python`과 달리 conda environment를 사용하지 않으므로, conda activate에 체크하지 않습니다.
 - 빈칸들을 채웁니다.
-- Script란에 **Rscript xxx.R**라고 작성합니다. 이는 home directory에 있는 **xxx.R** 파일을 `R`로 실행하라는 의미입니다.
+- Script란에 **Rscript xxx.R**라고 작성합니다. 이는 home directory에 있는 **xxx.R** 파일을 `R`로 실행하라는 의미입니다. Job script를 작성하거나 sbatch 명령어를 사용할 때, visual studio code의 explorer에서 파일명을 마우스 우클릭하고 경로 복사를 사용하면 편리합니다.
 - **Print & Copy** 버튼을 누르면 내용이 클립보드에 복사됩니다. 
 
 `R_test_cpu.job`이라는 이름으로 클러스터의 user home directory에 저장합니다.
