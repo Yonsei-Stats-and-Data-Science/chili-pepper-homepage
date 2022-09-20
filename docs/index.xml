@@ -36,8 +36,9 @@ Step 4. Export your conda setting 버전 관리 딥러닝 라이브러리를 사
       
       <guid>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</guid>
       <description>3. CPU node에서 R 코드 실행하기 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
-1. R 코드 작성 클러스터에서 실행할 R 코드를 local에서 작성합니다. 코드가 문제 없이 실행되는지 먼저 local에서 확인합니다. 그 후 실제로 실행할 코드를 작성하여 클러스터의 user home directory에 옮기거나, Visual Studio Code내에서 작성하여 저장합니다.
-R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사용하지 않습니다. R 패키지들은 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.</description>
+1. 필요한 R 패키지를 자신의 디렉토리에 설치하기 R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사용하지 않으며, R 패키지들은 install.packages를 통해 설치할 때 별도의 옵션을 주지 않으면 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.
+아래의 샘플 코드는 R 패키지를 /mnt/nas/users/mjm/R_packages 라는 디렉토리에 설치합니다. **install.packages()**에서
+ lib 옵션을 통해 자신의 개인 디렉토리에 패키지를 설치할 수 있습니다.</description>
     </item>
     
     <item>
