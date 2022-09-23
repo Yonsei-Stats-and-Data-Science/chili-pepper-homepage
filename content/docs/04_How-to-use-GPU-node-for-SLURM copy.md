@@ -5,11 +5,11 @@ date: 2022-03-14T14:54:35+09:00
 draft: false
 ---
 
-# 4. GPU node에서 Python 코드 실행하기
+# 4. GPU node에서 tensorflow 코드 실행하기
 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)를 먼저 숙지하시기 바랍니다. 이 문서는 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 Step 1, 2, 3 이후의 내용만을 다룹니다.
 
 `gpu-compute` node에서는 `Python`만 사용 가능합니다.
-## Step 4. Export your conda setting
+## Step 4. Setting up a conda environment
 
 ### 버전 관리
 딥러닝 라이브러리를 사용할 때에는 버전 관리가 중요합니다. 
@@ -18,18 +18,16 @@ draft: false
 - CUDA 버전([호환성 표](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html))
 - cuDNN, 딥러닝 라이브러리(`tensorflow`, `pytorch`) 버전(호환성 표: [tensorflow](https://www.tensorflow.org/install/source#gpu), [pytorch](https://pytorch.org/get-started/previous-versions/))
 
-이들의 버전 간 호환이 되는 조합을 숙지하고 이에 따라 conda environment를 만들어야 합니다. `gpu-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 요소들의 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
+이 네 가지 요소의 버전이 서로 호환이 되는 조합으로 conda environment를 생성해야 합니다. `gpu-compute` node의 GPU 드라이버 버전은 `418.67`으로 고정되어 있지만, 나머지 요소들의 버전은 conda environment마다 다르게 설정할 수 있습니다. 단, `Python` 버전의 경우 `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으므로 3.8까지만 지원합니다.
 
-GPU 드라이버 버전(`418.67`)에 맞는 Python 버전과 딥러닝 라이브러리 버전을 정한 다음 conda create 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다. 이 문서에서는 이 방법을 사용합니다.
+Conda를 이용해 버전을 쉽게 맞출 수 있습니다. 이 문서에서는 이 방법을 사용합니다.
+1. 주어진 GPU 드라이버 버전(`418.67`)에 맞게 Python 버전과 딥러닝 라이브러리 버전을 정합니다.
+2. conda install 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다.
 
 이 문서에서 사용하는 버전은 `tensorflow-gpu-2.2.0`입니다.
 
-### 1. local에서 conda environment 생성
-[2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 step 4의 내용에 따라 local에서 conda environment를 생성합니다. **conda list**로 CUDA, cudnn 버전을 확인합니다.
-
-### 2. gpu-compute node에서 동일한 conda environment 구축
+### 4.1. 중요 패키지의 버전만 맞추기
 두 가지 방법을 소개합니다.
-#### 2.1. 중요 패키지의 버전만 맞추기
 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)에서 한 것처럼 tensorflow 등의 버전만 동일하게 하여 `gpu-compute` node에서 `conda create`로 conda environment를 만들 수 있습니다.
 - 이 방법은 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
@@ -55,54 +53,7 @@ conda install -y tensorflow-gpu=2.2.0
 
 cudatoolkit, cudnn 등이 용량이 커서 시간이 조금 오래 걸립니다.
 
-#### 2.2. local environment export하기
-
-Local에서 생성된 가상환경으로부터 환경설정 `yml` 파일을 만들고, 이를 이용해 `gpu-compute` node에서 conda environment를 생성하여 conda 환경을 동일하게 맞출 수도 있습니다. 이게 가장 이상적인 방법이지만, local OS가 linux가 아닐 경우 문제가 발생할 수 있습니다. 이 문서에서는 이 방법을 설명합니다. 
-
-Local에서 아래 커맨드로 `yml` 파일을 추출합니다.
-```bash
-# export conda setting
-conda activate [YOUR ENV NAME]
-conda env export -n [ENV NAME] -f [FILENAME].yml --no-builds # 이러면 문제가 해결될 수 있습니다.
-```
-
-`yml` 파일을 클러스터 내 user home directory로 옮기고 아래 커맨드를 slurm job script에 추가하고 sbatch로 실행합니다. 이 때 Slurm job configurator에서 `Using GPU`에 체크해야 합니다.
-
-```bash
-# create environment from file
-
-conda create --name [YOUR ENV NAME] python = [VESTION] # same env name in yml file
-conda env create -f [FILENAME].yml
-
-conda env create -p [prefix path] -f [filename].yml
-```
-
-**—no-builds** 옵션은 서로 다른 OS에서 conda environment 내 패키지들의 버전 충돌을 방지하기 위한 것입니다. 이 옵션만으로 문제가 해결되기도 하지만, 해결되지 않으면 user가 직접 `yml` 파일을 수정해야 합니다. 에러 메시지에 **ResolvePackageNotFound**라는 문구가 나오는데, 이 문구 아래의 패키지들을 `yml` 파일에서 삭제해주면 문제가 해결될 수 있습니다.
-
-```bash
-conda env create -f test.yml
-Collecting package metadata: done
-Solving environment: failed
-
-# yml 파일에서 아래에 등장하는 패키지들을 지워줍니다.
-ResolvePackageNotFound: 
-  - libgfortran==3.0.1=h93005f0_2 # --no-builds 옵션을 쓰면 패키지 버전 옆의 빌드 정보가 나오지 않습니다.
-  - pyzmq==17.0.0=py36h1de35cc_1
-  - python==3.6.6=h4a56312_1003
-  - prompt_toolkit==1.0.15=py36haeda067_0
-  - libiconv==1.15=h1de35cc_1004
-  - sqlite==3.25.3=ha441bb4_0
-  - six==1.11.0=py36h0e22d5e_1
-  - cryptography==2.3.1=py36hdbc3d79_1000
-  - openssl==1.0.2p=h1de35cc_1002
-  - libxml2==2.9.8=hf14e9c8_1005
-  - libcxxabi==4.0.1=hebd6815_0
-  - matplotlib==2.2.3=py36h0e0179f_0
-  - ptyprocess==0.5.2=py36he6521c3_0
-```
-
-<aside>
-💡 `yml` file을 이용한 conda 환경 설정은 로컬과 서버 작업 환경을 동일하게 설정할 수 있는 신뢰할 수 있는 방법이지만, conda 환경 설정 과정이 너무 번거롭다면 requirements.txt를 만들어 패키지 버전만 관리할 수도 있습니다.
+requirements.txt를 만들어 설치할 수도 있습니다.
 </aside>
 
 ```bash

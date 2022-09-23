@@ -181,7 +181,7 @@ ls
    $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH #env가 이미 존재하면 삭제
    $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.6
    source $CONDA_BIN_PATH/activate $ENV_PATH
-   conda install -y lightgbm=2.0.7 scikit-learn pandas numpy
+   conda install -y lightgbm scikit-learn pandas numpy
    ```
    
     위 내용에서
