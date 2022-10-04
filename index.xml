@@ -41,6 +41,20 @@ Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러
     </item>
     
     <item>
+      <title>4. GPU node 사용법(Python)</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</link>
+      <pubDate>Fri, 11 Mar 2022 14:14:35 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</guid>
+      <description>4. GPU node에서 tensorflow 코드 실행하기 2번 문서를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
+gpu-compute node에서는 Python만 사용 가능합니다.
+Step 4. Setting up a conda environment conda environment를 새로 만들면서 cudatoolkit, tensorflow, torch를 설치합니다.
+주의:
+  각 사용자의 conda environment에 tensorflow, torch 뿐 아니라 cudatoolkit도 따로 설치됩니다.
+  gpu-compute node와 cpu-compute node는 서로 다른 컴퓨터이므로 한쪽에서 만든 conda environment는 다른 쪽에서 사용할 수 없습니다.</description>
+    </item>
+    
+    <item>
       <title>1. Introduction</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</link>
       <pubDate>Wed, 02 Mar 2022 22:24:04 +0900</pubDate>
@@ -80,20 +94,6 @@ Step 1 - Understanding the Cluster Structure Chili Pepper cluster has a NAS whic
       <guid>https://hpc.stat.yonsei.ac.kr/docs/configuring-jupyter-kernel/</guid>
       <description>Creating a Python Kernel Admin Prerequisite Admin must enable conda for all users by creating a symlink. This will let users create their own virtual environment by using the conda create command.
 1  ln -s /opt/conda/bin/conda /usr/local/bin/conda   User Instructions Python  Users can launch a terminal session with either JupyterHub or SSH connections. Launch a bash session.  1  bash   Users then can create a virtual environment in the following way.</description>
-    </item>
-    
-    <item>
-      <title>4. GPU node 사용법(Python)</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</guid>
-      <description>4. GPU node에서 tensorflow 코드 실행하기 2번 문서를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
-gpu-compute node에서는 Python만 사용 가능합니다.
-Step 4. Setting up a conda environment conda environment를 새로 만들면서 cudatoolkit, tensorflow, torch를 설치합니다.
-주의:
-  각 사용자의 conda environment에 tensorflow, torch 뿐 아니라 cudatoolkit도 따로 설치됩니다.
-  gpu-compute node와 cpu-compute node는 서로 다른 컴퓨터이므로 한쪽에서 만든 conda environment는 다른 쪽에서 사용할 수 없습니다.</description>
     </item>
     
   </channel>
