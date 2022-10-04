@@ -1,7 +1,7 @@
 ---
 title: "2. CPU node 사용법(Python)"
 author: "Jongmin Mun"
-date: 2022-10-04T14:54:35+09:00
+date: 2022-03-03T14:54:35+09:00
 draft: false
 
 ---
@@ -287,7 +287,7 @@ CONDA_BIN_PATH/conda create -y --prefix ENV_PATH python=3.8.12
    ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment의 경
    source $CONDA_BIN_PATH/activate $ENV_PATH 
    conda install -y pyyaml #설치할 패키지 목록. -y는 yes/no question에 yes로 답하도록 함. 설치 중에 상호작용이 불가능하므로 -y 옵션이 꼭 필요함
-   ``````
+```
 
 가상환경 생성 및 패키지 설치 중 일어나는 오류 중 상당수가 Python에서 기본으로 제공하는 패키지를 설치하려 하거나, 설치할 패키지의 이름을 잘못 입력했기 때문에 발생합니다. 예를 들어, 위에서 설치한 `pyyaml` 패키지는 실제로 Python에서 import할 때는 `import yaml`로 입력하는데, `conda install yaml`이라고 job script에 쓸 경우 오류가 발생합니다.
 
