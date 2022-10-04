@@ -5,22 +5,11 @@
     <link>https://hpc.stat.yonsei.ac.kr/docs/</link>
     <description>Recent content in Docs on Chili Pepper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 Oct 2022 14:54:35 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>2. CPU node 사용법(Python)</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</link>
-      <pubDate>Tue, 04 Oct 2022 14:54:35 +0900</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</guid>
-      <description>CPU node에서 Python 코드 실행하기 R 사용자는 Step 1-3을 숙지한 뒤 다음 문서로 넘어가세요.
-Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러스터를 사용합니다. 터미널 환경과 vi 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 Visual Studio Code를 사용하는 것을 추천합니다. 이 문서에서는 Visual Studio Code를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
- Windows, MacOS, Linux에서 모두 사용 가능합니다. 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.</description>
-    </item>
-    
+    <lastBuildDate>Sun, 06 Mar 2022 14:15:35 +0900</lastBuildDate><atom:link href="https://hpc.stat.yonsei.ac.kr/docs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>5. 모바일 기기에서(iOS/Android) 클러스터 사용하기</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/05_ipad/</link>
-      <pubDate>Sat, 19 Mar 2022 14:15:35 +0900</pubDate>
+      <pubDate>Sun, 06 Mar 2022 14:15:35 +0900</pubDate>
       
       <guid>https://hpc.stat.yonsei.ac.kr/docs/05_ipad/</guid>
       <description>1. iOS에서 클러스터 사용하기 2번 문서에서 설명했듯이, 어느 환경에서든 SSH 접속만 가능하다면 클러스터 이용이 가능합니다. Visual Studio Code를 쓸 수 있다면 좋겠지만, iOS 버전이 없습니다. Web version은 SSH를 지원하지 않습니다. 이 문서는 iPad에서 koder라는 앱을 이용해 클러스터를 이용하는 예제를 다룹니다.
@@ -29,21 +18,9 @@ Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러
     </item>
     
     <item>
-      <title>3. CPU node 사용법(R)</title>
-      <link>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</link>
-      <pubDate>Sat, 12 Mar 2022 13:54:35 +0900</pubDate>
-      
-      <guid>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</guid>
-      <description>3. CPU node에서 R 코드 실행하기 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
-1. 필요한 R 패키지를 자신의 디렉토리에 설치하기 R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사용하지 않으며, R 패키지들은 install.packages를 통해 설치할 때 별도의 옵션을 주지 않으면 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.
-아래의 샘플 코드는 R 패키지를 /mnt/nas/users/mjm/R_packages 라는 디렉토리에 설치합니다. **install.packages()**에서
- lib 옵션을 통해 자신의 개인 디렉토리에 패키지를 설치할 수 있습니다.</description>
-    </item>
-    
-    <item>
       <title>4. GPU node 사용법(Python)</title>
       <link>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</link>
-      <pubDate>Fri, 11 Mar 2022 14:14:35 +0900</pubDate>
+      <pubDate>Sat, 05 Mar 2022 14:14:35 +0900</pubDate>
       
       <guid>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</guid>
       <description>4. GPU node에서 tensorflow 코드 실행하기 2번 문서를 먼저 숙지하시기 바랍니다. 이 문서는 2번 문서의 Step 1, 2, 3 이후의 내용만을 다룹니다.
@@ -52,6 +29,29 @@ Step 4. Setting up a conda environment conda environment를 새로 만들면서 
 주의:
   각 사용자의 conda environment에 tensorflow, torch 뿐 아니라 cudatoolkit도 따로 설치됩니다.
   gpu-compute node와 cpu-compute node는 서로 다른 컴퓨터이므로 한쪽에서 만든 conda environment는 다른 쪽에서 사용할 수 없습니다.</description>
+    </item>
+    
+    <item>
+      <title>3. CPU node 사용법(R)</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</link>
+      <pubDate>Fri, 04 Mar 2022 13:54:35 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</guid>
+      <description>3. CPU node에서 R 코드 실행하기 2번 문서의 Step 1, 2, 3을 먼저 숙지하시기 바랍니다. 이 문서는 그 이후의 내용만을 다룹니다.
+1. 필요한 R 패키지를 자신의 디렉토리에 설치하기 R은 cpu-compute에만 설치되어 있습니다. R은 conda environment를 사용하지 않으며, R 패키지들은 install.packages를 통해 설치할 때 별도의 옵션을 주지 않으면 user별 directory가 아닌 NAS 내의 공통 폴더에 저장됩니다.
+아래의 샘플 코드는 R 패키지를 /mnt/nas/users/mjm/R_packages 라는 디렉토리에 설치합니다. **install.packages()**에서
+  lib 옵션을 통해 자신의 개인 디렉토리에 패키지를 설치할 수 있습니다.</description>
+    </item>
+    
+    <item>
+      <title>2. CPU node 사용법(Python)</title>
+      <link>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</link>
+      <pubDate>Thu, 03 Mar 2022 14:54:35 +0900</pubDate>
+      
+      <guid>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</guid>
+      <description>CPU node에서 Python 코드 실행하기 R 사용자는 Step 1-3을 숙지한 뒤 다음 문서로 넘어가세요.
+Step 1 - terminal 앱 고르기 User는 SSH로 proxy node에 접속하여 클러스터를 사용합니다. 터미널 환경과 vi 에디터에 익숙한 user는 자신에게 친숙한 앱을 사용하면 됩니다. 그렇지 않은 경우 Visual Studio Code를 사용하는 것을 추천합니다. 이 문서에서는 Visual Studio Code를 사용하는 것을 전제로 합니다. 추천 이유는 다음과 같습니다.
+ Windows, MacOS, Linux에서 모두 사용 가능합니다. 터미널과 에디터, 파일 브라우저가 통합되어 있습니다.</description>
     </item>
     
     <item>

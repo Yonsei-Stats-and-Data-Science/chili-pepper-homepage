@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</loc>
-    <lastmod>2022-10-04T14:54:35+09:00</lastmod>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/05_ipad/</loc>
+    <lastmod>2022-03-06T14:15:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/</loc>
-    <lastmod>2022-10-04T14:54:35+09:00</lastmod>
+    <lastmod>2022-03-06T14:15:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/</loc>
-    <lastmod>2022-10-04T14:54:35+09:00</lastmod>
-  </url><url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/05_ipad/</loc>
-    <lastmod>2022-03-19T14:15:35+09:00</lastmod>
-  </url><url>
-    <loc>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</loc>
-    <lastmod>2022-03-12T13:54:35+09:00</lastmod>
+    <lastmod>2022-03-06T14:15:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/04_how-to-use-gpu-node-for-slurm-copy/</loc>
-    <lastmod>2022-03-11T14:14:35+09:00</lastmod>
+    <lastmod>2022-03-05T14:14:35+09:00</lastmod>
+  </url><url>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/03_how-to-use-cpu-node_r/</loc>
+    <lastmod>2022-03-04T13:54:35+09:00</lastmod>
+  </url><url>
+    <loc>https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/</loc>
+    <lastmod>2022-03-03T14:54:35+09:00</lastmod>
   </url><url>
     <loc>https://hpc.stat.yonsei.ac.kr/docs/01_intro/</loc>
     <lastmod>2022-03-02T22:24:04+09:00</lastmod>
