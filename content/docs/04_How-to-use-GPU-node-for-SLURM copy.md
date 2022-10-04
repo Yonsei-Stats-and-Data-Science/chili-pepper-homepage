@@ -59,11 +59,9 @@ CONDA_BIN_PATH=/opt/miniconda/bin
 ENV_NAME=testEnvGPU
 ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
 $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
-$CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.7
+$CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8.13
 source $CONDA_BIN_PATH/activate $ENV_PATH
-conda install -y tensorflow-gpu=2.2.0
-conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
-### 
+conda install -y tensorflow=2.3.0 pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=10.1 -c pytorch 
 ```
 
 cudatoolkit, cudnn 등이 용량이 커서 시간이 조금 오래 걸립니다. 
