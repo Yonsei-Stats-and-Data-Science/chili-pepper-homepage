@@ -21,7 +21,7 @@ conda environment를 새로 만들면서 `cudatoolkit`, `tensorflow`, `torch`를
 
 - `gpu-compute` node와 `cpu-compute` node는 서로 다른 컴퓨터이므로 한쪽에서 만든 conda environment는 다른 쪽에서 사용할 수 없습니다.
 
-우리 컴퓨터의 gpu와 호환이 검증된 `tensorflow-gpu==2.3.0`, `torch==1.7.1` `cudatoolkit=11.0`를 설치할 것을 권장합니다.  cuda 아래 설명은 다른 버전을 사용하고자 할 경우에만 필요합니다.
+우리 컴퓨터의 gpu와 호환이 검증된 `tensorflow-gpu==2.2.0`, `torch==1.7.1` `cudatoolkit=11.0`를 설치할 것을 권장합니다. 아래 설명은 다른 버전을 사용하고자 할 경우에만 필요합니다.
 
 ### 설명: 버전 관리
 
@@ -39,7 +39,7 @@ Conda를 이용해 버전을 쉽게 맞출 수 있습니다. 이 문서에서는
 1. 주어진 GPU 드라이버 버전(`515.48.07`)에 맞게 Python 버전과 딥러닝 라이브러리 버전을 정합니다.
 2. conda install 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다.
 
-### 
+### Conda environment 생성
 
 이제 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 
@@ -61,7 +61,7 @@ ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
 $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
 $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.7
 source $CONDA_BIN_PATH/activate $ENV_PATH
-conda install -y tensorflow-gpu=2.3.0
+conda install -y tensorflow-gpu=2.2.0
 conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
 ### 
 ```
@@ -72,7 +72,7 @@ cudatoolkit, cudnn 등이 용량이 커서 시간이 조금 오래 걸립니다.
 
 ### 1. Python 코드 작성
 
-이제 클러스터에서 실행할 Python 코드를 local에서 작성합니다. 먼저 local에서 코드가 오류 없이 돌아가는지 확인합니다. 그 후 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
+이제 클러스터에서 실행할 Python 코드를 local이나 Jupyter에서 작성하고 오류 없이 돌아가는지 확인합니다. 그 후 클러스터의 user home directory에 옮기거나, `Visual Studio Code`내에서 작성하여 저장합니다.
 
 아래는 TensorFlow 공식 페이지에 게시된 [초보자용 문서](https://www.tensorflow.org/tutorials/quickstart/beginner?hl=ko) 코드입니다. Batch script를 작성할 때는 알고리즘의 output이 자동으로 저장되지 않으므로 파일로 결과를 저장하는 코드를 포함하는 것이 좋습니다. 아래 코드에는 결과를 저장하는 코드는 없지만, `tensorflow`가 학습 과정을 콘솔에 출력하기 때문에 이를 로그 파일에서 볼 수 있습니다. 아래 코드를 `tensor.py`라는 이름으로 user home directory에 저장합니다.
 
