@@ -1,15 +1,14 @@
 ---
-
 title: "2. CPU node 사용법(Python)"
 author: "Jongmin Mun"
-date: 2022-03-04T14:54:35+09:00
+date: 2022-10-04T14:54:35+09:00
 draft: false
 
 ---
 
 # CPU node에서 Python 코드 실행하기
 
-R 사용자는 Step 1-3을 숙지한 뒤 다음 문서로 넘어가십시오.
+R 사용자는 Step 1-3을 숙지한 뒤 다음 문서로 넘어가세요.
 
 ## Step 1 - terminal 앱 고르기
 
@@ -168,20 +167,21 @@ ls
    
    ```bash
    #!/bin/bash
-   #SBATCH --job-name=testEnv
+   #SBATCH --job-name=testEnv 
    #SBATCH --nodes=1
+   #SBATCH --time=99:59:59
    #SBATCH --mem=4gb
    #SBATCH --partition=all
    #SBATCH --nodelist=cpu-compute
    #SBATCH --output=testEnv.log
    #SBATCH --error=testEnv.err
    CONDA_BIN_PATH=/opt/miniconda/bin
-   ENV_NAME=testEnv #local에서와 같은 이름으로 입력
-   ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
-   $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH #env가 이미 존재하면 삭제
-   $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.6
-   source $CONDA_BIN_PATH/activate $ENV_PATH
-   conda install -y lightgbm scikit-learn pandas numpy
+   ENV_NAME=testEnv 
+   ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment의 경
+   $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH #envenvironment가 이미 존재하면 삭제
+   $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8.12 #파이썬 3.6버전으로 environment 생
+   source $CONDA_BIN_PATH/activate $ENV_PATH #conda를 환경변수에 등록하여 conda명령어만으로 conda가 실행되도록 함
+   conda install -y lightgbm scikit-learn pandas numpy #설치할 패키지 목록. -y는 yes/no question에 yes로 답하도록 함. 설치 중에 상호작용이 불가능하므로 -y 옵션이 꼭 필요함
    ```
    
     위 내용에서
@@ -192,7 +192,7 @@ ls
    - 10번 라인의 environment name
    - 13번 라인의 python version
    - 15번 라인의 패키지 설치 커맨드
-     를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤, 클러스터 내 user home directory에 `[your_env_name].job`으로 저장합니다.
+     를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤, 클러스터 내 user home directory에 `[your_env_name].job`으로 저장합니다(e.g.  `testEnv.job`).
 
 2. 작성한 스크립트 실행하기. `Visual Studio Code` 하단 터미널에
    
@@ -266,18 +266,30 @@ ls
 
 ```bash
 CONDA_BIN_PATH/conda env remove --prefix ENV_PATH 
-CONDA_BIN_PATH/conda create -y --prefix ENV_PATH python=3.6
+CONDA_BIN_PATH/conda create -y --prefix ENV_PATH python=3.8.12
 ```
 
-을 삭제하고 아래와 같이 패키지를 설치하는 커맨드를 추가해 준 다음 job을 제출합니다. -y는 설치 중간에 yes/no 를 물을 경우 자동으로 yes를 입력하게 하는 옵션입니다. 설치 중에 컴퓨터를 직접 조작할 수 없기 때문에 꼭 사용해야 하는 옵션입니다.
+을 삭제하고 아래와 같이 패키지를 설치하는 커맨드를 추가해 준 다음 job을 제출합니다. -y는 설치 중간에 yes/no 를 물을 경우 자동으로 yes를 입력하게 하는 옵션입니다. 설치 중에 컴퓨터를 직접 조작할 수 없기 때문에 꼭 사용해야 하는 옵션입니다. 아래는 `pyyaml` 패키지를 설치하는 job script 예시입니다.
 
 ```
- conda install pyyaml -y
-```
+```bash
+   #!/bin/bash
+   #SBATCH --job-name=install_package 
+   #SBATCH --nodes=1
+   #SBATCH --time=99:59:59
+   #SBATCH --mem=4gb
+   #SBATCH --partition=all
+   #SBATCH --nodelist=cpu-compute
+   #SBATCH --output=testEnv.log
+   #SBATCH --error=testEnv.err
+   CONDA_BIN_PATH=/opt/miniconda/bin
+   ENV_NAME=testEnv 
+   ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment의 경
+   source $CONDA_BIN_PATH/activate $ENV_PATH 
+   conda install -y pyyaml #설치할 패키지 목록. -y는 yes/no question에 yes로 답하도록 함. 설치 중에 상호작용이 불가능하므로 -y 옵션이 꼭 필요함
+   ``````
 
-가상환경 생성 및 패키지 설치 중 일어나는 오류 중 상당수가 Python에서 기본으로 제공하는 패키지를 설치하려 하거나, 설치할 패키지의 이름을 잘못 입력했기 때문에 발생합니다. 예를 들어, 위에서 설치한 pyyaml 패키지는 실제로 Python에서 import할 때는 import yaml로 입력하는데, conda install yaml이라고 job script에 쓸 경우 오류가 발생합니다.
-
-
+가상환경 생성 및 패키지 설치 중 일어나는 오류 중 상당수가 Python에서 기본으로 제공하는 패키지를 설치하려 하거나, 설치할 패키지의 이름을 잘못 입력했기 때문에 발생합니다. 예를 들어, 위에서 설치한 `pyyaml` 패키지는 실제로 Python에서 import할 때는 `import yaml`로 입력하는데, `conda install yaml`이라고 job script에 쓸 경우 오류가 발생합니다.
 
 ## Step 5. Slrum batch script 작성하여 서버에 제출하기
 
