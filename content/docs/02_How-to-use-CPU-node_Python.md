@@ -159,89 +159,110 @@ ls
 - `cpu-compute` node에는 conda version 4.11.0이 설치되어 있으며 Python version을 3.10까지 지원합니다[^fn1].
 - `gpu-compute` node에는 conda version 4.6.14가 설치되어 있으며 Python version을 3.8까지 지원합니다.
 
-여기서는 `cpu-compute` node에서 conda environment를 생성하는 방법을 설명합니다. local에서 작성한 코드가 `cpu-compute` node에서 오류 없이 작동하도록 하기 위해, local과 `cpu-compute` node에서 동일한 conda environment를 구축해야 합니다. 
+### Step 4.1. Conda environment 생성 batch script 작성
 
-### 1. `cpu-compute` node에 conda environment 구축하기
+여기서는 `cpu-compute` node에서 conda environment를 생성하는 방법을 설명합니다. 두 가지 방법 중 하나를 선택하여 진행합니다. 
+- 4.1.1. 직접 파이썬 버전과 설치할 패키지 목록을 명시해서 생성
+- 4.1.2. yml 파일을 통해 생성
 
-1. Conda environment 생성 slurm batch script를 작성합니다.
-   
-   ```bash
-   #!/bin/bash
-   #SBATCH --job-name=testEnv 
-   #SBATCH --nodes=1
-   #SBATCH --time=99:59:59
-   #SBATCH --mem=4gb
-   #SBATCH --partition=all
-   #SBATCH --nodelist=cpu-compute
-   #SBATCH --output=testEnv.log
-   #SBATCH --error=testEnv.err
-   CONDA_BIN_PATH=/opt/miniconda/bin
-   ENV_NAME=testEnv 
-   ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment의 경
-   $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH #envenvironment가 이미 존재하면 삭제
-   $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8.12 #파이썬 3.6버전으로 environment 생
-   source $CONDA_BIN_PATH/activate $ENV_PATH #conda를 환경변수에 등록하여 conda명령어만으로 conda가 실행되도록 함
-   conda install -y lightgbm scikit-learn pandas numpy #설치할 패키지 목록. -y는 yes/no question에 yes로 답하도록 함. 설치 중에 상호작용이 불가능하므로 -y 옵션이 꼭 필요함
-   ```
-   
-    위 내용에서
-   
-   - 2번 라인의 **#SBATCH --job-name=testEnv**의 job name
-   - 7번 라인의 **#SBATCH --output=testEnv.log**의 output log 파일명
-   - 8번 라인의 **#SBATCH --error=testEnv.err**의 error log 파일명
-   - 10번 라인의 environment name
-   - 13번 라인의 python version
-   - 15번 라인의 패키지 설치 커맨드
-     를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤, 클러스터 내 user home directory에 `[your_env_name].job`으로 저장합니다(e.g.  `testEnv.job`).
+### 4.1.1. 직접 파이썬 버전과 설치할 패키지 목록을 명시해서 생성
 
-2. 작성한 스크립트 실행하기. `Visual Studio Code` 하단 터미널에
+Conda environment 생성 slurm batch script를 작성합니다. 아래는 script 예시입니다.
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=testEnv 
+#SBATCH --nodes=1
+#SBATCH --time=99:59:59
+#SBATCH --mem=4gb
+#SBATCH --partition=all
+#SBATCH --nodelist=cpu-compute
+#SBATCH --output=testEnv.log
+#SBATCH --error=testEnv.err
+CONDA_BIN_PATH=/opt/miniconda/bin
+ENV_NAME=testEnv 
+ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment의 경
+$CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH #envenvironment가 이미 존재하면 삭제
+$CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8.12 
+source $CONDA_BIN_PATH/activate $ENV_PATH #conda를 환경변수에 등록하여 conda명령어만으로 conda가 실행되도록 함
+conda install -y lightgbm scikit-learn pandas numpy #설치할 패키지 목록. -y는 yes/no question에 yes로 답하도록 함. 설치 중에 상호작용이 불가능하므로 -y 옵션이 꼭 필요함
+```
+conda install -y 뒤에 설치를 원하는 패키지명을 입력합니다.
+위 내용에서
+- 2번 라인의 **#SBATCH --job-name=testEnv**의 job name을 원하는 이름으로 변경합니다.
+- 3번 라인의 #SBATCH --time=99:59:59 은 작업 시간 최대 허용치를 의미합니다.
+- 7번 라인의 **#SBATCH --output=testEnv.log**의 output log 파일명과 경로, 8번 라인의 **#SBATCH --error=testEnv.err**의 error log 파일명과 경로를 원하는 데로 변경합니다.
+- 10번 라인의 environment name을 원하는 이름으로 변경합니다.
+- environment 저장 경로를 바꾸고 싶을 경우 11번 라인의 ENV_PATH=/mnt/nas/users/\$(whoami)/.conda/envs/\$ENV_NAME 에서 \$(whoami)와 \$ENV_NAME 사이 내용을 원하는 경로로 변경합니다. 이렇게 경로를 바꿀 경우, Python 코드를 실행하는 job을 제출할 때 바뀐 ENV_PATH를 써 주어야 합니다.
+- 13번 라인의 python version을 원하는 버전으로 변경합니다. 
+- 15번 라인의 패키지 설치 커맨드에서 conda install -y 뒤에 설치를 원하는 패키지 이름을 입력합니다.
+  
+위 내용에 따라 job script를 알맞게 수정하여 `Visual Studio Code`에서 작성한 뒤, 클러스터 내 user home directory에 `[your_env_name].job`으로 저장합니다(e.g.  `testEnv.job`).
+
+
+### 4.1.2. yml 파일을 이용해 생성
+아래는 yml 파일을 이용해 environment를 생성하는 scipt 예시입니다.
+```bash
+#!/bin/bash
+#SBATCH --job-name=testEnvGPU
+#SBATCH --nodes=1
+#SBATCH --mem=8gb
+#SBATCH --partition=all
+#SBATCH --nodelist=gpu-compute
+#SBATCH --time=30:50:00
+#SBATCH --output=/mnt/nas/users/mjm/testEnvGPU.log
+#SBATCH --error=/mnt/nas/users/mjm/testEnvGPU.err
+CONDA_BIN_PATH=/opt/miniconda/bin
+cd /mnt/nas/users/$(whoami)/.conda/envs/ #environment 저장 경로
+conda env create --file /mnt/nas/users/mjm/environment.yml
+```
+- #SBATCH --output, #SBATCH --error를 원하는 경로와 파일명으로 변경합니다.
+- environment 저장 경로를 바꾸고 싶을 경우 cd /mnt/nas/users/\$(whoami)/.conda/envs/ 에서 \$(whoami) 뒷부분을 원하는 경로로 변경합니다. 이렇게 경로를 바꿀 경우, Python 코드를 실행하는 job을 제출할 때 바뀐 ENV_PATH를 써 주어야 합니다.
+- conda env create --file 뒷쪽에 yml 파일 경로를 입력합니다.
+  
+
+### Step 4.2. 작성한 스크립트 실행하기.
+`Visual Studio Code` 하단 터미널에
    
    ```bash
    sbatch [your_env_name].job
    ```
-   
-    를 입력해 slurm batch job submission을 수행합니다. 작업이 노드에서 성공적으로 실행되면
+  를 입력해 slurm batch job submission을 수행합니다. 작업이 노드에서 성공적으로 실행되면
    
    ```text
    Submitted batch job 401
    ```
-   
-    와 같은 메시지가 뜨고 job 번호가 할당됩니다. 할당되는 job 번호는 나중에 squeue를 통해 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
+와 같은 메시지가 뜨고 job 번호가 할당됩니다. 할당되는 job 번호는 나중에 squeue를 통해 정보를 확인하거나 job을 취소할 때 이용되므로 기록해 놓아야 합니다.
    
    ```bash
    squeue
    ```
-   
-    커맨드를 통해 작업 실행 현황을 확인할 수 있습니다.
+커맨드를 통해 작업 실행 현황을 확인할 수 있습니다.
    
    ```text
    JOBID PARTITION     NAME     USER ST    TIME  NODES NODELIST(REASON)
    402     all       testEnv    mjm  R    0:01    1  cpu-compute
    ```
-   
-    또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다. **ctrl+c**로 escape 할 수 있습니다.
+또는 아래 커맨드를 통해 실시간(1초 단위)으로 작업 실행 현황을 확인할 수 있습니다. **ctrl+c**로 escape 할 수 있습니다.
    
    ```bash
    smap -i 1 
    ```
-   
-    다음 커맨드를 통해 output log, error log파일의 내용을 확인할 수 있습니다.
+다음 커맨드를 통해 output log, error log파일의 내용을 확인할 수 있습니다.
    
    ```bash
    cat [your_job-name].log
    cat [your_job-name].err
    ```
-   
-    log 파일의 내용을 다음 커맨드를 통해 실시간으로 확인할 수 있습니다. **ctrl+c**로 escape할 수 있습니다.
+log 파일의 내용을 다음 커맨드를 통해 실시간으로 확인할 수 있습니다. **ctrl+c**로 escape할 수 있습니다.
    
    ```bash
    tail -f [your_job_name].log
    tail -f [your_job_name].err
    ```
+터미널을 여러 개 띄워 놓고 각각에 `smap`과 `tail` 커맨드를 입력하면 편리하게 실행 상황을 모니터링할 수 있습니다.
    
-    터미널을 여러 개 띄워 놓고 각각에 `smap`과 `tail` 커맨드를 입력하면 편리하게 실행 상황을 모니터링할 수 있습니다.
-   
-    위 샘플 코드는 약 3분 안에 작업이 완료됩니다. smap에서 작업 목록이 사라진 후 **cat**으로 로그 파일을 열어서
+위 샘플 코드는 약 3분 안에 작업이 완료됩니다. smap에서 작업 목록이 사라진 후 **cat**으로 로그 파일을 열어서
    
    ```
    pandas-1.1.3         | 10.5 MB   |            |   0% 
@@ -252,9 +273,9 @@ ls
    Executing transaction: ...working... done
    ```
    
-    와 같은 기록이 남아 있으면 conda environment 생성이 완료된 것입니다.
+와 같은 기록이 남아 있으면 conda environment 생성이 완료된 것입니다.
    
-     작업이 끝나기 전에 취소하려면 **scancel** 커맨드를 사용합니다.
+작업이 끝나기 전에 취소하려면 **scancel** 커맨드를 사용합니다.
    
    ```bash
    scancel [job_number]
@@ -483,6 +504,24 @@ UserId=mjm(1003) GroupId=mjm(1003) MCS_label=N/A
 
 `Visual Stuio Code`의 file explorer는 실시간으로 변화가 반영되지 않습니다. 새로고침 버튼을 눌러 주면 변화가 반영되고 output 파일이 explorer에 보입니다.
 
+## terminal에서는 ssh 접속이 되지만 Visual Studio Code에서는 되지 않을 때
+sudo 권한이 필요하므로 조교에게 문의하세요.
+
+해결방법:
+```bash
+lsof +D ./.vscode-server
+lsof +D ./.vscode-remote-containers
+```
+로 이 폴더를 사용하는 프로세스 번호를 확인한 후(e.g. 46088)
+```bash
+sudo kill 46088
+```
+
+그 후 아래 폴더를 삭제합니다.
+```bash
+sudo rm -rf .vscode-server
+sudo rm -rf .vscode-remote-containers
+```
 ## 더 알아보기
 
 [Submitting a slurm job script](https://ubccr.freshdesk.com/support/solutions/articles/5000688140-submitting-a-slurm-job-script)

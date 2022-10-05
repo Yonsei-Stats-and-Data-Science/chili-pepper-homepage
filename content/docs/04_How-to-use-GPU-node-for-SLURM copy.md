@@ -40,7 +40,8 @@ Conda를 이용해 버전을 쉽게 맞출 수 있습니다. 이 문서에서는
 2. conda install 명령어에서 버전을 명시해 주면 알아서 CUDA와 cuDNN 버전을 맞춰 줍니다.
 
 ### Conda environment 생성
-
+environment를 직접 생성할 수도 있고, yml파일을 이용해 생성할 수도 있습니다.
+#### 직접 environment 생성
 이제 [2번 문서](https://hpc.stat.yonsei.ac.kr/docs/02_how-to-use-cpu-node_python/)의 안내를 따라 진행하면 됩니다. 따라서 설명을 생략하고 sbatch script만 제시합니다.
 
 - Slurm job configurator에서 `Using GPU`에 체크한다는 점만 다릅니다.
@@ -56,8 +57,8 @@ Conda를 이용해 버전을 쉽게 맞출 수 있습니다. 이 문서에서는
 #SBATCH --output=testEnvGPU.log
 #SBATCH --error=testEnvGPU.err
 CONDA_BIN_PATH=/opt/miniconda/bin
-ENV_NAME=testEnvGPU
-ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME
+ENV_NAME=testEnvGPU #environment 이름
+ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME #environment 저장 경로
 $CONDA_BIN_PATH/conda env remove --prefix $ENV_PATH
 $CONDA_BIN_PATH/conda create -y --prefix $ENV_PATH python=3.8.13
 source $CONDA_BIN_PATH/activate $ENV_PATH
@@ -65,6 +66,30 @@ conda install -y tensorflow=2.3.0 pytorch==1.7.1 torchvision==0.8.2 torchaudio==
 ```
 
 cudatoolkit, cudnn 등이 용량이 커서 시간이 조금 오래 걸립니다. 
+- #SBATCH --nodelist=gpu-compute 옵션이 GPU 컴퓨터를 사용한다는 의미입니다.
+- #SBATCH --time=99:59:59 은 작업 시간 최대 허용치를 의미합니다.
+- #SBATCH --output, #SBATCH --error를 원하는 경로와 파일명으로 변경합니다.
+- environment 저장 경로를 바꾸고 싶을 경우 ENV_PATH=/mnt/nas/users/$(whoami)/.conda/envs/$ENV_NAME 에서 $(whoami)와 $ENV_NAME 사이 내용을 원하는 경로로 변경합니다. 이렇게 경로를 바꿀 경우, Python 코드를 실행하는 job을 제출할 때 바뀐 ENV_PATH를 써 주어야 합니다.
+- conda install -y 뒤에 설치를 원하는 패키지명을 입력합니다.
+
+#### yml 파일을 이용하여 생성
+```bash
+#!/bin/bash
+#SBATCH --job-name=testEnvGPU
+#SBATCH --nodes=1
+#SBATCH --mem=8gb
+#SBATCH --partition=all
+#SBATCH --nodelist=gpu-compute
+#SBATCH --time=30:50:00
+#SBATCH --output=/mnt/nas/users/mjm/testEnvGPU.log
+#SBATCH --error=/mnt/nas/users/mjm/testEnvGPU.err
+CONDA_BIN_PATH=/opt/miniconda/bin
+cd /mnt/nas/users/$(whoami)/.conda/envs/ #environment 저장 경로
+conda env create --file /mnt/nas/users/mjm/environment.yml
+```
+- #SBATCH --output, #SBATCH --error를 원하는 경로와 파일명으로 변경합니다.
+- environment 저장 경로를 바꾸고 싶을 경우 cd /mnt/nas/users/$(whoami)/.conda/envs/ 에서 $(whoami) 뒷부분을 원하는 경로로 변경합니다. 이렇게 경로를 바꿀 경우, Python 코드를 실행하는 job을 제출할 때 바뀐 ENV_PATH를 써 주어야 합니다.
+- conda env create --file 뒷쪽에 yml 파일 경로를 입력합니다.
 
 ## Step 5. job script 제출
 
